@@ -1,0 +1,41 @@
+Languages:
+English
+German
+
+
+Select the region of your pain.
+
+Tippen Sie auf den Bereich des Schmerzes.
+
+
+What is the severity of the pain?
+Severe pain
+Moderate pain
+Mild pain
+
+Wie stark sind Ihre Schmerzen?
+Starke Schmerzen
+Moderate Schmerzen
+Geringe Schmerzen
+
+
+Did you have to vomit?
+Vomitting with blood
+Vomitting without blood
+No vomitting
+
+Mussten Sie sich übergeben?
+Übergeben mit Blut
+Übergeben ohne Blut
+Kein Übergeben
+
+
+How often did you vomit?
+1-2 times
+3-4 times
+5 or more times
+
+Wie oft mussten Sie sich übergeben
+1-2 mal
+3-4 mal
+mehr als 4 mal
