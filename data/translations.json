@@ -1,0 +1,53 @@
+{
+  "abdominal": [
+    {
+      "name": "severity",
+      "image": "url",
+      "severity": [4,3,2,1],
+      "translations": {
+        "english": {
+          "question": "What is the severity of the pain?",
+          "choices": [
+            "Severe pain",
+            "Moderate pain",
+            "Mild pain",
+            "No pain"
+          ]
+        },
+        "german": {
+          "question": "Wie stark sind Ihre Schmerzen?",
+          "choices": [
+            "Starke Schmerzen",
+            "Moderate Schmerzen",
+            "Geringe Schmerzen",
+            "Keine Schmerzen"
+          ]
+        }
+      }
+    },
+
+    {
+      "name": "vomit",
+      "image": "url",
+      "severity": [4,3,2,1],
+      "translations": {
+        "english": {
+          "question": "Did you have to vomit?",
+          "choices": [
+            "Vomitting with blood",
+            "Vomitting without blood",
+            "No vomitting"
+          ]
+        },
+        "german": {
+          "question": "Mussten Sie sich übergeben?",
+          "choices": [
+            "Übergeben mit Blut",
+            "Übergeben ohne Blut",
+            "Kein Übergeben"
+          ]
+        }
+      }
+    }
+  ]
+}
