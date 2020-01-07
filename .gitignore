@@ -85,3 +85,4 @@ modules.xml
 # End of https://www.gitignore.io/api/intellij+iml
 target
 web
+hierarchy/bin
