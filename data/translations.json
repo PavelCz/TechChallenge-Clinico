@@ -3,7 +3,7 @@
     {
       "name": "severity",
       "image": "url",
-      "severity": [4,3,2,1],
+      "severity": [3,2,1,0],
       "translations": {
         "english": {
           "question": "What is the severity of the pain?",
@@ -29,7 +29,7 @@
     {
       "name": "vomit",
       "image": "url",
-      "severity": [4,3,2,1],
+      "severity": [3,1,0],
       "translations": {
         "english": {
           "question": "Did you have to vomit?",
@@ -45,6 +45,30 @@
             "Übergeben mit Blut",
             "Übergeben ohne Blut",
             "Kein Übergeben"
+          ]
+        }
+      }
+    },
+
+    {
+      "name": "vomit-frequency",
+      "image": "url",
+      "severity": [1,2,3],
+      "translations": {
+        "english": {
+          "question": "How often did you vomit?",
+          "choices": [
+            "1-2 times",
+            "3-4 times",
+            "5 or more times"
+          ]
+        },
+        "german": {
+          "question": "Wie oft mussten Sie sich übergeben?",
+          "choices": [
+            "1-2 mal",
+            "3-4 mal",
+            "mehr als 4 mal"
           ]
         }
       }
