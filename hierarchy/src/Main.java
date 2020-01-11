@@ -2,10 +2,15 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -69,6 +74,18 @@ public class Main {
         int xCursor = 0;
         int yCursor = 0;
 
+        gbc.gridx = xCursor;
+        gbc.gridy = yCursor;
+        panel.add(new JLabel("Questions"), gbc);
+        xCursor++;
+
+        gbc.gridx = xCursor;
+        gbc.gridy = yCursor;
+        panel.add(new JLabel("Answers"), gbc);
+
+        xCursor = 0;
+        ++yCursor;
+
         for (String text : nurseQuestions) {
             gbc.gridx = xCursor;
             gbc.gridy = yCursor;
@@ -78,7 +95,7 @@ public class Main {
 
             gbc.gridx = xCursor;
             gbc.gridy = yCursor;
-            JLabel answerPanel = new JLabel("TEST");
+            JLabel answerPanel = new JLabel("           ");
             panel.add(answerPanel, gbc);
 
             xCursor = 0;
@@ -95,12 +112,23 @@ public class Main {
         JButton submitButton = new JButton("Send questions");
         panel.add(submitButton, gbc);
 
-        // Right side of the pann
+        xCursor++;
+
+        gbc.gridx = xCursor;
+        gbc.gridy = yCursor;
+
+        // Gif from http://www.ajaxload.info/
+
+        Icon icon2 = new ImageIcon("data/ajax-loader.gif");
+        JLabel loadingGif = new JLabel(icon2);
+        panel.add(loadingGif, gbc);
+
 
 
         frame.add(panel);
 
-        frame.pack();
+        //frame.pack();
+        frame.setSize(1024, 512);
         frame.setVisible(true);
 
 
