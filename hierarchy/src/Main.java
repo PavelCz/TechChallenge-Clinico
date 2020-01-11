@@ -51,26 +51,51 @@ public class Main {
         JFrame frame = new JFrame("Clinico Triage System");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+        // Left side of the panel
         JPanel panel = new JPanel();
 
         // This layout aligns the checkboxes vertically
         panel.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.gridwidth = GridBagConstraints.REMAINDER;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.anchor = GridBagConstraints.LINE_START;
+        // Number of colums
+        //gbc.gridwidth = 2;
+        // Number of lines (plus 1 for the button)
+        //gbc.gridheight = nurseQuestions.size() + 1;
 
-        nurseQuestions.forEach(text -> {
+        //gbc.fill = GridBagConstraints.HORIZONTAL;
+
+
+        int xCursor = 0;
+        int yCursor = 0;
+
+        for (String text : nurseQuestions) {
+            gbc.gridx = xCursor;
+            gbc.gridy = yCursor;
             JCheckBox checkbox = new JCheckBox(text, false);
             panel.add(checkbox, gbc);
-        });
+            xCursor++;
+
+            gbc.gridx = xCursor;
+            gbc.gridy = yCursor;
+            JLabel answerPanel = new JLabel("TEST");
+            panel.add(answerPanel, gbc);
+
+            xCursor = 0;
+            ++yCursor;
+        }
 
         // Panel title
         panel.setBorder(BorderFactory.createTitledBorder("Choose which questions you want to ask"));
 
-        // Add submit button
-        JButton submitButton = new JButton("Submit");
-        panel.add(submitButton);
+        gbc.gridx = xCursor;
+        gbc.gridy = yCursor;
 
+        // Add submit button
+        JButton submitButton = new JButton("Send questions");
+        panel.add(submitButton, gbc);
+
+        // Right side of the pann
 
 
         frame.add(panel);
