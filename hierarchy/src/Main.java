@@ -2,6 +2,8 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import javax.swing.*;
+import java.awt.*;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
@@ -21,6 +23,7 @@ public class Main {
     }
 
     private static void run() {
+        // Open the Json file to read the translations
         String translationsPath = "data/translations.json";
 
         String nurseLanguage = "german";
@@ -40,6 +43,34 @@ public class Main {
 
         List<String> nurseQuestions = getAllQuestionsForLanguage(questions, nurseLanguage);
         System.out.println(nurseQuestions);
+
+        // Create backend GUI
+
+        // Frame properties
+        JFrame.setDefaultLookAndFeelDecorated(true);
+        JFrame frame = new JFrame("Clinico Triage System");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        JPanel panel = new JPanel();
+
+        // This layout aligns the checkboxes vertically
+        panel.setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridwidth = GridBagConstraints.REMAINDER;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+
+        nurseQuestions.forEach(text -> {
+            JCheckBox checkbox = new JCheckBox(text, false);
+            panel.add(checkbox, gbc);
+        });
+
+        // Panel title
+        panel.setBorder(BorderFactory.createTitledBorder("Choose which questions you want to ask"));
+
+        frame.add(panel);
+
+        frame.pack();
+        frame.setVisible(true);
 
 
     }
