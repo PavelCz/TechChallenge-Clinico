@@ -319,7 +319,13 @@
 			//add pager and questions
 			if(typeof questions !== "undefined" && $.type(questions) === "array"){
 				//add first question
-				$(document.createElement('h3')).text('Welcome to MRI!').appendTo('#frame');
+				$(document.createElement('br')).appendTo('#frame');
+				$(document.createElement('br')).appendTo('#frame');
+				$(document.createElement('h3')).text('Welcome to MRI!').css({'text-align':'center', 'font-size':'300%'}).appendTo('#frame');
+
+				$(document.createElement('br')).appendTo('#frame');
+				$(document.createElement('br')).appendTo('#frame');
+
 				//add image if present
 				$(document.createElement('img')).addClass('question-homeImage').attr('id', 'question-homeImage').attr('src', "https://www.nngm.de/wp-content/uploads/2018/10/header-standort-muenchen-mri.jpg").attr('alt', htmlEncode('homePage')).appendTo('#frame');
 
