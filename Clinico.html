@@ -4,7 +4,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
 	<meta name="viewport" content="initial-scale=1.0">
-    <title>Quiz</title>
+    <title>Clinico</title>
     <!-- jquery for maximum compatibility -->
 	<link type="text/css" rel="stylesheet" href="https://stackpath.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css">
     <!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>-->
@@ -12,7 +12,8 @@
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <script>
 
-    var quiztitle = "Clinico Sample GUI";
+    var title = "Clinico Sample GUI";
+    var language = "";
 
     /**
     * Set the information about your questions here. The correct answer string needs to match
@@ -43,7 +44,7 @@
   return array;
 }*/
 	    
-if (!("scramble" in Array.prototype)) {
+/*if (!("scramble" in Array.prototype)) {
   Object.defineProperty(Array.prototype, "scramble", {
     enumerable: false,
     value: function() {
@@ -57,9 +58,9 @@ if (!("scramble" in Array.prototype)) {
       return this;
     }
   });
-}		
+}	*/	
 	    
-    var quiz = [
+    var questions = [
         {
             "question"      :   "Question: Is there pain?",
             "image"         :   "https://static.spacecrafted.com/ff54fd0b912c4dd99d383fad9530cb4a/i/bb1044de01b447abbdd734687d094dfb/1/4SoifmQp45JMgBnHp7ed2/pain-points-smaller.jpg",
@@ -69,8 +70,8 @@ if (!("scramble" in Array.prototype)) {
                                     "Mild",
                                     "No pain"
                                 ],
-            "correct"       :   "Albert Einstein",
-            "explanation"   :   "Albert Einstein drafted the special theory of relativity in 1905.",
+            "correct"       :   "",
+            "explanation"   :   "",
         },
         {
             "question"      :   "Question: Is there vomitting?",
@@ -95,17 +96,28 @@ if (!("scramble" in Array.prototype)) {
             "correct"       :   "",
             "explanation"   :   "",
         },
-
+        {
+            "question"      :   "Question: How tired are you of writing this stupid code, Milen?",
+            "image"         :   "https://sayingimages.com/wp-content/uploads/i-dont-know-anymore-guys-i-quit-life-meme.jpg",
+            "choices"       :   [
+                                    "I don't know!",
+                                    "Do NOT dare ask!",
+                                    "I am strong, I can do it.",
+                                    "Desperately need a break!!!"
+                                ],
+            "correct"       :   "",
+            "explanation"   :   "",
+        }
     ];
 
 //use this for IE syntax error at => : ECMA script 6 not supported in IE 11 :(
-//quiz.forEach(function(q){ return q.choices.scramble()});
+//questions.forEach(function(q){ return q.choices.scramble()});
 
 //use this for ECMA script 6
-quiz.forEach(q => q.choices.scramble());
-//console.log(quiz[0].choices);
+//questions.forEach(q => q.choices.scramble());
+//console.log(questions[0].choices);
 		
-//quiz = shuffle(quiz);
+//questions = shuffle(questions);
 	    
     /******* No need to edit below this line *********/
     var currentquestion = 0, score = 0, submt=true, picked;
@@ -140,18 +152,18 @@ quiz.forEach(q => q.choices.scramble());
 		function nextQuestion(){
 			submt = true;
 			$('#explanation').empty();
-			$('#question').text(quiz[currentquestion]['question']);
-			$('#pager').text('Question ' + Number(currentquestion + 1) + ' of ' + quiz.length);
-			if(quiz[currentquestion].hasOwnProperty('image') && quiz[currentquestion]['image'] != ""){
+			$('#question').text(questions[currentquestion]['question']);
+			$('#pager').text('Question ' + Number(currentquestion + 1) + ' of ' + questions.length);
+			if(questions[currentquestion].hasOwnProperty('image') && questions[currentquestion]['image'] != ""){
 				if($('#question-image').length == 0){
-					$(document.createElement('img')).addClass('question-image').attr('id', 'question-image').attr('src', quiz[currentquestion]['image']).attr('alt', htmlEncode(quiz[currentquestion]['question'])).insertAfter('#question');
+					$(document.createElement('img')).addClass('question-image').attr('id', 'question-image').attr('src', questions[currentquestion]['image']).attr('alt', htmlEncode(questions[currentquestion]['question'])).insertAfter('#question');
 				} else {
-					$('#question-image').attr('src', quiz[currentquestion]['image']).attr('alt', htmlEncode(quiz[currentquestion]['question']));
+					$('#question-image').attr('src', questions[currentquestion]['image']).attr('alt', htmlEncode(questions[currentquestion]['question']));
 				}
 			} else {
 				$('#question-image').remove();
 			}
-			addChoices(quiz[currentquestion]['choices']);
+			addChoices(questions[currentquestion]['choices']);
 			setupButtons();
 			
 			jQuery(document).ready(function($){
@@ -182,25 +194,25 @@ quiz.forEach(q => q.choices.scramble());
          * @param {choice} number The li zero-based index of the choice picked
          */
         function processQuestion(choice){
-            if(true) //quiz[currentquestion]['choices'][choice] == quiz[currentquestion]['correct']){
+            if(true) //questions[currentquestion]['choices'][choice] == questions[currentquestion]['correct']){
 				$('.choice').eq(choice).addClass('btn-success').css({'font-weight':'bold', 'border-color':'#51a351', 'color':'#fff'});
-				$('#explanation').html('<span class="correct">THANK YOU!</span> ' + htmlEncode(quiz[currentquestion]['explanation']));
+				$('#explanation').html('<span class="correct">THANK YOU!</span> ' + htmlEncode(questions[currentquestion]['explanation']));
 				score++;
 			/*} else {
                 $('.choice').eq(choice).addClass('btn-danger').css({'font-weight':'bold', 'border-color':'#f93939', 'color':'#fff'});
-                $('#explanation').html('<span class="incorrect">INCORRECT!</span> ' + htmlEncode(quiz[currentquestion]['explanation']));
+                $('#explanation').html('<span class="incorrect">INCORRECT!</span> ' + htmlEncode(questions[currentquestion]['explanation']));
             }*/
             currentquestion++;
 
-			if(currentquestion == quiz.length){
-				$('#submitbutton').html('GET QUIZ RESULTS').removeClass('btn-success').addClass('btn-info').css({'border-color':'#3a87ad', 'color':'#fff'}).on('click', function(){
-					$(this).text('GET QUIZ RESULTS').on('click');
-					endQuiz();
+			if(currentquestion == questions.length){
+				$('#submitbutton').html('SUBMIT RESULTS').removeClass('btn-success').addClass('btn-info').css({'border-color':'#3a87ad', 'font-size':'150%','color':'#fff'}).on('click', function(){
+					$(this).text('SUBMIT RESULTS').on('click');
+					endQuestions();
 				})
 				
-			} else if (currentquestion < quiz.length){
-				$('#submitbutton').html('NEXT QUESTION &raquo;').removeClass('btn-success').addClass('btn-warning').css({'font-weight':'bold', 'border-color':'#faa732', 'color':'#fff'}).on('click', function(){
-					$(this).text('- SUBMIT -').removeClass('btn-warning').addClass('btn-success').css({'font-weight':'bold', 'border-color':'#51a351', 'color':'#fff'}).on('click');
+			} else if (currentquestion < questions.length){
+				$('#submitbutton').html('NEXT QUESTION &raquo;').removeClass('btn-success').addClass('btn-warning').css({'font-weight':'bold', 'font-size':'150%','border-color':'#faa732', 'color':'#fff'}).on('click', function(){
+					$(this).text('- SUBMIT -').removeClass('btn-warning').addClass('btn-success').css({'font-weight':'bold', 'font-size':'150%', 'border-color':'#51a351', 'color':'#fff'}).on('click');
 					nextQuestion();
 				})
 			} else {
@@ -232,40 +244,37 @@ quiz.forEach(q => q.choices.scramble());
 		}
         
         /**
-         * Quiz ends, display a message.
+         * questions ends, display a message.
          */
-		function endQuiz(){
-			var endQuestions = "End of Quiz!";
+		function endQuestions(){
+			var endQuestions = "Thank you for your answers!!!";
 			document.getElementById("pager").innerHTML = endQuestions;
 			$('#explanation').empty();
 			$('#question').empty();
 			$('#choice-block').empty();
 			$('#submitbutton').remove();
-			$('.rsform-block-submit').addClass('show');
-			$('#question').text("You got " + score + " out of " + quiz.length + " correct.");
-			$(document.createElement('h4')).addClass('score').text(Math.round(score/quiz.length * 100) + '%').insertAfter('#question');			
+			//$('.rsform-block-submit').addClass('show');
+			$('#question').text("Please now go to the administration.");
+			//$(document.createElement('h4')).addClass('score').text(Math.round(score/quiz.length * 100) + '%').insertAfter('#question');			
 		}
 
-        /**
-         * Runs the first time and creates all of the elements for the quiz
-         */
-		function init(){
+		function initQuestion(){
 			//add title
-			if(typeof quiztitle !== "undefined" && $.type(quiztitle) === "string"){
-				$(document.createElement('h2')).text(quiztitle).appendTo('#frame');
+			if(typeof title !== "undefined" && $.type(title) === "string"){
+				$(document.createElement('h2')).text(title).appendTo('#frame');
 			} else {
 				$(document.createElement('h2')).text("Questionaire").appendTo('#frame');
 			}
 			
 			//add pager and questions
-			if(typeof quiz !== "undefined" && $.type(quiz) === "array"){
+			if(typeof questions !== "undefined" && $.type(questions) === "array"){
 				//add pager
-				$(document.createElement('p')).addClass('pager').attr('id','pager').text('Question 1 of ' + quiz.length).appendTo('#frame');
+				$(document.createElement('p')).addClass('pager').attr('id','pager').text('Question 1 of ' + questions.length).appendTo('#frame');
 				//add first question
-				$(document.createElement('h3')).addClass('question').attr('id', 'question').text(quiz[0]['question']).appendTo('#frame');
+				$(document.createElement('h3')).addClass('question').attr('id', 'question').text(questions[0]['question']).appendTo('#frame');
 				//add image if present
-				if(quiz[0].hasOwnProperty('image') && quiz[0]['image'] != ""){
-					$(document.createElement('img')).addClass('question-image').attr('id', 'question-image').attr('src', quiz[0]['image']).attr('alt', htmlEncode(quiz[0]['question'])).appendTo('#frame');
+				if(questions[0].hasOwnProperty('image') && questions[0]['image'] != ""){
+					$(document.createElement('img')).addClass('question-image').attr('id', 'question-image').attr('src', questions[0]['image']).attr('alt', htmlEncode(questions[0]['question'])).appendTo('#frame');
 				}
 				
 				$(document.createElement('p')).addClass('explanation').attr('id','explanation').html('').appendTo('#frame');
@@ -274,13 +283,108 @@ quiz.forEach(q => q.choices.scramble());
 				$(document.createElement('ul')).attr('id', 'choice-block').appendTo('#frame');
 				
 				//add choices
-				addChoices(quiz[0]['choices']);
+				addChoices(questions[0]['choices']);
 				
 				//add submit button
-				$(document.createElement('div')).addClass('btn-success choice-box').attr('id', 'submitbutton').text('- SUBMIT -').css({'font-weight':'bold', 'color':'#fff','padding':'30px 0', 'border-radius':'10px'}).appendTo('#frame');
+				$(document.createElement('div')).addClass('btn-success choice-box').attr('id', 'submitbutton').text('- SUBMIT -').css({'font-weight':'bold', 'font-size':'150%','color':'#fff','padding':'30px 0', 'border-radius':'10px'}).appendTo('#frame');
 				
 				setupButtons();
 			}
+		}
+
+		function wait () {
+			console.log('before');
+			setTimeout(donothing,5000); // after 5 seconds
+			console.log('after');
+		}
+
+		function startQuestions(){
+			if (language !== '') {
+				//window.alert(language);
+				$('img').remove();
+				$('br').remove();
+				$('h3').remove();
+				$('h2').remove();
+				initQuestion();
+			}
+		}
+
+        /**
+         * Runs the first time and creates all of the elements for the questions
+         */
+		function init(){
+
+			$(document.createElement('h2')).text(title).appendTo('#frame');
+			
+			//add pager and questions
+			if(typeof questions !== "undefined" && $.type(questions) === "array"){
+				//add first question
+				$(document.createElement('h3')).text('Welcome to MRI!').appendTo('#frame');
+				//add image if present
+				$(document.createElement('img')).addClass('question-homeImage').attr('id', 'question-homeImage').attr('src', "https://www.nngm.de/wp-content/uploads/2018/10/header-standort-muenchen-mri.jpg").attr('alt', htmlEncode('homePage')).appendTo('#frame');
+
+				$(document.createElement('br')).appendTo('#frame');
+				$(document.createElement('br')).appendTo('#frame');
+
+				$(document.createElement('img')).addClass('question-button').attr('id', 'question-button').attr('src', "http://www.clker.com/cliparts/a/C/M/J/6/Y/start-hi.png").attr('onmouseover', '').attr('style', 'cursor:pointer').appendTo('#frame');
+
+				$('.question-button').on('click', function() {
+					$('img').remove();
+					$('br').remove();
+					$('h3').remove();
+					$(document.createElement('h3')).text('Choose a language!').appendTo('#frame');
+
+					$(document.createElement('br')).appendTo('#frame');
+					$(document.createElement('br')).appendTo('#frame');
+					$(document.createElement('br')).appendTo('#frame');
+					$(document.createElement('br')).appendTo('#frame');
+
+					var en = $(document.createElement('img')).addClass('question-flag').attr('id', 'question-flag').attr('src', "http://blog.geocaching.com/wp-content/uploads/2012/09/English-language-flag4.png").attr('style', 'float:left').appendTo('#frame');
+					var de = $(document.createElement('img')).addClass('question-flag').attr('id', 'question-flag').attr('src', "https://upload.wikimedia.org/wikipedia/en/thumb/b/ba/Flag_of_Germany.svg/1200px-Flag_of_Germany.svg.png").attr('style', 'float:right').appendTo('#frame');
+					var es = $(document.createElement('img')).addClass('question-flag').attr('id', 'question-flag').attr('src', "https://i.ytimg.com/vi/vV_owUdv_7o/maxresdefault.jpg").attr('style', 'float').appendTo('#frame');
+
+					$(document.createElement('br')).appendTo('#frame');
+					$(document.createElement('br')).appendTo('#frame');
+
+					var tr = $(document.createElement('img')).addClass('question-flag').attr('id', 'question-flag').attr('src', "https://i.ytimg.com/vi/N2xHqs-9GzQ/maxresdefault.jpg").attr('style', 'float:left').appendTo('#frame');
+					var bg = $(document.createElement('img')).addClass('question-flag').attr('id', 'question-flag').attr('src', "https://upload.wikimedia.org/wikipedia/commons/e/e5/Flag_of_Bulgaria_%28bordered%29.png").attr('style', 'float:right').appendTo('#frame');
+					var ru = $(document.createElement('img')).addClass('question-flag	').attr('id', 'question-flag').attr('src', "https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/Flag_of_Russia_with_border_mini.svg/640px-Flag_of_Russia_with_border_mini.svg.png").attr('style', 'float').appendTo('#frame');
+
+					$(document.createElement('br')).appendTo('#frame');
+					$(document.createElement('br')).appendTo('#frame');
+					$(document.createElement('br')).appendTo('#frame');
+					$(document.createElement('br')).appendTo('#frame');
+
+					en.on('click', function() {
+						language = 'en'
+						startQuestions();
+					})
+					de.on('click', function() {
+						language = 'de'
+						startQuestions();
+					})
+					es.on('click', function() {
+						language = 'es'
+						startQuestions();
+					})
+					tr.on('click', function() {
+						language = 'tr'
+						startQuestions();
+
+					})
+					bg.on('click', function() {
+						language = 'bg'
+						startQuestions();
+					})
+					ru.on('click', function() {
+						language = 'ru'
+						startQuestions();
+					})
+
+				});
+			}
+
+			wait();
 		}
 	
 		init();
@@ -332,7 +436,7 @@ quiz.forEach(q => q.choices.scramble());
 /*		.rsform-block-placecontent 								{ display:none; } */
 		#submit													{ margin:0 auto; display:block; }
 
-		/* QUIZ STYLES */
+		/* QUESTIONS STYLES */
 		ol,ul 													{ list-style:none; }
 		strong 													{ font-weight:700; }
 		#frame 													{ width:auto; max-width: 800px; background:transparent; margin:3px auto; padding:10px; color:#333 !important; }
@@ -342,13 +446,17 @@ quiz.forEach(q => q.choices.scramble());
 		.qnumber 												{ font-size:25px; font-weight:bold; font-style:italic; vertical-align:bottom; }
 		.number 												{ font-size:25px; font-weight:bold; font-style:normal; vertical-align:inherit; padding-right:10px; }
 		.score 													{ width:100%; display:inline-block; margin:30px 0; font-size:100px; text-align:center; }
-		img.question-image 										{ width:100%; height:auto; display:block; max-width:250px; margin:10px auto; border:1px solid #ccc; }
+		img.question-image 										{ width:100%; width:auto; display:block; max-height:350px; margin:10px auto; border:2px solid #ccc; }
+		.question-button 										{ width:50%; height:auto; display:block; max-width:150px; margin:10px auto; border:0px solid #ccc; cursor:pointer; }
+		.question-flag 											{ width:80%; height:auto; display:block; max-width:180px; max-height:100px; margin:10px auto; border:1px solid #ccc; }
+		.question-homeImage 									{ width:200%; height:auto; display:block; max-width:500px; margin:10px auto; border:1px solid #ccc; }
 		#choice-block 											{ display:block; list-style:none; margin:0; padding:0; cursor: pointer; }
 	/*	#submitbutton 											{ cursor:pointer; -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; } */
 	/*	#submitbutton:hover 									{ background:#7b8da6; } */
 		#explanation 											{ width:auto; min-height:100px; margin:0 auto; padding:20px 0; text-align:center; }
 		#explanation span 										{ font-weight:bold; padding-right:8px; }
-		.choice-box 											{ width:100%;  display:block;  text-align:center;  margin:5px auto !important; padding:10px 0 !important; border:1px solid #bdbdbd; }
+		.choice 												{ font-weight:bold; font-size:150%; margin:20px 0; padding:0; font-style:italic; display:block; }
+		.choice-box 											{ width:100%; height:30px;  display:block;  text-align:center;  margin:5px auto !important; padding:10px 0 !important; border:1px solid #bdbdbd; }
 		.correct 												{ color:#51a351; font-size: 20px; display: block; margin-bottom: 5px; border-bottom: 1px #51a351 solid; padding-bottom: 5px; }
 		.incorrect 												{ color:#f93939; font-size: 20px; display: block; margin-bottom: 5px; border-bottom: 1px #f93939 solid; padding-bottom: 5px; }
     </style>
@@ -366,7 +474,7 @@ quiz.forEach(q => q.choices.scramble());
 </div>	
 	
 <div class="col-sm-6 formControls rsform-block-submit">
-	<button type="submit" name="form[submit]" id="submit" onclick="copyText()" class="rsform-submit-button  btn btn-primary">Submit Quiz</button>			
+	<button type="submit" name="form[submit]" id="submit" onclick="copyText()" class="rsform-submit-button  btn btn-primary">Submit Answers</button>			
 </div>	
 </body>
 </html>
