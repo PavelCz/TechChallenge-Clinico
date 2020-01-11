@@ -67,6 +67,12 @@ public class Main {
         // Panel title
         panel.setBorder(BorderFactory.createTitledBorder("Choose which questions you want to ask"));
 
+        // Add submit button
+        JButton submitButton = new JButton("Submit");
+        panel.add(submitButton);
+
+
+
         frame.add(panel);
 
         frame.pack();
