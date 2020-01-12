@@ -2,19 +2,12 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 public class Main {
 
@@ -72,57 +65,42 @@ public class Main {
 
         //gbc.fill = GridBagConstraints.HORIZONTAL;
 
-
-        int xCursor = 0;
-        int yCursor = 0;
-
-        gbc.gridx = xCursor;
-        gbc.gridy = yCursor;
+        gbc.gridx = 0;
+        gbc.gridy = 0;
         panel.add(new JLabel("Questions"), gbc);
-        xCursor++;
+        gbc.gridx++;
 
-        gbc.gridx = xCursor;
-        gbc.gridy = yCursor;
         panel.add(new JLabel("Answers"), gbc);
 
-        xCursor = 0;
-        ++yCursor;
+        gbc.gridx = 0;
+        ++gbc.gridy;
         List<JCheckBox> checkboxes = new ArrayList<>();
         List<JLabel> answers = new ArrayList<>();
 
+        // Add question list with checkboxes
         for (String text : nurseQuestions) {
-            gbc.gridx = xCursor;
-            gbc.gridy = yCursor;
             JCheckBox checkbox = new JCheckBox(text, false);
             checkboxes.add(checkbox);
 
             panel.add(checkbox, gbc);
-            xCursor++;
+            gbc.gridx++;
 
-            gbc.gridx = xCursor;
-            gbc.gridy = yCursor;
-            JLabel answerLabel = new JLabel("           ");
+            JLabel answerLabel = new JLabel("                    ");
             answers.add(answerLabel);
             panel.add(answerLabel, gbc);
 
-            xCursor = 0;
-            ++yCursor;
+            gbc.gridx = 0;
+            ++gbc.gridy;
         }
 
         // Panel title
         panel.setBorder(BorderFactory.createTitledBorder("Choose which questions you want to ask"));
 
-        gbc.gridx = xCursor;
-        gbc.gridy = yCursor;
-
         // Add submit button
         JButton submitButton = new JButton("Send questions");
         panel.add(submitButton, gbc);
 
-        xCursor++;
-
-        gbc.gridx = xCursor;
-        gbc.gridy = yCursor;
+        gbc.gridx++;
 
         // Gif from http://www.ajaxload.info/
         Icon icon2 = new ImageIcon("data/ajax-loader.gif");
