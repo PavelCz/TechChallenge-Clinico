@@ -13,10 +13,13 @@ public class Main {
 
     private static List<String> getAllQuestionsForLanguage(JsonArray questions, String language) {
         List<String> nurseQuestions = new ArrayList<>();
-        questions.forEach(q ->
-                nurseQuestions.add(
-                        q.getAsJsonObject().get(language).getAsJsonObject().get("question").getAsString()
-                )
+        questions.forEach(q -> {
+                    String question = q.getAsJsonObject().get(language).getAsJsonObject().get("question").getAsString();
+                    StringBuilder sb = new StringBuilder(question);
+                    // Remove first seven Characters because they all say "Frage: "
+                    sb.replace(0, 7, "");
+                    nurseQuestions.add(sb.toString());
+                }
         );
         return nurseQuestions;
     }
