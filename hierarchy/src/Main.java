@@ -9,10 +9,12 @@ import java.awt.image.BufferedImage;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class Main {
 
@@ -85,18 +87,23 @@ public class Main {
 
         xCursor = 0;
         ++yCursor;
+        List<JCheckBox> checkboxes = new ArrayList<>();
+        List<JLabel> answers = new ArrayList<>();
 
         for (String text : nurseQuestions) {
             gbc.gridx = xCursor;
             gbc.gridy = yCursor;
             JCheckBox checkbox = new JCheckBox(text, false);
+            checkboxes.add(checkbox);
+
             panel.add(checkbox, gbc);
             xCursor++;
 
             gbc.gridx = xCursor;
             gbc.gridy = yCursor;
-            JLabel answerPanel = new JLabel("           ");
-            panel.add(answerPanel, gbc);
+            JLabel answerLabel = new JLabel("           ");
+            answers.add(answerLabel);
+            panel.add(answerLabel, gbc);
 
             xCursor = 0;
             ++yCursor;
@@ -118,12 +125,29 @@ public class Main {
         gbc.gridy = yCursor;
 
         // Gif from http://www.ajaxload.info/
-
         Icon icon2 = new ImageIcon("data/ajax-loader.gif");
         JLabel loadingGif = new JLabel(icon2);
         panel.add(loadingGif, gbc);
 
+        loadingGif.setVisible(false);
 
+        String[] possibleAnswers = {"Moderate pain", "Vomitting without blood", "1-2 times"};
+
+        // Add button action
+        submitButton.addActionListener(e -> {
+            if (!loadingGif.isVisible()) {
+                loadingGif.setVisible(true);
+
+            } else {
+                loadingGif.setVisible(false);
+                for (int i = 0; i < checkboxes.size(); ++i) {
+                    if (checkboxes.get(i).isSelected()) {
+                        checkboxes.get(i).setSelected(false);
+                        answers.get(i).setText(possibleAnswers[i]);
+                    }
+                }
+            }
+        });
 
         frame.add(panel);
 
