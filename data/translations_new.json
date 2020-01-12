@@ -1,0 +1,71 @@
+{
+  "abdominal": [
+    {
+      "tag": "severity",
+      "image": "https://static.spacecrafted.com/ff54fd0b912c4dd99d383fad9530cb4a/i/bb1044de01b447abbdd734687d094dfb/1/4SoifmQp45JMgBnHp7ed2/pain-points-smaller.jpg",
+      "severity": [3,2,1,0],
+      "en": {
+        "question": "Question: What is the severity of the pain?",
+        "choices": [
+          "Severe pain",
+          "Moderate pain",
+          "Mild pain",
+          "No pain"
+        ]
+      },
+      "de": {
+        "question": "Frage: Wie stark sind Ihre Schmerzen?",
+        "choices": [
+          "Starke Schmerzen",
+          "Moderate Schmerzen",
+          "Geringe Schmerzen",
+          "Keine Schmerzen"
+        ]
+      }
+    },
+
+    {
+      "tag": "vomit",
+      "image": "https://previews.123rf.com/images/krisdog/krisdog1906/krisdog190600119/125055526-vomiting-puking-emoji-emoticon-icon-cartoon.jpg",
+      "severity": [3,1,0],
+      "en": {
+        "question": "Question: Did you have to vomit?",
+        "choices": [
+          "Vomitting with blood",
+          "Vomitting without blood",
+          "No vomitting"
+        ]
+      },
+      "de": {
+        "question": "Frage: Mussten Sie sich übergeben?",
+        "choices": [
+          "Übergeben mit Blut",
+          "Übergeben ohne Blut",
+          "Kein Übergeben"
+        ]
+      }
+    },
+
+    {
+      "tag": "vomit-frequency",
+      "image": "https://cdn0.iconfinder.com/data/icons/audio-and-video-outline-1/24/audio_-30-512.png",
+      "severity": [1,2,3],
+      "en": {
+        "question": "Question: How often did you vomit?",
+        "choices": [
+          "1-2 times",
+          "3-4 times",
+          "5 or more times"
+        ]
+        },
+      "de": {
+        "question": "Frage: Wie oft mussten Sie sich übergeben?",
+        "choices": [
+          "1-2 mal",
+          "3-4 mal",
+          "mehr als 4 mal"
+        ]
+      }
+      }
+  ]
+}
