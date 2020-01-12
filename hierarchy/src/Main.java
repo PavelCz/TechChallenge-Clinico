@@ -15,8 +15,7 @@ public class Main {
         List<String> nurseQuestions = new ArrayList<>();
         questions.forEach(q ->
                 nurseQuestions.add(
-                        q.getAsJsonObject().get("translations").getAsJsonObject().get(language).getAsJsonObject()
-                                .get("question").getAsString()
+                        q.getAsJsonObject().get(language).getAsJsonObject().get("question").getAsString()
                 )
         );
         return nurseQuestions;
@@ -26,7 +25,7 @@ public class Main {
         // Open the Json file to read the translations
         String translationsPath = "data/translations.json";
 
-        String nurseLanguage = "german";
+        String nurseLanguage = "de";
 
         // Open the file and serialize the data into a json object
         FileReader fr = null;
