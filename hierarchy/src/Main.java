@@ -119,8 +119,10 @@ public class Main {
             } else {
                 loadingGif.setVisible(false);
                 for (int i = 0; i < checkboxes.size(); ++i) {
-                    if (checkboxes.get(i).isSelected()) {
-                        checkboxes.get(i).setSelected(false);
+                    JCheckBox cb = checkboxes.get(i);
+                    if (cb.isSelected()) {
+                        cb.setSelected(false);
+                        cb.setForeground(Color.GRAY);
                         answers.get(i).setText(possibleAnswers[i]);
                     }
                 }
