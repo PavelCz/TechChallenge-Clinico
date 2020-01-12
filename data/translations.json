@@ -209,7 +209,7 @@
         3
       ],
       "en": {
-        "question": "Do you suffer from allergies?",
+        "question": "Question: Do you suffer from allergies?",
         "choices": [
           "Yes",
           "No"
@@ -232,7 +232,7 @@
         3
       ],
       "en": {
-        "question": "What are you allergic to?",
+        "question": "Question: What are you allergic to?",
         "choices": [
           "Medicines - e.g. ibuprofen, aspirin, penecilin, antibiotics",
           "Other - e.g. food, animal dander, hay fever..."
@@ -255,14 +255,14 @@
         3
       ],
       "en": {
-        "question": "Are you currently taking any medication?",
+        "question": "Question: Are you currently taking any medication?",
         "choices": [
           "free text field",
           "No"
         ]
       },
       "de": {
-        "question": "Nehmen sie aktuell Medikamente ein?",
+        "question": "Frage: Nehmen sie aktuell Medikamente ein?",
         "choices": [
           "Patient nimmt folgende Medikamente: ",
           "Patient nimmt aktuell keine Medikamente"
@@ -278,7 +278,7 @@
         3
       ],
       "en": {
-        "question": "Have you had any abdominal surgery?",
+        "question": "Question: Have you had any abdominal surgery?",
         "choices": [
           "No, I have not had any abdominal surgery",
           "Yes, I had my caecum out",
@@ -288,7 +288,7 @@
         ]
       },
       "de": {
-        "question": "Hatten Sie bereits Operationen im Bauchbereich?",
+        "question": "Frage: Hatten Sie bereits Operationen im Bauchbereich?",
         "choices": [
           "Keine früheren Operationen im Bauchbereich",
           "Bereits Blinddarm entfernt",
