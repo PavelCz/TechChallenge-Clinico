@@ -3,11 +3,17 @@
     {
       "tag": "severity",
       "image": "https://www.disabled-world.com/pics/1/pain-scale-chart-3.gif",
-      "severity": [4,3,2,1,0],
+      "severity": [
+        4,
+        3,
+        2,
+        1,
+        0
+      ],
       "en": {
         "question": "Question: What is the severity of the pain?",
         "choices": [
-	  "Unendurable, excruciating pain",
+          "Unendurable, excruciating pain",
           "Severe pain",
           "Moderate pain",
           "Mild pain",
@@ -17,7 +23,7 @@
       "de": {
         "question": "Frage: Wie stark sind Ihre Schmerzen?",
         "choices": [
-	  "Nicht auszuhaltende, Qualvolle Schmerzen",
+          "Nicht auszuhaltende, Qualvolle Schmerzen",
           "Starke Schmerzen",
           "Moderate Schmerzen",
           "Geringe Schmerzen",
@@ -25,11 +31,13 @@
         ]
       }
     },
-
     {
       "tag": "shortage of breath",
       "image": "https://banner2.cleanpng.com/20190628/keu/kisspng-shortness-of-breath-gif-clip-art-diaphragmatic-bre-clip-art-royalty-free-download-breath-clipart-brea-5d15aff1b24d24.6815248915617023857303.jpg",
-      "severity": [4,0],
+      "severity": [
+        4,
+        0
+      ],
       "en": {
         "question": "Question: Are you in acute shortness of breath?",
         "choices": [
@@ -45,13 +53,14 @@
         ]
       }
     },
-	
-
-
     {
       "tag": "vomit",
       "image": "https://cdn.imgbin.com/23/6/7/imgbin-food-poisoning-vomiting-food-safety-danger-zone-others-snY67ZNyxNm4M6rZcP5szNJmM.jpg",
-      "severity": [3,1,0],
+      "severity": [
+        3,
+        1,
+        0
+      ],
       "en": {
         "question": "Question: Did you have to vomit?",
         "choices": [
@@ -69,11 +78,14 @@
         ]
       }
     },
-
     {
       "tag": "vomit-frequency",
       "image": "https://cdn4.iconfinder.com/data/icons/celiac-disease-signs-and-symptoms/191/celiac-disease-005-512.png",
-      "severity": [1,2,3],
+      "severity": [
+        1,
+        2,
+        3
+      ],
       "en": {
         "question": "Question: How often did you vomit in the last 24 hours?",
         "choices": [
@@ -81,7 +93,7 @@
           "3-4 times",
           "5 or more times"
         ]
-        },
+      },
       "de": {
         "question": "Frage: Wie oft haben Sie sich in den letzten 24 Stunden übergeben?",
         "choices": [
@@ -94,30 +106,39 @@
     {
       "tag": "defecation",
       "image": "https://pp.netclipart.com/pp/s/61-613364_clip-art-diarrhea-pictogram-free-view-diarrhea-icon.png",
-      "severity": [1,3,1,0],
+      "severity": [
+        1,
+        3,
+        1,
+        0
+      ],
       "en": {
         "question": "Question: Did you have any problems with your last bowel movement?",
         "choices": [
           "Yes, I had diarrhea",
           "Yes, I had diarrhea and there was blood in the feces",
           "Yes, I suffer from constipation",
-	  "No, my bowel movement was normal"   	
+          "No, my bowel movement was normal"
         ]
-        },
+      },
       "de": {
         "question": "Frage: Hatten Sie Probleme bei Ihrem letzten Stuhlgang?",
         "choices": [
           "Durchfall",
           "Durchfall mit Blut im Stuhl",
           "Verstopfung",
-	  "Normaler Stuhlgang"
+          "Normaler Stuhlgang"
         ]
       }
     },
     {
       "tag": "fever",
       "image": "https://us.123rf.com/450wm/logo3in1/logo3in11504/logo3in1150400006/39036484-kranker-junge-mit-hohem-fieber-schlaf-zu-ruhen-auf-dem-bett-im-krankenzimmer-des-krankenhauses.jpg?ver=6",
-      "severity": [3,2,0],
+      "severity": [
+        3,
+        2,
+        0
+      ],
       "en": {
         "question": "Question: Do you have a fever?",
         "choices": [
@@ -125,7 +146,7 @@
           "Yes, I feel kind of hot",
           "No, I feel normal"
         ]
-        },
+      },
       "de": {
         "question": "Frage: Wann hatten Sie das letzte mal Stuhlgang?",
         "choices": [
@@ -135,17 +156,20 @@
         ]
       }
     },
-  {
+    {
       "tag": "pain-back",
       "image": "https://banner2.cleanpng.com/20180403/bkw/kisspng-back-pain-computer-icons-symbol-clip-art-back-pain-5ac31f32cbb048.9928265615227369468343.jpg",
-      "severity": [3,0],
+      "severity": [
+        3,
+        0
+      ],
       "en": {
         "question": "Question: Does the pain radiate to the back?",
         "choices": [
           "Yes",
           "No"
         ]
-        },
+      },
       "de": {
         "question": "Frage: Strahlen die Schmerzen in die Rücken ab?",
         "choices": [
@@ -153,18 +177,21 @@
           "Keine Schmerzaustrahlung in den Rücken"
         ]
       }
-  },
-  {
+    },
+    {
       "tag": "pain-shoulder",
       "image": "https://fscomps.fotosearch.com/compc/CSP/CSP753/schulterschmerzen-clipart__k19534050.jpg",
-      "severity": [2,0],
+      "severity": [
+        2,
+        0
+      ],
       "en": {
         "question": "Question: Does the pain radiate to the shoulder?",
         "choices": [
           "Yes",
           "No"
         ]
-        },
+      },
       "de": {
         "question": "Frage: Strahlen die Schmerzen in die Schulter ab?",
         "choices": [
@@ -172,18 +199,22 @@
           "Keine Schmerzaustrahlung in die Schulter"
         ]
       }
-  },
-  {
+    },
+    {
       "tag": "General-Question-Allergies",
       "image": "https://cdn0.iconfinder.com/data/icons/audio-and-video-outline-1/24/audio_-30-512.png",
-      "severity": [1,2,3],
+      "severity": [
+        1,
+        2,
+        3
+      ],
       "en": {
         "question": "Do you suffer from allergies?",
         "choices": [
           "Yes",
           "No"
         ]
-        },
+      },
       "de": {
         "question": "Frage: Haben Sie Allergien?",
         "choices": [
@@ -191,18 +222,22 @@
           "Keine Allergien bekannt"
         ]
       }
-      },
+    },
     {
       "tag": "General-Question-Allergies",
       "image": "https://thumbs.dreamstime.com/z/pill-bottle-allergy-line-color-icon-allergic-reaction-to-drug-medication-intolerance-hypersensitivity-individual-components-157613838.jpg",
-      "severity": [1,2,3],
+      "severity": [
+        1,
+        2,
+        3
+      ],
       "en": {
         "question": "What are you allergic to?",
         "choices": [
-	  "Medicines - e.g. ibuprofen, aspirin, penecilin, antibiotics",
-          "Other - e.g. food, animal dander, hay fever..."	
+          "Medicines - e.g. ibuprofen, aspirin, penecilin, antibiotics",
+          "Other - e.g. food, animal dander, hay fever..."
         ]
-        },
+      },
       "de": {
         "question": "Frage: Wogegen sind sie allergisch?",
         "choices": [
@@ -210,18 +245,22 @@
           ", nicht relevant"
         ]
       }
-      },
+    },
     {
       "tag": "General-Question-Medication",
       "image": "https://f1.pngfuel.com/png/700/430/567/medicine-antibiotics-antimicrobial-resistance-pharmaceutical-drug-penicillin-infection-capsule-pill-png-clip-art-thumbnail.png",
-      "severity": [1,2,3],
+      "severity": [
+        1,
+        2,
+        3
+      ],
       "en": {
         "question": "Are you currently taking any medication?",
         "choices": [
-	  "free text field",
-          "No"	
+          "free text field",
+          "No"
         ]
-        },
+      },
       "de": {
         "question": "Nehmen sie aktuell Medikamente ein?",
         "choices": [
@@ -229,29 +268,33 @@
           "Patient nimmt aktuell keine Medikamente"
         ]
       }
-      },
+    },
     {
       "tag": "General-Question-History",
       "image": "https://us.123rf.com/450wm/cookamoto/cookamoto1606/cookamoto160600014/58703745-vector-medizinische-konzept-chirurgen-in-op-zimmer-mit-menschen-skalpell-und-bildschirm-krankheit-un.jpg?ver=6",
-      "severity": [1,2,3],
+      "severity": [
+        1,
+        2,
+        3
+      ],
       "en": {
         "question": "Have you had any abdominal surgery?",
         "choices": [
-	  "No, I have not had any abdominal surgery", 
-	  "Yes, I had my caecum out",
+          "No, I have not had any abdominal surgery",
+          "Yes, I had my caecum out",
           "Yes, by the gall",
-	  "Yes, on the intestines",
-	  "Yes, Other"
+          "Yes, on the intestines",
+          "Yes, Other"
         ]
-        },
+      },
       "de": {
         "question": "Hatten Sie bereits Operationen im Bauchbereich?",
         "choices": [
-	  "Keine früheren Operationen im Bauchbereich"
+          "Keine früheren Operationen im Bauchbereich",
           "Bereits Blinddarm entfernt",
           "Operation an der Galle",
-	  "Operation am Darm",
-   	  "Andere Operation im Bauchbereich"
+          "Operation am Darm",
+          "Andere Operation im Bauchbereich"
         ]
       }
     }
