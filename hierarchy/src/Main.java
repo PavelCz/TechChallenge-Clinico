@@ -24,7 +24,26 @@ public class Main {
         return nurseQuestions;
     }
 
-    private static void run() {
+    private JFrame frame;
+    private int state;
+
+    public Main() {
+        this.frame = new JFrame("Clinico Triage System");
+        this.state = 0;
+    }
+
+    public void initGUI() {
+        // Frame properties
+        JFrame.setDefaultLookAndFeelDecorated(true);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        //frame.setUndecorated(true);
+    }
+
+    private void startQuestionChooser() {
+
+        this.frame.removeAll();
+
         // Open the Json file to read the translations
         String translationsPath = "data/translations.json";
 
@@ -45,13 +64,6 @@ public class Main {
 
         List<String> nurseQuestions = getAllQuestionsForLanguage(questions, nurseLanguage);
         System.out.println(nurseQuestions);
-
-        // Create backend GUI
-
-        // Frame properties
-        JFrame.setDefaultLookAndFeelDecorated(true);
-        JFrame frame = new JFrame("Clinico Triage System");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         // Left side of the panel
         JPanel panel = new JPanel();
@@ -158,15 +170,52 @@ public class Main {
         finishButton.addActionListener(e -> System.exit(0));
 
         frame.add(panel);
-
-        //frame.pack();
-        frame.setSize(1024, 512);
-        frame.setVisible(true);
+    }
 
 
+    private void initStartScreen() {
+        ImagePanel panel = new ImagePanel("data/mts.jpg");
+        //panel.setLayout(new BorderLayout());
+        panel.setLayout(new FlowLayout(FlowLayout.RIGHT));
+
+        JButton continueButton = new JButton("Translated triage");
+        continueButton.addActionListener(e -> state = 1);
+        panel.add(continueButton );
+        this.frame.add(panel);
+        //frame.setSize(1024, 512);
+        this.frame.setVisible(true);
+    }
+
+    private void run() {
+        while (this.state == 0) {
+            if(this.state == 1) {
+                break;
+            }
+        }
+        System.out.println("Change screen");
     }
 
     public static void main(String[] args) {
-        run();
+        Main m = new Main();
+        m.initGUI();
+        m.initStartScreen();
+        // Blocks until state is changed
+        m.run();
+        m.startQuestionChooser();
     }
+
+    private class ImagePanel extends JPanel {
+        private String path;
+
+        private ImagePanel(String path) {
+            this.path = path;
+        }
+
+        @Override
+        public void paintComponent(Graphics g) {
+            Image image = new ImageIcon(path).getImage();
+            g.drawImage(image, 0, 0, this);
+        }
+    }
+
 }
