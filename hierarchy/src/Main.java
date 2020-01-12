@@ -120,9 +120,16 @@ public class Main {
 
         loadingGif.setVisible(false);
 
+
+        gbc.gridx++;
+
+        JButton finishButton = new JButton("Finish");
+        panel.add(finishButton, gbc);
+
         // Placeholder handling of answers and severities
         String[] possibleAnswers = {"Moderate pain", "Vomitting without blood", "1-2 times"};
         String[] answerSeverities = {"2", "1", "1"};
+        Color[] colors = {Color.YELLOW, Color.GREEN, Color.GREEN};
         // Add button action
         submitButton.addActionListener(e -> {
             if (!loadingGif.isVisible()) {
@@ -138,10 +145,15 @@ public class Main {
                         answers.get(i).setText(possibleAnswers[i]);
 
                         severities.get(i).setText(answerSeverities[i]);
+                        severities.get(i).setBackground(colors[i]);
+                        // This is necessary in order for the background to be painted
+                        severities.get(i).setOpaque(true);
                     }
                 }
             }
         });
+
+        finishButton.addActionListener(e -> System.exit(0));
 
         frame.add(panel);
 
