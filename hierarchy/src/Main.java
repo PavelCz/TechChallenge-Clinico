@@ -58,6 +58,7 @@ public class Main {
         panel.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.anchor = GridBagConstraints.LINE_START;
+        gbc.ipadx = 5;
         // Number of colums
         //gbc.gridwidth = 2;
         // Number of lines (plus 1 for the button)
@@ -72,10 +73,14 @@ public class Main {
 
         panel.add(new JLabel("Answers"), gbc);
 
+        gbc.gridx++;
+        panel.add(new JLabel("Severity"), gbc);
+
         gbc.gridx = 0;
         ++gbc.gridy;
         List<JCheckBox> checkboxes = new ArrayList<>();
         List<JLabel> answers = new ArrayList<>();
+        List<JLabel> severities = new ArrayList<>();
 
         // Add question list with checkboxes
         for (String text : nurseQuestions) {
@@ -88,6 +93,12 @@ public class Main {
             JLabel answerLabel = new JLabel("                    ");
             answers.add(answerLabel);
             panel.add(answerLabel, gbc);
+
+            gbc.gridx++;
+
+            JLabel sev = new JLabel("");
+            severities.add(sev);
+            panel.add(sev, gbc);
 
             gbc.gridx = 0;
             ++gbc.gridy;
@@ -109,8 +120,9 @@ public class Main {
 
         loadingGif.setVisible(false);
 
+        // Placeholder handling of answers and severities
         String[] possibleAnswers = {"Moderate pain", "Vomitting without blood", "1-2 times"};
-
+        String[] answerSeverities = {"2", "1", "1"};
         // Add button action
         submitButton.addActionListener(e -> {
             if (!loadingGif.isVisible()) {
@@ -124,6 +136,8 @@ public class Main {
                         cb.setSelected(false);
                         cb.setForeground(Color.GRAY);
                         answers.get(i).setText(possibleAnswers[i]);
+
+                        severities.get(i).setText(answerSeverities[i]);
                     }
                 }
             }
