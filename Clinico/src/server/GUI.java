@@ -260,8 +260,12 @@ public class GUI {
     }
 
     private class ImagePanel extends JPanel {
-        private String path;
-
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+		private String path;
+        
         private ImagePanel(String path) {
             this.path = path;
         }
