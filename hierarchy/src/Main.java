@@ -140,10 +140,6 @@ public class Main {
         JButton finishButton = new JButton("Finish");
         questionsPanel.add(finishButton, gbc);
 
-        // Placeholder handling of answers and severities
-        String[] possibleAnswers = {"Moderate pain", "Vomitting without blood", "1-2 times"};
-        String[] answerSeverities = {"2", "1", "1"};
-        Color[] colors = {Color.YELLOW, Color.GREEN, Color.GREEN};
         // Add button action
         submitButton.addActionListener(e -> {
             if (!loadingGif.isVisible()) {
@@ -151,25 +147,34 @@ public class Main {
 
             } else {
                 loadingGif.setVisible(false);
-                for (int i = 0; i < checkboxes.size(); ++i) {
-                    JCheckBox cb = checkboxes.get(i);
-                    if (cb.isSelected()) {
-                        cb.setSelected(false);
-                        cb.setForeground(Color.GRAY);
-                        answers.get(i).setText(possibleAnswers[i]);
-
-                        severities.get(i).setText(answerSeverities[i]);
-                        severities.get(i).setBackground(colors[i]);
-                        // This is necessary in order for the background to be painted
-                        severities.get(i).setOpaque(true);
-                    }
-                }
+                this.handleAnswers(checkboxes, answers, severities);
             }
         });
 
         finishButton.addActionListener(e -> System.exit(0));
 
         root.add(questionsPanel);
+    }
+
+    private void handleAnswers(List<JCheckBox> checkboxes, List<JLabel> answers, List<JLabel> severities) {
+
+        // Placeholder handling of answers and severities
+        String[] possibleAnswers = {"Moderate pain", "Vomitting without blood", "1-2 times"};
+        String[] answerSeverities = {"2", "1", "1"};
+        Color[] colors = {Color.YELLOW, Color.GREEN, Color.GREEN};
+        for (int i = 0; i < checkboxes.size(); ++i) {
+            JCheckBox cb = checkboxes.get(i);
+            if (cb.isSelected()) {
+                cb.setSelected(false);
+                cb.setForeground(Color.GRAY);
+                answers.get(i).setText(possibleAnswers[i]);
+
+                severities.get(i).setText(answerSeverities[i]);
+                severities.get(i).setBackground(colors[i]);
+                // This is necessary in order for the background to be painted
+                severities.get(i).setOpaque(true);
+            }
+        }
     }
 
     private void next() {
