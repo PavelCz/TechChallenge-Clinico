@@ -34,7 +34,6 @@ public class ServerProgram {
 
 		GUI gui = new GUI();
 		gui.startGUI();
-		/*
 
 
 		ServerSocket s = new ServerSocket(PORT);
@@ -51,7 +50,7 @@ public class ServerProgram {
 			}
 		} finally {
 			s.close();
-		}*/
+		}
 	}
 
 }
