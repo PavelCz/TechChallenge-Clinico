@@ -24,25 +24,25 @@ public class Main {
         return nurseQuestions;
     }
 
-    private JFrame frame;
-    private int state;
+    private JPanel root;
 
-    public Main() {
-        this.frame = new JFrame("Clinico Triage System");
-        this.state = 0;
-    }
 
     public void initGUI() {
+        JFrame frame = new JFrame("Clinico Triage System");
         // Frame properties
         JFrame.setDefaultLookAndFeelDecorated(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        //frame.setUndecorated(true);
+        //root.setUndecorated(true);
+
+        this.root = new JPanel();
+        frame.add(root);
+        frame.setVisible(true);
+
+        this.root.setLayout(new CardLayout());
     }
 
-    private void startQuestionChooser() {
-
-        this.frame.removeAll();
+    private void initQuestionPage() {
 
         // Open the Json file to read the translations
         String translationsPath = "data/translations.json";
@@ -65,11 +65,11 @@ public class Main {
         List<String> nurseQuestions = getAllQuestionsForLanguage(questions, nurseLanguage);
         System.out.println(nurseQuestions);
 
-        // Left side of the panel
-        JPanel panel = new JPanel();
+        // Left side of the questionsPanel
+        JPanel questionsPanel = new JPanel();
 
         // This layout aligns the checkboxes vertically
-        panel.setLayout(new GridBagLayout());
+        questionsPanel.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.anchor = GridBagConstraints.LINE_START;
         gbc.ipadx = 5;
@@ -82,13 +82,13 @@ public class Main {
 
         gbc.gridx = 0;
         gbc.gridy = 0;
-        panel.add(new JLabel("Questions"), gbc);
+        questionsPanel.add(new JLabel("Questions"), gbc);
         gbc.gridx++;
 
-        panel.add(new JLabel("Answers"), gbc);
+        questionsPanel.add(new JLabel("Answers"), gbc);
 
         gbc.gridx++;
-        panel.add(new JLabel("Severity"), gbc);
+        questionsPanel.add(new JLabel("Severity"), gbc);
 
         gbc.gridx = 0;
         ++gbc.gridy;
@@ -101,36 +101,36 @@ public class Main {
             JCheckBox checkbox = new JCheckBox(text, false);
             checkboxes.add(checkbox);
 
-            panel.add(checkbox, gbc);
+            questionsPanel.add(checkbox, gbc);
             gbc.gridx++;
 
             JLabel answerLabel = new JLabel("                    ");
             answers.add(answerLabel);
-            panel.add(answerLabel, gbc);
+            questionsPanel.add(answerLabel, gbc);
 
             gbc.gridx++;
 
             JLabel sev = new JLabel("");
             severities.add(sev);
-            panel.add(sev, gbc);
+            questionsPanel.add(sev, gbc);
 
             gbc.gridx = 0;
             ++gbc.gridy;
         }
 
         // Panel title
-        panel.setBorder(BorderFactory.createTitledBorder("Choose which questions you want to ask"));
+        questionsPanel.setBorder(BorderFactory.createTitledBorder("Choose which questions you want to ask"));
 
         // Add submit button
         JButton submitButton = new JButton("Send questions");
-        panel.add(submitButton, gbc);
+        questionsPanel.add(submitButton, gbc);
 
         gbc.gridx++;
 
         // Gif from http://www.ajaxload.info/
         Icon icon2 = new ImageIcon("data/ajax-loader.gif");
         JLabel loadingGif = new JLabel(icon2);
-        panel.add(loadingGif, gbc);
+        questionsPanel.add(loadingGif, gbc);
 
         loadingGif.setVisible(false);
 
@@ -138,7 +138,7 @@ public class Main {
         gbc.gridx++;
 
         JButton finishButton = new JButton("Finish");
-        panel.add(finishButton, gbc);
+        questionsPanel.add(finishButton, gbc);
 
         // Placeholder handling of answers and severities
         String[] possibleAnswers = {"Moderate pain", "Vomitting without blood", "1-2 times"};
@@ -169,39 +169,31 @@ public class Main {
 
         finishButton.addActionListener(e -> System.exit(0));
 
-        frame.add(panel);
+        root.add(questionsPanel);
+    }
+
+    private void next() {
+        CardLayout c = (CardLayout) this.root.getLayout();
+        c.next(this.root);
     }
 
 
     private void initStartScreen() {
-        ImagePanel panel = new ImagePanel("data/mts.jpg");
-        //panel.setLayout(new BorderLayout());
-        panel.setLayout(new FlowLayout(FlowLayout.RIGHT));
+        JPanel startPanel = new ImagePanel("data/mts.jpg");
+
+        startPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
 
         JButton continueButton = new JButton("Translated triage");
-        continueButton.addActionListener(e -> state = 1);
-        panel.add(continueButton );
-        this.frame.add(panel);
-        //frame.setSize(1024, 512);
-        this.frame.setVisible(true);
-    }
-
-    private void run() {
-        while (this.state == 0) {
-            if(this.state == 1) {
-                break;
-            }
-        }
-        System.out.println("Change screen");
+        continueButton.addActionListener(e -> this.next());
+        startPanel.add(continueButton);
+        this.root.add(startPanel);
     }
 
     public static void main(String[] args) {
         Main m = new Main();
         m.initGUI();
         m.initStartScreen();
-        // Blocks until state is changed
-        m.run();
-        m.startQuestionChooser();
+        m.initQuestionPage();
     }
 
     private class ImagePanel extends JPanel {
