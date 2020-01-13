@@ -179,10 +179,14 @@ public class Main {
             if (cb.isSelected()) {
                 cb.setSelected(false);
                 cb.setForeground(Color.GRAY);
-                answers.get(i).setText(possibleAnswers[i]);
+                String text = i < possibleAnswers.length ? possibleAnswers[i] : "default";
+                answers.get(i).setText(text);
 
-                severities.get(i).setText(answerSeverities[i]);
-                severities.get(i).setBackground(colors[i]);
+                String severity = i < answerSeverities.length ? answerSeverities[i] : "0";
+                severities.get(i).setText(severity);
+                Color color = i < colors.length ? colors[i] : Color.GREEN;
+
+                severities.get(i).setBackground(color);
                 // This is necessary in order for the background to be painted
                 severities.get(i).setOpaque(true);
             }
