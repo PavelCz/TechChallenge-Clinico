@@ -86,3 +86,6 @@ modules.xml
 target
 web
 hierarchy/bin
+NODE/node_modules
+
+NODE/package-lock.json
