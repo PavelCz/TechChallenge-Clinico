@@ -144,7 +144,7 @@ public class Main {
         submitButton.addActionListener(e -> {
             if (!loadingGif.isVisible()) {
                 loadingGif.setVisible(true);
-
+                this.submitQuestions(checkboxes, questions);
             } else {
                 loadingGif.setVisible(false);
                 this.handleAnswers(checkboxes, answers, severities);
@@ -154,6 +154,18 @@ public class Main {
         finishButton.addActionListener(e -> System.exit(0));
 
         root.add(questionsPanel);
+    }
+
+    private void submitQuestions(List<JCheckBox> checkboxes, JsonArray allQuestions) {
+        JsonArray a = new JsonArray();
+        for (int i = 0; i < checkboxes.size(); ++i) {
+            JCheckBox cb = checkboxes.get(i);
+            if (cb.isSelected()) {
+                a.add(allQuestions.get(i));
+            }
+        }
+        System.out.println(a);
+
     }
 
     private void handleAnswers(List<JCheckBox> checkboxes, List<JLabel> answers, List<JLabel> severities) {
