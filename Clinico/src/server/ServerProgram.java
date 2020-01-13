@@ -30,6 +30,13 @@ public class ServerProgram {
 	 */
 	
 	public static void main(String[] args) throws IOException {
+
+
+		GUI gui = new GUI();
+		gui.startGUI();
+		/*
+
+
 		ServerSocket s = new ServerSocket(PORT);
 		System.out.println("Server Started!");
 		try {
@@ -44,7 +51,7 @@ public class ServerProgram {
 			}
 		} finally {
 			s.close();
-		}
+		}*/
 	}
 
 }

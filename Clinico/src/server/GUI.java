@@ -1,3 +1,5 @@
+package server;
+
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -242,11 +244,19 @@ public class GUI {
     }
 
     public static void main(String[] args) {
-        Main m = new Main();
+        GUI m = new GUI();
         m.initGUI();
         m.initStartScreen();
         m.initQuestionPage();
         m.initReportScreen();
+    }
+
+    public void startGUI() {
+
+        this.initGUI();
+        initStartScreen();
+        initQuestionPage();
+        initReportScreen();
     }
 
     private class ImagePanel extends JPanel {
