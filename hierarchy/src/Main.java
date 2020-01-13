@@ -25,6 +25,7 @@ public class Main {
     }
 
     private JPanel root;
+    private List<String> collectedAnswers = new ArrayList<>();
 
 
     public void initGUI() {
@@ -148,10 +149,29 @@ public class Main {
             } else {
                 loadingGif.setVisible(false);
                 this.handleAnswers(checkboxes, answers, severities);
+
+                // I get some kind of answer list.JSON Object?
+                collectedAnswers.add("Moderate Schmerzen");
+                collectedAnswers.add("Normale Atmung");
+                collectedAnswers.add("Kein Übergeben");
+                //collectedAnswers.add("Normaler Stuhlgang");
+                collectedAnswers.add("Leichtes Fieber");
+                String report = "Bericht:\nDer Patient hatte:\n";
+                for (String answer : collectedAnswers) {
+                    report += "- ";
+                    report += answer;
+                    report += "\n";
+                }
+
+
+                JPanel p = (JPanel) this.root.getComponent(2);
+                JTextArea t = (JTextArea) p.getComponent(0);
+                t.setText(report);
+
             }
         });
 
-        finishButton.addActionListener(e -> System.exit(0));
+        finishButton.addActionListener(e -> this.next());
 
         root.add(questionsPanel);
     }
@@ -210,11 +230,23 @@ public class Main {
         this.root.add(startPanel);
     }
 
+    private void initReportScreen() {
+        JPanel panel = new JPanel();
+        JTextArea t = new JTextArea("Bericht");
+        panel.add(t);
+
+        JButton continueButton = new JButton("Fertigstellen");
+        continueButton.addActionListener(e -> this.next());
+        panel.add(continueButton);
+        this.root.add(panel);
+    }
+
     public static void main(String[] args) {
         Main m = new Main();
         m.initGUI();
         m.initStartScreen();
         m.initQuestionPage();
+        m.initReportScreen();
     }
 
     private class ImagePanel extends JPanel {
