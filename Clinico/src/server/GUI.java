@@ -9,7 +9,7 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Main {
+public class GUI {
 
     private static List<String> getAllQuestionsForLanguage(JsonArray questions, String language) {
         List<String> nurseQuestions = new ArrayList<>();
