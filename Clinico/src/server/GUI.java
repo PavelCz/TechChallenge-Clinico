@@ -1,6 +1,7 @@
 package server;
 
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
@@ -16,6 +17,7 @@ public class GUI {
     private Socket socket;
     private BufferedReader in;
     private PrintWriter out;
+    private JsonArray allQuestions;
 
     private static List<String> getAllQuestionsForLanguage(JsonArray questions, String language) {
         List<String> nurseQuestions = new ArrayList<>();
@@ -28,6 +30,29 @@ public class GUI {
                 }
         );
         return nurseQuestions;
+    }
+
+    private List<List<Object>> getAnswersByTag(JsonArray answers, String language) {
+
+        List<List<Object>> results = new ArrayList<>();
+        for (JsonElement jsonObj : answers) {
+            // Let's see if this monstrosity works
+            String answerTag = (String) jsonObj.getAsJsonObject().keySet().toArray()[0];
+            int answerIndex = jsonObj.getAsJsonObject().get(answerTag).getAsInt();
+
+            // Find the tag in list of all questions
+            for (JsonElement questionObject : this.allQuestions) {
+                String questionTag = questionObject.getAsJsonObject().get("tag").getAsString();
+
+                // Find the question this tag belongs to
+                if (answerTag.equals(questionTag)) {
+                    int severity = questionObject.getAsJsonObject().get("severity").getAsJsonArray().get(answerIndex).getAsInt();
+                    String answer = questionObject.getAsJsonObject().get(language).getAsJsonObject().get("choices").getAsJsonArray().get(answerIndex).getAsString();
+
+                }
+
+            }
+        }
     }
 
     private JPanel root;
@@ -66,10 +91,10 @@ public class GUI {
             }
         }
         JsonObject translation = JsonParser.parseReader(fr).getAsJsonObject();
-        JsonArray questions = translation.get("abdominal").getAsJsonArray();
+        allQuestions = translation.get("abdominal").getAsJsonArray();
 
 
-        List<String> nurseQuestions = getAllQuestionsForLanguage(questions, nurseLanguage);
+        List<String> nurseQuestions = getAllQuestionsForLanguage(allQuestions, nurseLanguage);
         System.out.println(nurseQuestions);
 
         // Left side of the questionsPanel
@@ -151,8 +176,8 @@ public class GUI {
         submitButton.addActionListener(e -> {
             if (!loadingGif.isVisible()) {
                 loadingGif.setVisible(true);
-                // Send questions to client
-                this.submitQuestions(checkboxes, questions);
+                // Send allQuestions to client
+                this.submitQuestions(checkboxes, allQuestions);
 
                 // Receive answers
                 String answer = "";
@@ -164,6 +189,9 @@ public class GUI {
                 System.out.println("Answer:");
                 System.out.println(answer);
                 loadingGif.setVisible(false);
+
+                JsonArray answersArray = JsonParser.parseString(answer).getAsJsonArray();
+
 
                 // Visualize answers
                 this.handleAnswers(checkboxes, answers, severities);
@@ -289,11 +317,11 @@ public class GUI {
 
     private class ImagePanel extends JPanel {
         /**
-		 * 
-		 */
-		private static final long serialVersionUID = 1L;
-		private String path;
-        
+         *
+         */
+        private static final long serialVersionUID = 1L;
+        private String path;
+
         private ImagePanel(String path) {
             this.path = path;
         }
