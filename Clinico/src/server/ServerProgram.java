@@ -42,8 +42,9 @@ public class ServerProgram {
 			while(true) {
 				Socket socket = s.accept();
 				try {
-					Thread t = new Thread(new NewConnection(socket, args[0]));
-					t.start();
+					gui.addSocket(socket);
+					//Thread t = new Thread(new NewConnection(socket, args[0]));
+					//t.start();
 				} catch (IOException e) {
 					socket.close();
 				}

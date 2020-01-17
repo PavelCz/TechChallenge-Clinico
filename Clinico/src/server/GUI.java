@@ -6,12 +6,16 @@ import com.google.gson.JsonParser;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.*;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
 public class GUI {
+
+    private Socket socket;
+    private BufferedReader in;
+    private PrintWriter out;
 
     private static List<String> getAllQuestionsForLanguage(JsonArray questions, String language) {
         List<String> nurseQuestions = new ArrayList<>();
@@ -147,8 +151,24 @@ public class GUI {
         submitButton.addActionListener(e -> {
             if (!loadingGif.isVisible()) {
                 loadingGif.setVisible(true);
+                // Send questions to client
                 this.submitQuestions(checkboxes, questions);
-            } else {
+
+                // Receive answers
+                String answer = "";
+                try {
+                    answer = this.in.readLine();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+                System.out.println("Answer:");
+                System.out.println(answer);
+                loadingGif.setVisible(false);
+
+                // Visualize answers
+                this.handleAnswers(checkboxes, answers, severities);
+            }
+            /*else {
                 loadingGif.setVisible(false);
                 this.handleAnswers(checkboxes, answers, severities);
 
@@ -170,7 +190,7 @@ public class GUI {
                 JTextArea t = (JTextArea) p.getComponent(0);
                 t.setText(report);
 
-            }
+            }*/
         });
 
         finishButton.addActionListener(e -> this.next());
@@ -186,7 +206,9 @@ public class GUI {
                 a.add(allQuestions.get(i));
             }
         }
+        System.out.println("Sending Questions:");
         System.out.println(a);
+        this.out.println(a);
 
     }
 
@@ -257,6 +279,12 @@ public class GUI {
         initStartScreen();
         initQuestionPage();
         initReportScreen();
+    }
+
+    public void addSocket(Socket socket) throws IOException {
+        this.socket = socket;
+        in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+        out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())), true);
     }
 
     private class ImagePanel extends JPanel {
