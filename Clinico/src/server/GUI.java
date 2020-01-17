@@ -85,10 +85,10 @@ public class GUI {
 
         gbc.gridx = 0;
         gbc.gridy = 0;
-        questionsPanel.add(new JLabel("Questions"), gbc);
+        questionsPanel.add(new JLabel("Fragen"), gbc);
         gbc.gridx++;
 
-        questionsPanel.add(new JLabel("Answers"), gbc);
+        questionsPanel.add(new JLabel("Antworten"), gbc);
 
         gbc.gridx++;
         questionsPanel.add(new JLabel("Severity"), gbc);
@@ -122,10 +122,10 @@ public class GUI {
         }
 
         // Panel title
-        questionsPanel.setBorder(BorderFactory.createTitledBorder("Choose which questions you want to ask"));
+        questionsPanel.setBorder(BorderFactory.createTitledBorder("Wählen Sie Fragen aus, die Sie stellen möchten"));
 
         // Add submit button
-        JButton submitButton = new JButton("Send questions");
+        JButton submitButton = new JButton("Fragen absenden");
         questionsPanel.add(submitButton, gbc);
 
         gbc.gridx++;
@@ -140,7 +140,7 @@ public class GUI {
 
         gbc.gridx++;
 
-        JButton finishButton = new JButton("Finish");
+        JButton finishButton = new JButton("Beenden");
         questionsPanel.add(finishButton, gbc);
 
         // Add button action
@@ -226,7 +226,7 @@ public class GUI {
 
         startPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
 
-        JButton continueButton = new JButton("Translated triage");
+        JButton continueButton = new JButton("Triage Übersetzung");
         continueButton.addActionListener(e -> this.next());
         startPanel.add(continueButton);
         this.root.add(startPanel);
