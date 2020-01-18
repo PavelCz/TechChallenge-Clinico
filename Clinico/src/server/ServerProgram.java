@@ -47,6 +47,7 @@ public class ServerProgram {
 					Thread t = new Thread(connection);
 					t.start();
 					gui.setConnection(connection);
+					connection.setGui(gui);
 				} catch (IOException e) {
 					socket.close();
 				}

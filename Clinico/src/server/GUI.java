@@ -10,7 +10,9 @@ import java.awt.*;
 import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class GUI {
 
@@ -19,6 +21,11 @@ public class GUI {
     private PrintWriter out;
     private JsonArray allQuestions;
     private NewConnection connection;
+    private String nurseLanguage;
+    private List<JCheckBox> checkboxes;
+    private List<JLabel> answers;
+    private List<JLabel> severities;
+    private JLabel loadingGif;
 
     private static List<String> getAllQuestionsForLanguage(JsonArray questions, String language) {
         List<String> nurseQuestions = new ArrayList<>();
@@ -33,31 +40,20 @@ public class GUI {
         return nurseQuestions;
     }
 
-    /*private List<List<Object>> getAnswersByTag(JsonArray answers, String language) {
-
-        List<List<Object>> results = new ArrayList<>();
-        for (JsonElement jsonObj : answers) {
-            // Let's see if this monstrosity works
-            String answerTag = (String) jsonObj.getAsJsonObject().keySet().toArray()[0];
-            int answerIndex = jsonObj.getAsJsonObject().get(answerTag).getAsInt();
-
-            // Find the tag in list of all questions
-            for (JsonElement questionObject : this.allQuestions) {
-                String questionTag = questionObject.getAsJsonObject().get("tag").getAsString();
-
-                // Find the question this tag belongs to
-                if (answerTag.equals(questionTag)) {
-                    int severity = questionObject.getAsJsonObject().get("severity").getAsJsonArray().get(answerIndex).getAsInt();
-                    String answer = questionObject.getAsJsonObject().get(language).getAsJsonObject().get("choices").getAsJsonArray().get(answerIndex).getAsString();
-
-                }
-
-            }
-        }
-    }*/
-
     private JPanel root;
     private List<String> collectedAnswers = new ArrayList<>();
+    private HashMap<String, Integer> indexMap;
+
+
+    private int tagToIndex(String tag) {
+        if (this.indexMap == null) {
+            this.indexMap = new HashMap<>();
+            for (int i = 0; i < this.allQuestions.size(); ++i) {
+                indexMap.put(this.allQuestions.get(i).getAsJsonObject().get("tag").getAsString(), i);
+            }
+        }
+        return indexMap.get(tag);
+    }
 
 
     public void initGUI() {
@@ -79,8 +75,7 @@ public class GUI {
 
         // Open the Json file to read the translations
         String translationsPath = "data/translations.json";
-
-        String nurseLanguage = "de";
+        nurseLanguage = "de";
 
         // Open the file and serialize the data into a json object
         FileReader fr = null;
@@ -125,9 +120,9 @@ public class GUI {
 
         gbc.gridx = 0;
         ++gbc.gridy;
-        List<JCheckBox> checkboxes = new ArrayList<>();
-        List<JLabel> answers = new ArrayList<>();
-        List<JLabel> severities = new ArrayList<>();
+        checkboxes = new ArrayList<>();
+        answers = new ArrayList<>();
+        severities = new ArrayList<>();
 
         // Add question list with checkboxes
         for (String text : nurseQuestions) {
@@ -162,7 +157,7 @@ public class GUI {
 
         // Gif from http://www.ajaxload.info/
         Icon icon2 = new ImageIcon("data/ajax-loader.gif");
-        JLabel loadingGif = new JLabel(icon2);
+        loadingGif = new JLabel(icon2);
         questionsPanel.add(loadingGif, gbc);
 
         loadingGif.setVisible(false);
@@ -187,15 +182,15 @@ public class GUI {
                 } catch (IOException ex) {
                     ex.printStackTrace();
                 }*/
-                System.out.println("Answer:");
-                System.out.println(answer);
-                loadingGif.setVisible(false);
+                //System.out.println("Answer:");
+                //System.out.println(answer);
+                //loadingGif.setVisible(false);
 
-                JsonArray answersArray = JsonParser.parseString(answer).getAsJsonArray();
+                //JsonArray answersArray = JsonParser.parseString(answer).getAsJsonArray();
 
 
                 // Visualize answers
-                this.handleAnswers(checkboxes, answers, severities);
+                //this.handleAnswers(checkboxes, answers, severities);
             }
             /*else {
                 loadingGif.setVisible(false);
@@ -241,31 +236,49 @@ public class GUI {
         this.connection.setOutgoingMessage(allQuestions.toString());
         this.connection.sendToClient(allQuestions.toString());
 
-    }
 
-    private void handleAnswers(List<JCheckBox> checkboxes, List<JLabel> answers, List<JLabel> severities) {
-
-        // Placeholder handling of answers and severities
-        String[] possibleAnswers = {"Moderate pain", "Vomitting without blood", "1-2 times"};
-        String[] answerSeverities = {"2", "1", "1"};
-        Color[] colors = {Color.YELLOW, Color.GREEN, Color.GREEN};
         for (int i = 0; i < checkboxes.size(); ++i) {
             JCheckBox cb = checkboxes.get(i);
             if (cb.isSelected()) {
                 cb.setSelected(false);
                 cb.setForeground(Color.GRAY);
-                String text = i < possibleAnswers.length ? possibleAnswers[i] : "default";
-                answers.get(i).setText(text);
-
-                String severity = i < answerSeverities.length ? answerSeverities[i] : "0";
-                severities.get(i).setText(severity);
-                Color color = i < colors.length ? colors[i] : Color.GREEN;
-
-                severities.get(i).setBackground(color);
-                // This is necessary in order for the background to be painted
-                severities.get(i).setOpaque(true);
             }
         }
+
+    }
+
+    public void receiveAnswers(String answers) {
+        String language = this.nurseLanguage;
+        Color[] colors = {Color.CYAN, Color.GREEN, Color.YELLOW, Color.ORANGE, Color.RED};
+
+        JsonObject jsonObj = JsonParser.parseString(answers).getAsJsonObject();
+        for (Map.Entry<String, JsonElement> entry : jsonObj.entrySet()) {
+            String answerTag = entry.getKey();
+            int answerIndex = entry.getValue().getAsInt();
+
+            // Find the information about answer in nurse language
+            for (JsonElement questionObject : this.allQuestions) {
+                String questionTag = questionObject.getAsJsonObject().get("tag").getAsString();
+
+                // Find the question this tag belongs to
+                if (answerTag.equals(questionTag)) {
+                    int severity = questionObject.getAsJsonObject().get("severity").getAsJsonArray().get(answerIndex).getAsInt();
+                    String answer = questionObject.getAsJsonObject().get(language).getAsJsonObject().get("choices").getAsJsonArray().get(answerIndex).getAsString();
+                    int questionIndex = tagToIndex(questionTag);
+                    // Update this answer in the GUI
+
+                    this.answers.get(questionIndex).setText(answer);
+                    this.severities.get(questionIndex).setText("" + severity);
+                    this.severities.get(questionIndex).setBackground(colors[answerIndex]);
+                    // Necessary for background to be painted
+                    severities.get(questionIndex).setOpaque(true);
+
+                    // Go to next answer from client
+                    break;
+                }
+            }
+        }
+        loadingGif.setVisible(false);
     }
 
     private void next() {
