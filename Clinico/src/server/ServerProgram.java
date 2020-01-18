@@ -32,8 +32,8 @@ public class ServerProgram {
 	public static void main(String[] args) throws IOException {
 
 
-		//GUI gui = new GUI();
-		//gui.startGUI();
+		GUI gui = new GUI();
+		gui.startGUI();
 
 
 		ServerSocket s = new ServerSocket(PORT);
@@ -43,8 +43,10 @@ public class ServerProgram {
 				Socket socket = s.accept();
 				try {
 					//gui.addSocket(socket);
-					Thread t = new Thread(new NewConnection(socket, "/"));
+					NewConnection connection = new NewConnection(socket, "/");
+					Thread t = new Thread(connection);
 					t.start();
+					gui.setConnection(connection);
 				} catch (IOException e) {
 					socket.close();
 				}

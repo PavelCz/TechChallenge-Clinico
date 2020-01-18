@@ -18,6 +18,7 @@ public class GUI {
     private BufferedReader in;
     private PrintWriter out;
     private JsonArray allQuestions;
+    private NewConnection connection;
 
     private static List<String> getAllQuestionsForLanguage(JsonArray questions, String language) {
         List<String> nurseQuestions = new ArrayList<>();
@@ -181,11 +182,11 @@ public class GUI {
 
                 // Receive answers
                 String answer = "";
-                try {
+                /*try {
                     answer = this.in.readLine();
                 } catch (IOException ex) {
                     ex.printStackTrace();
-                }
+                }*/
                 System.out.println("Answer:");
                 System.out.println(answer);
                 loadingGif.setVisible(false);
@@ -236,7 +237,9 @@ public class GUI {
         }
         System.out.println("Sending Questions:");
         System.out.println(a);
-        this.out.println(a);
+        //this.out.println(a);
+        this.connection.setOutgoingMessage(allQuestions.toString());
+        this.connection.sendToClient(allQuestions.toString());
 
     }
 
@@ -313,6 +316,10 @@ public class GUI {
         this.socket = socket;
         in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())), true);
+    }
+
+    public void setConnection(NewConnection connection) {
+        this.connection = connection;
     }
 
     private class ImagePanel extends JPanel {

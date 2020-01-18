@@ -89,3 +89,4 @@ hierarchy/bin
 NODE/node_modules
 
 NODE/package-lock.json
+NODE/received.json
