@@ -65,6 +65,15 @@ app.post('/answers', function json(req, res, next) {
     });
 });
 
+app.post('/received.json', function json(req, res, next) {
+    var username = req.body;
+    console.log(username);
+    fs.writeFile( "received.json", "", "utf8", (err) => {
+      if (err) throw err;
+      console.log("File Cleared!");
+    });
+});
+
 /*
  * JSON API Endpoints
  */

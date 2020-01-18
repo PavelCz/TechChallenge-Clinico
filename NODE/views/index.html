@@ -18,9 +18,12 @@
     var currentquestion = 0, submt=true, picked;
     var answers = {};
 
-    jQuery.get('http://localhost:3000/received.json', function(data) {
+    setInterval(function() {
+      jQuery.get('http://localhost:3000/received.json', function(data) {
+        console.log('gettttttting');
         questions = data;
-    });
+      });
+    }, 1000);
 
     jQuery(document).ready(function($){
         function htmlEncode(value){
@@ -124,10 +127,20 @@
       $('#question').empty();
       $('#choice-block').empty();
       $('#submitbutton').remove();
-      $('#question').text("Please now go to the administration.");    
+      $('#question').text("Please now go to the administration."); 
+      $.post('/received.json', "Clean the Questions!")
+            .success(
+              function(success){
+                console.log(success)
+              })
+            .error(
+              function(error){
+                console.log(error)
+              });   
     }
 
     function initQuestion(){
+
       if(typeof title !== "undefined" && $.type(title) === "string"){
         $(document.createElement('h2')).text(title).appendTo('#frame');
       } else {
@@ -135,7 +148,7 @@
       }
       
       //add pager and questions
-      if(typeof questions !== "undefined"){
+      if(typeof questions !== "undefined" && questions !== ""){
         //add pager
         $(document.createElement('p')).addClass('pager').attr('id','pager').text('Question 1 of ' + questions.length).appendTo('#frame');
         //add first question
