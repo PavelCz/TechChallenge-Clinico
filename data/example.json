@@ -1,0 +1,19 @@
+[{
+  "tag": "severity",
+  "image": "https://www.disabled-world.com/pics/1/pain-scale-chart-3.gif",
+  "severity": [
+    4,
+    3,
+    2,
+    1,
+    0
+  ],
+  "question": "Question: What is the severity of the pain?",
+  "choices": [
+    "Unendurable, excruciating pain",
+    "Severe pain",
+    "Moderate pain",
+    "Mild pain",
+    "No pain"
+  ]
+}]
