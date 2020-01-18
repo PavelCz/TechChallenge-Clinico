@@ -32,7 +32,7 @@ public class GUI {
         return nurseQuestions;
     }
 
-    private List<List<Object>> getAnswersByTag(JsonArray answers, String language) {
+    /*private List<List<Object>> getAnswersByTag(JsonArray answers, String language) {
 
         List<List<Object>> results = new ArrayList<>();
         for (JsonElement jsonObj : answers) {
@@ -53,7 +53,7 @@ public class GUI {
 
             }
         }
-    }
+    }*/
 
     private JPanel root;
     private List<String> collectedAnswers = new ArrayList<>();

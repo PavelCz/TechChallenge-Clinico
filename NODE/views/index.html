@@ -13,124 +13,20 @@
     <script>
 
     var title = "Clinico Sample GUI";
-    var language = "";
+    var language = "";      
+    var questions = "";
+    var currentquestion = 0, submt=true, picked;
+    var answers = {};
 
-/**
-*Let's create the randomization of the questions!
-*/
-
-/*function shuffle(array) {
-  var currentIndex = array.length, temporaryValue, randomIndex;
-
-  // While there remain elements to shuffle...
-  while (0 !== currentIndex) {
-
-    // Pick a remaining element...
-    randomIndex = Math.floor(Math.random() * currentIndex);
-    currentIndex -= 1;
-
-    // And swap it with the current element.
-    temporaryValue = array[currentIndex];
-    array[currentIndex] = array[randomIndex];
-    array[randomIndex] = temporaryValue;
-  }
-
-  return array;
-}*/
-      
-/*if (!("scramble" in Array.prototype)) {
-  Object.defineProperty(Array.prototype, "scramble", {
-    enumerable: false,
-    value: function() {
-      var o, i, ln = this.length;
-      while (ln--) {
-        i = Math.random() * (ln + 1) | 0;
-        o = this[ln];
-        this[ln] = this[i];
-        this[i] = o;
-      }
-      return this;
-    }
-  });
-} */  
-      
-    var questions = [
-        {
-            "question"      :   "Question: Is there pain?",
-            "image"         :   "https://static.spacecrafted.com/ff54fd0b912c4dd99d383fad9530cb4a/i/bb1044de01b447abbdd734687d094dfb/1/4SoifmQp45JMgBnHp7ed2/pain-points-smaller.jpg",
-            "choices"       :   [
-                                    "Severe",
-                                    "Moderate",
-                                    "Mild",
-                                    "No pain"
-                                ],
-            "correct"       :   "",
-            "explanation"   :   "",
-        },
-        {
-            "question"      :   "Question: Is there vomitting?",
-            "image"         :   "https://previews.123rf.com/images/krisdog/krisdog1906/krisdog190600119/125055526-vomiting-puking-emoji-emoticon-icon-cartoon.jpg",
-            "choices"       :   [
-                                    "Vimitting without blood",
-                                    "Vomitting with blood",
-                                    "No vomitting"
-                                ],
-            "correct"       :   "",
-            "explanation"   :   "",
-        },
-        {
-            "question"      :   "Question: How many times did you vomit so far?",
-            "image"         :   "https://cdn0.iconfinder.com/data/icons/audio-and-video-outline-1/24/audio_-30-512.png",
-            "choices"       :   [
-                                    "1-2 times",
-                                    "3-4 times",
-                                    "5-6 times",
-                                    "more than 6 times"
-                                ],
-            "correct"       :   "",
-            "explanation"   :   "",
-        },
-        {
-            "question"      :   "Question: How tired are you of writing this stupid code, Milen?",
-            "image"         :   "https://sayingimages.com/wp-content/uploads/i-dont-know-anymore-guys-i-quit-life-meme.jpg",
-            "choices"       :   [
-                                    "I don't know!",
-                                    "Do NOT dare ask!",
-                                    "I am strong, I can do it.",
-                                    "Desperately need a break!!!"
-                                ],
-            "correct"       :   "",
-            "explanation"   :   "",
-        }
-    ];
-
-//use this for IE syntax error at => : ECMA script 6 not supported in IE 11 :(
-//questions.forEach(function(q){ return q.choices.scramble()});
-
-//use this for ECMA script 6
-//questions.forEach(q => q.choices.scramble());
-//console.log(questions[0].choices);
-    
-//questions = shuffle(questions);
-      
-    /******* No need to edit below this line *********/
-    var currentquestion = 0, score = 0, submt=true, picked;
+    jQuery.get('http://localhost:3000/received.json', function(data) {
+        questions = data;
+    });
 
     jQuery(document).ready(function($){
-
-        /**
-         * HTML Encoding function for alt tags and attributes to prevent messy
-         * data appearing inside tag attributes.
-         */
         function htmlEncode(value){
           return $(document.createElement('div')).text(value).html();
         }
 
-        /**
-         * This will add the individual choices for each question to the ul#choice-block
-         *
-         * @param {choices} array The choices from each question
-         */
     function addChoices(choices){
       if(typeof choices !== "undefined" && $.type(choices) == "array"){
         $('#choice-block').empty();
@@ -139,10 +35,7 @@
         }
       }
     }
-        
-        /**
-         * Resets all of the fields to prepare for next question
-         */
+
     function nextQuestion(){
       submt = true;
       $('#explanation').empty();
@@ -177,50 +70,37 @@
             text.join(' ')
           );
         });
-        
-      });
-      
-        }
+      });  
+    }
 
-        /**
-         * After a selection is submitted, checks if its the right answer
-         *
-         * @param {choice} number The li zero-based index of the choice picked
-         */
-        function processQuestion(choice){
-            if(true) //questions[currentquestion]['choices'][choice] == questions[currentquestion]['correct']){
-        $('.choice').eq(choice).addClass('btn-success').css({'font-weight':'bold', 'border-color':'#51a351', 'color':'#fff'});
-        $('#explanation').html('<span class="correct">THANK YOU!</span> ' + htmlEncode(questions[currentquestion]['explanation']));
-        score++;
-      /*} else {
-                $('.choice').eq(choice).addClass('btn-danger').css({'font-weight':'bold', 'border-color':'#f93939', 'color':'#fff'});
-                $('#explanation').html('<span class="incorrect">INCORRECT!</span> ' + htmlEncode(questions[currentquestion]['explanation']));
-            }*/
-            currentquestion++;
+    function processQuestion(choice){
+      
+      answers['Q' + currentquestion] = choice;
+
+      currentquestion++;
 
       if(currentquestion == questions.length){
         $('#submitbutton').html('SUBMIT RESULTS').removeClass('btn-success').addClass('btn-info').css({'border-color':'#3a87ad', 'font-size':'150%','color':'#fff'}).on('click', function(){
           $(this).text('SUBMIT RESULTS').on('click');
+          $.post('/answers', answers)
+            .success(
+              function(success){
+                console.log(success)
+              })
+            .error(
+              function(error){
+                console.log(error)
+              });
           endQuestions();
         })
         
       } else if (currentquestion < questions.length){
-        $('#submitbutton').html('NEXT QUESTION &raquo;').removeClass('btn-success').addClass('btn-warning').css({'font-weight':'bold', 'font-size':'150%','border-color':'#faa732', 'color':'#fff'}).on('click', function(){
-          $(this).text('- SUBMIT -').removeClass('btn-warning').addClass('btn-success').css({'font-weight':'bold', 'font-size':'150%', 'border-color':'#51a351', 'color':'#fff'}).on('click');
-          nextQuestion();
-        })
+        nextQuestion();
       } else {
-        //  $('#submitbutton').html('NEXT QUESTION &raquo;').on('click', function(){
-        //    $(this).text('- CHECK ANSWER -').css({'color':'inherit'}).on('click');
-        //  })
+        throw "Error: This state should not be reached!";
       }
-
-      
     }
 
-        /**
-         * Sets up the event listeners for each button.
-         */
     function setupButtons(){
       $('.choice').on('click', function(){
         picked = $(this).attr('data-index');
@@ -231,15 +111,12 @@
           $('#submitbutton').css({'color':'#fff','cursor':'pointer'}).on('click', function(){
             $('.choice').off('click');
             $(this).off('click');
-            processQuestion(picked);
+            processQuestion(picked); 
           });
         }
       })
     }
-        
-        /**
-         * questions ends, display a message.
-         */
+
     function endQuestions(){
       var endQuestions = "Thank you for your answers!!!";
       document.getElementById("pager").innerHTML = endQuestions;
@@ -247,13 +124,10 @@
       $('#question').empty();
       $('#choice-block').empty();
       $('#submitbutton').remove();
-      //$('.rsform-block-submit').addClass('show');
-      $('#question').text("Please now go to the administration.");
-      //$(document.createElement('h4')).addClass('score').text(Math.round(score/quiz.length * 100) + '%').insertAfter('#question');     
+      $('#question').text("Please now go to the administration.");    
     }
 
     function initQuestion(){
-      //add title
       if(typeof title !== "undefined" && $.type(title) === "string"){
         $(document.createElement('h2')).text(title).appendTo('#frame');
       } else {
@@ -261,7 +135,7 @@
       }
       
       //add pager and questions
-      if(typeof questions !== "undefined" && $.type(questions) === "array"){
+      if(typeof questions !== "undefined"){
         //add pager
         $(document.createElement('p')).addClass('pager').attr('id','pager').text('Question 1 of ' + questions.length).appendTo('#frame');
         //add first question
@@ -271,7 +145,10 @@
           $(document.createElement('img')).addClass('question-image').attr('id', 'question-image').attr('src', questions[0]['image']).attr('alt', htmlEncode(questions[0]['question'])).appendTo('#frame');
         }
         
-        $(document.createElement('p')).addClass('explanation').attr('id','explanation').html('').appendTo('#frame');
+        //$(document.createElement('p')).addClass('explanation').attr('id','explanation').html('').appendTo('#frame');
+
+        $(document.createElement('br')).appendTo('#frame');
+        $(document.createElement('br')).appendTo('#frame');
         
         //questions holder
         $(document.createElement('ul')).attr('id', 'choice-block').appendTo('#frame');
@@ -286,15 +163,14 @@
       }
     }
 
-    function wait () {
+    /*function wait () {
       console.log('before');
-      setTimeout(donothing,5000); // after 5 seconds
+      setTimeout(function(){},5000); // after 5 seconds
       console.log('after');
-    }
+    }*/
 
     function startQuestions(){
       if (language !== '') {
-        //window.alert(language);
         $('img').remove();
         $('br').remove();
         $('h3').remove();
@@ -303,15 +179,11 @@
       }
     }
 
-        /**
-         * Runs the first time and creates all of the elements for the questions
-         */
     function init(){
-
       $(document.createElement('h2')).text(title).appendTo('#frame');
       
       //add pager and questions
-      if(typeof questions !== "undefined" && $.type(questions) === "array"){
+      if(typeof questions !== "undefined"){
         //add first question
         $(document.createElement('br')).appendTo('#frame');
         $(document.createElement('br')).appendTo('#frame');
@@ -373,18 +245,17 @@
 
           })
           bg.on('click', function() {
-            language = 'bg'
+            language = 'bg';
+            window.alert("Fuck it!");
             startQuestions();
           })
           ru.on('click', function() {
             language = 'ru'
             startQuestions();
           })
-
         });
       }
-
-      wait();
+      //wait();
     }
   
     init();
@@ -445,7 +316,6 @@
     p.pager                         { margin:5px 0 5px; color:#999; text-align:right; }
     .qnumber                        { font-size:25px; font-weight:bold; font-style:italic; vertical-align:bottom; }
     .number                         { font-size:25px; font-weight:bold; font-style:normal; vertical-align:inherit; padding-right:10px; }
-    .score                          { width:100%; display:inline-block; margin:30px 0; font-size:100px; text-align:center; }
     img.question-image                    { width:100%; width:auto; display:block; max-height:350px; margin:10px auto; border:2px solid #ccc; }
     .question-button                    { width:50%; height:auto; display:block; max-width:150px; margin:10px auto; border:0px solid #ccc; cursor:pointer; }
     .question-flag                      { width:80%; height:auto; display:block; max-width:180px; max-height:100px; margin:10px auto; border:1px solid #ccc; }

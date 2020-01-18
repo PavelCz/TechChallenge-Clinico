@@ -76,39 +76,22 @@ public class NewConnection implements Runnable{
 				if(str.equalsIgnoreCase("index")) {
 					System.out.println(serverDir);
 					TreeMap<String, String> myList = new TreeMap<>();
-					getFiles(serverDir, myList);
+					//getFiles(serverDir, myList);
 					for(String el: myList.keySet()) {
 						out.println(el);
 					}
 					out.println("END");
-				} else if(str.toLowerCase().substring(0, 4).equals("get ")) {
-					String fileName = str.substring(4);
-					TreeMap<String, String> myList = new TreeMap<>();
-					getFiles(serverDir, myList);
-					boolean flag = false;
-					for(String el: myList.keySet()) {
-						System.out.println(el);
-						if(el.equals(fileName)) {
-							out.println("ok");
-							BufferedReader fileReader = new BufferedReader(new FileReader(new File(myList.get(el))));
-							try { 
-								String line;
-								while((line = fileReader.readLine()) != null) {
-									System.out.println(line);
-									out.println(line);
-								}
-								out.println("END");
-								flag = true;
-							} finally {
-								fileReader.close();
-							}
-						}
-					}
-					if(!flag) {
-						out.println("error");
-					}
 				} else {
-					out.println("Use get + name of file");
+					String json = "[{\"question\":\"Question: Is there pain?\", \"image\":\"https://static.spacecrafted.com/ff54fd0b912c4dd99d383fad9530cb4a/i/bb1044de01b447abbdd734687d094dfb/1/4SoifmQp45JMgBnHp7ed2/pain-points-smaller.jpg\"," + 
+							"\"choices\":[\"Severe\", \"Moderate\", \"Mild\", \"No pain\"], \"correct\":\"\", \"explanation\":\"\"" + 
+							"}, {\"question\":\"Question: Is there vomitting?\", \"image\":\"https://previews.123rf.com/images/krisdog/krisdog1906/krisdog190600119/125055526-vomiting-puking-emoji-emoticon-icon-cartoon.jpg\"," + 
+							"\"choices\":[\"Vimitting without blood\", \"Vomitting with blood\", \"No vomitting\"], \"correct\":\"\"," + 
+							"\"explanation\":\"\"},{\"question\":\"Question: How many times did you vomit so far?\", \"image\":\"https://cdn0.iconfinder.com/data/icons/audio-and-video-outline-1/24/audio_-30-512.png\"," + 
+							"\"choices\":[\"1-2 times\",\"3-4 times\",\"5-6 times\",\"No vomitting!\"],\"correct\":\"\"," + 
+							"\"explanation\":\"\"}, {\"question\":\"Question: How tired are you of writing this stupid code, Milen?\", \"image\":\"https://sayingimages.com/wp-content/uploads/i-dont-know-anymore-guys-i-quit-life-meme.jpg\"," + 
+							"\"choices\":[\"I don't know!\", \"Do NOT dare ask!\", \"I am strong, I can do it.\"," + 
+							"\"Desperately need a break!!!\"],\"correct\":\"\",\"explanation\":\"\"}]";
+					out.println(json);
 				}
 			} 
 		}catch(IOException e) {

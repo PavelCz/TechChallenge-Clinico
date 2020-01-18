@@ -1,10 +1,5 @@
 // require express and other modules
 const express = require('express');
-var net = require('net');
-
-var client = net.connect(8080, 'localhost');
-
-client.write("Is it working?")
 
 const app = express();
 // Express Body Parser
@@ -14,12 +9,36 @@ app.use(express.json());
 // Set Static File Directory
 app.use(express.static(__dirname + '/public'));
 
+var net = require('net');
+var fs = require("fs");
 
-/************
- * DATABASE *
- ************/
+var lastmsg = "";
 
-const db = require('./models');
+var client = net.connect(8080, 'localhost');
+client.setEncoding('utf8');
+//setInterval(function() {
+//  console.log("Writing....")
+//  client.write('Hello from node.js\n');
+//}, 1000);
+
+setTimeout(function() {
+  console.log("Writing....")
+  client.write('Hello from node.js\n');
+}, 1000);
+
+client.on('data', function(data) {
+  if (lastmsg !== arguments) {
+    console.log("Received:", arguments);
+    lastmsg = data.toString();
+    //var JSONObject = JSON.parse(lastmsg);
+    fs.writeFile( "received.json", lastmsg, "utf8", (err) => {
+      if (err) throw err;
+      console.log("It's saved!");
+    });
+  }
+})
+
+//client.end();
 
 /**********
  * ROUTES *
@@ -33,6 +52,18 @@ app.get('/', function homepage(req, res) {
 	res.sendFile(__dirname + '/views/index.html');
 });
 
+app.get('/received.json', function json(req, res) {
+  res.sendFile(__dirname + '/received.json');
+});
+
+app.post('/answers', function json(req, res, next) {
+    var username = req.body;
+    console.log(username);
+    client.write(JSON.stringify(username) + '\n', 'utf8', function(error, data){
+      if (error) throw error; 
+      console.log("Success sending answer!");
+    });
+});
 
 /*
  * JSON API Endpoints
