@@ -174,25 +174,8 @@ public class GUI {
                 loadingGif.setVisible(true);
                 // Send allQuestions to client
                 this.submitQuestions(checkboxes, allQuestions);
-
-                // Receive answers
-                String answer = "";
-                /*try {
-                    answer = this.in.readLine();
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }*/
-                //System.out.println("Answer:");
-                //System.out.println(answer);
-                //loadingGif.setVisible(false);
-
-                //JsonArray answersArray = JsonParser.parseString(answer).getAsJsonArray();
-
-
-                // Visualize answers
-                //this.handleAnswers(checkboxes, answers, severities);
             }
-            /*else {
+            /*else { Stuff for the report
                 loadingGif.setVisible(false);
                 this.handleAnswers(checkboxes, answers, severities);
 
@@ -228,23 +211,14 @@ public class GUI {
             JCheckBox cb = checkboxes.get(i);
             if (cb.isSelected()) {
                 a.add(allQuestions.get(i));
-            }
-        }
-        System.out.println("Sending Questions:");
-        System.out.println(a);
-        //this.out.println(a);
-        this.connection.setOutgoingMessage(allQuestions.toString());
-        this.connection.sendToClient(allQuestions.toString());
-
-
-        for (int i = 0; i < checkboxes.size(); ++i) {
-            JCheckBox cb = checkboxes.get(i);
-            if (cb.isSelected()) {
                 cb.setSelected(false);
                 cb.setForeground(Color.GRAY);
             }
         }
+        System.out.println("Sending Questions:");
+        System.out.println(a);
 
+        this.connection.sendToClient(a.toString());
     }
 
     public void receiveAnswers(String answers) {
@@ -269,7 +243,7 @@ public class GUI {
 
                     this.answers.get(questionIndex).setText(answer);
                     this.severities.get(questionIndex).setText("" + severity);
-                    this.severities.get(questionIndex).setBackground(colors[answerIndex]);
+                    this.severities.get(questionIndex).setBackground(colors[severity]);
                     // Necessary for background to be painted
                     severities.get(questionIndex).setOpaque(true);
 
