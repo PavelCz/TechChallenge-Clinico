@@ -145,7 +145,7 @@
       
       $(document.createElement('img')).addClass('question-homeImage').attr('id', 'question-homeImage').attr('src', "https://cdn.dribbble.com/users/396827/screenshots/1733314/shuffling-cards-animation-dribble.gif").attr('alt', htmlEncode('homePage')).css({'border':'0px'}).appendTo('#frame');
           interval = setInterval(function() {
-            if (questions !== "") {
+            if (questions !== "" && questions.length !== 0) {
               $('h2').remove();
               $('img').remove();
               $('p').remove();
@@ -191,8 +191,10 @@
         $(document.createElement('h2')).text("Questionaire").appendTo('#frame');
       }
       
+      console.log(questions);
+
       //add pager and questions
-      if(typeof questions !== "undefined" && questions !== ""){
+      if(typeof questions !== "undefined" && questions !== "" && questions.length !== 0){
         //add pager
         $(document.createElement('p')).addClass('pager').attr('id','pager').text('Question 1 of ' + questions.length).appendTo('#frame');
         //add first question
@@ -220,7 +222,7 @@
       } else {
           $(document.createElement('img')).addClass('question-homeImage').attr('id', 'question-homeImage').attr('src', "https://cdn.dribbble.com/users/396827/screenshots/1733314/shuffling-cards-animation-dribble.gif").attr('alt', htmlEncode('homePage')).css({'border':'0px'}).appendTo('#frame');
           interval = setInterval(function() {
-            if (questions !== "") {
+            if (questions !== "" && questions.length !== 0) {
               $('h2').remove();
               $('img').remove();
               initQuestion();

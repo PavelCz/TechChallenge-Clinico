@@ -180,7 +180,7 @@ public class GUI {
 
         finishButton.addActionListener(e -> {
             StringBuilder report = new StringBuilder("Bericht:\nDer Patient hat:\n");
-            this.answers.stream().filter(label -> !label.getText().isBlank()).forEach(label ->
+            this.answers.stream().filter(label -> !label.getText().trim().equals("")).forEach(label ->
                     report.append("- ").append(label.getText()).append("\n")
             );
             JPanel p = (JPanel) this.root.getComponent(2);
