@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 
 public class GUI {
 
@@ -175,32 +176,18 @@ public class GUI {
                 // Send allQuestions to client
                 this.submitQuestions(checkboxes, allQuestions);
             }
-            /*else { Stuff for the report
-                loadingGif.setVisible(false);
-                this.handleAnswers(checkboxes, answers, severities);
-
-                // I get some kind of answer list.JSON Object?
-                collectedAnswers.add("Moderate Schmerzen");
-                collectedAnswers.add("Normale Atmung");
-                collectedAnswers.add("Kein Übergeben");
-                //collectedAnswers.add("Normaler Stuhlgang");
-                collectedAnswers.add("Leichtes Fieber");
-                String report = "Bericht:\nDer Patient hatte:\n";
-                for (String answer : collectedAnswers) {
-                    report += "- ";
-                    report += answer;
-                    report += "\n";
-                }
-
-
-                JPanel p = (JPanel) this.root.getComponent(2);
-                JTextArea t = (JTextArea) p.getComponent(0);
-                t.setText(report);
-
-            }*/
         });
 
-        finishButton.addActionListener(e -> this.next());
+        finishButton.addActionListener(e -> {
+            StringBuilder report = new StringBuilder("Bericht:\nDer Patient hat:\n");
+            this.answers.stream().filter(label -> !label.getText().isBlank()).forEach(label ->
+                    report.append("- ").append(label.getText()).append("\n")
+            );
+            JPanel p = (JPanel) this.root.getComponent(2);
+            JTextArea t = (JTextArea) p.getComponent(0);
+            t.setText(report.toString());
+            this.next();
+        });
 
         root.add(questionsPanel);
     }
