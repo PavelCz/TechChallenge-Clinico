@@ -17,6 +17,7 @@
     var questions = "";
     var currentquestion = 0, submt=true, picked;
     var answers = {};
+    var interval = undefined;
 
     setInterval(function() {
       jQuery.get('http://localhost:3000/received.json', function(data) {
@@ -94,7 +95,19 @@
               function(error){
                 console.log(error)
               });
-          endQuestions();
+          $.post('/received.json', "Clean the Questions!")
+            .success(
+              function(success){
+                console.log(success)
+              })
+            .error(
+              function(error){
+                console.log(error)
+              });
+          setTimeout(function() {
+            questions = "";
+            waitForQuestions();
+          }, 500);
         })
         
       } else if (currentquestion < questions.length){
@@ -120,6 +133,41 @@
       })
     }
 
+    function waitForQuestions(){
+      document.getElementById("pager").innerHTML = "Please Wait!";
+      $('#explanation').empty();
+      $('#question').empty();
+      $('#choice-block').empty();
+      $('#submitbutton').remove();
+      $('#question').remove(); 
+      $('img').remove();
+      $('li').remove();
+      
+      $(document.createElement('img')).addClass('question-homeImage').attr('id', 'question-homeImage').attr('src', "https://cdn.dribbble.com/users/396827/screenshots/1733314/shuffling-cards-animation-dribble.gif").attr('alt', htmlEncode('homePage')).css({'border':'0px'}).appendTo('#frame');
+          interval = setInterval(function() {
+            if (questions !== "") {
+              $('h2').remove();
+              $('img').remove();
+              $('p').remove();
+              $('br').remove();
+              $('li').remove();
+              $('#explanation').remove();
+              $('#question').remove();
+              $('#choice-block').empty();
+              $('#choice-block').remove();
+              $('choice').remove();
+              $('btn').remove();
+              $('#submitbutton').remove();
+              $('#question').remove(); 
+              $('br').remove();
+              submt = true;
+              currentquestion = 0;
+              answers = {};
+              initQuestion();
+            }
+          }, 500);
+    }
+
     function endQuestions(){
       var endQuestions = "Thank you for your answers!!!";
       document.getElementById("pager").innerHTML = endQuestions;
@@ -127,19 +175,15 @@
       $('#question').empty();
       $('#choice-block').empty();
       $('#submitbutton').remove();
-      $('#question').text("Please now go to the administration."); 
-      $.post('/received.json', "Clean the Questions!")
-            .success(
-              function(success){
-                console.log(success)
-              })
-            .error(
-              function(error){
-                console.log(error)
-              });   
+      $('#question').text("Please now go to the administration.");    
     }
 
     function initQuestion(){
+
+      if(typeof interval !== "undefined") {
+        clearInterval(interval);
+        interval = undefined;
+      }
 
       if(typeof title !== "undefined" && $.type(title) === "string"){
         $(document.createElement('h2')).text(title).appendTo('#frame');
@@ -173,6 +217,15 @@
         $(document.createElement('div')).addClass('btn-success choice-box').attr('id', 'submitbutton').text('- SUBMIT -').css({'font-weight':'bold', 'font-size':'150%','color':'#fff','padding':'30px 0', 'border-radius':'10px'}).appendTo('#frame');
         
         setupButtons();
+      } else {
+          $(document.createElement('img')).addClass('question-homeImage').attr('id', 'question-homeImage').attr('src', "https://cdn.dribbble.com/users/396827/screenshots/1733314/shuffling-cards-animation-dribble.gif").attr('alt', htmlEncode('homePage')).css({'border':'0px'}).appendTo('#frame');
+          interval = setInterval(function() {
+            if (questions !== "") {
+              $('h2').remove();
+              $('img').remove();
+              initQuestion();
+            }
+          }, 500);
       }
     }
 
