@@ -148,7 +148,7 @@
         ]
       },
       "de": {
-        "question": "Frage: Wann hatten Sie das letzte mal Stuhlgang?",
+        "question": "Frage: Haben Sie Fieber?",
         "choices": [
           "Starkes Fieber",
           "Leichtes Fieber",
@@ -201,12 +201,11 @@
       }
     },
     {
-      "tag": "General-Question-Allergies",
+      "tag": "yes-no-allergies",
       "image": "https://cdn0.iconfinder.com/data/icons/audio-and-video-outline-1/24/audio_-30-512.png",
       "severity": [
         1,
-        2,
-        3
+        2
       ],
       "en": {
         "question": "Question: Do you suffer from allergies?",
@@ -228,8 +227,7 @@
       "image": "https://thumbs.dreamstime.com/z/pill-bottle-allergy-line-color-icon-allergic-reaction-to-drug-medication-intolerance-hypersensitivity-individual-components-157613838.jpg",
       "severity": [
         1,
-        2,
-        3
+        2
       ],
       "en": {
         "question": "Question: What are you allergic to?",
@@ -251,8 +249,7 @@
       "image": "https://f1.pngfuel.com/png/700/430/567/medicine-antibiotics-antimicrobial-resistance-pharmaceutical-drug-penicillin-infection-capsule-pill-png-clip-art-thumbnail.png",
       "severity": [
         1,
-        2,
-        3
+        2
       ],
       "en": {
         "question": "Question: Are you currently taking any medication?",
@@ -275,7 +272,9 @@
       "severity": [
         1,
         2,
-        3
+        3,
+        4,
+        4
       ],
       "en": {
         "question": "Question: Have you had any abdominal surgery?",
