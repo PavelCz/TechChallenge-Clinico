@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Function;
 
 public class GUI {
 
@@ -58,6 +57,13 @@ public class GUI {
 
 
     public void initGUI() {
+        // Change default font size
+        Font font = (Font) UIManager.getLookAndFeelDefaults().get("Label.font");
+        Font newFont = new Font(font.getName(), Font.PLAIN, 18);
+        UIManager.put("Label.font", newFont);
+        UIManager.put("CheckBox.font", newFont);
+        UIManager.put("Button.font", newFont);
+
         JFrame frame = new JFrame("Clinico Triage System");
         // Frame properties
         JFrame.setDefaultLookAndFeelDecorated(true);
@@ -297,10 +303,6 @@ public class GUI {
     }
 
     private class ImagePanel extends JPanel {
-        /**
-         *
-         */
-        private static final long serialVersionUID = 1L;
         private String path;
 
         private ImagePanel(String path) {
