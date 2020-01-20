@@ -33,7 +33,7 @@
     },
     {
       "tag": "shortage of breath",
-      "image": "https://banner2.cleanpng.com/20190628/keu/kisspng-shortness-of-breath-gif-clip-art-diaphragmatic-bre-clip-art-royalty-free-download-breath-clipart-brea-5d15aff1b24d24.6815248915617023857303.jpg",
+      "image": "http://localhost:3000/images/7.png",
       "severity": [
         4,
         0
@@ -55,7 +55,7 @@
     },
     {
       "tag": "vomit",
-      "image": "https://cdn.imgbin.com/23/6/7/imgbin-food-poisoning-vomiting-food-safety-danger-zone-others-snY67ZNyxNm4M6rZcP5szNJmM.jpg",
+      "image": "http://localhost:3000/images/6.png",
       "severity": [
         3,
         1,
@@ -80,7 +80,7 @@
     },
     {
       "tag": "vomit-frequency",
-      "image": "https://cdn4.iconfinder.com/data/icons/celiac-disease-signs-and-symptoms/191/celiac-disease-005-512.png",
+      "image": "http://localhost:3000/images/6.png",
       "severity": [
         1,
         2,
@@ -105,7 +105,7 @@
     },
     {
       "tag": "defecation",
-      "image": "https://pp.netclipart.com/pp/s/61-613364_clip-art-diarrhea-pictogram-free-view-diarrhea-icon.png",
+      "image": "http://localhost:3000/images/1.png",
       "severity": [
         1,
         3,
@@ -158,7 +158,7 @@
     },
     {
       "tag": "pain-back",
-      "image": "https://banner2.cleanpng.com/20180403/bkw/kisspng-back-pain-computer-icons-symbol-clip-art-back-pain-5ac31f32cbb048.9928265615227369468343.jpg",
+      "image": "http://localhost:3000/images/3.png",
       "severity": [
         3,
         0
@@ -180,7 +180,7 @@
     },
     {
       "tag": "pain-shoulder",
-      "image": "https://fscomps.fotosearch.com/compc/CSP/CSP753/schulterschmerzen-clipart__k19534050.jpg",
+      "image": "http://localhost:3000/images/2.png",
       "severity": [
         2,
         0
@@ -202,7 +202,7 @@
     },
     {
       "tag": "General-Question-Allergies",
-      "image": "https://cdn0.iconfinder.com/data/icons/audio-and-video-outline-1/24/audio_-30-512.png",
+      "image": "http://localhost:3000/images/9.png",
       "severity": [
         1,
         2,
@@ -224,8 +224,8 @@
       }
     },
     {
-      "tag": "General-Question-Allergies",
-      "image": "https://thumbs.dreamstime.com/z/pill-bottle-allergy-line-color-icon-allergic-reaction-to-drug-medication-intolerance-hypersensitivity-individual-components-157613838.jpg",
+      "tag": "General-Question-Allergies2",
+      "image": "http://localhost:3000/images/9.png",
       "severity": [
         1,
         2,
@@ -248,7 +248,7 @@
     },
     {
       "tag": "General-Question-Medication",
-      "image": "https://f1.pngfuel.com/png/700/430/567/medicine-antibiotics-antimicrobial-resistance-pharmaceutical-drug-penicillin-infection-capsule-pill-png-clip-art-thumbnail.png",
+      "image": "http://localhost:3000/images/4.png",
       "severity": [
         1,
         2,
@@ -271,7 +271,7 @@
     },
     {
       "tag": "General-Question-History",
-      "image": "https://us.123rf.com/450wm/cookamoto/cookamoto1606/cookamoto160600014/58703745-vector-medizinische-konzept-chirurgen-in-op-zimmer-mit-menschen-skalpell-und-bildschirm-krankheit-un.jpg?ver=6",
+      "image": "http://localhost:3000/images/5.png",
       "severity": [
         1,
         2,

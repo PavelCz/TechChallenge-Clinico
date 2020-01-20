@@ -14,12 +14,14 @@
 
     var HOST = '192.168.2.112';
 
-    var title = "Clinico Sample GUI";
+    var title = "Clinico GmbH";
     var language = "";      
     var questions = "";
     var currentquestion = 0, submt=true, picked;
     var answers = {};
     var interval = undefined;
+    var MRI = "http://localhost:3000/images/MRI.svg";
+    var CLI = "http://localhost:3000/images/CLI.png";
 
     setInterval(function() {
       jQuery.get('http://' + HOST + ':3000/received.json', function(data) {
@@ -37,7 +39,7 @@
       if(typeof choices !== "undefined" && $.type(choices) == "array"){
         $('#choice-block').empty();
         for(var i=0;i<choices.length; i++){
-        $(document.createElement('a')).addClass('list-group-item list-group-item-action').attr('data-index', i).text(choices[i]).appendTo('#choice-block');
+        $(document.createElement('a')).addClass('list-group-item list-group-item-action').attr('data-index', i).text(choices[i]).css({'text-align':'center'}).appendTo('#choice-block');
         }
       }
     }
@@ -49,9 +51,9 @@
       $('#pager').text('Question ' + Number(currentquestion + 1) + ' of ' + questions.length);
       if(questions[currentquestion].hasOwnProperty('image') && questions[currentquestion]['image'] != ""){
         if($('#question-image').length == 0){
-          $(document.createElement('img')).addClass('question-image').attr('id', 'question-image').attr('src', questions[currentquestion]['image']).attr('alt', htmlEncode(questions[currentquestion]['question'])).insertAfter('#question');
+          $(document.createElement('img')).addClass('question-image').attr('id', 'question-image').attr('src', questions[currentquestion]['image'].replace("localhost", HOST)).attr('alt', htmlEncode(questions[currentquestion]['question'])).insertAfter('#question');
         } else {
-          $('#question-image').attr('src', questions[currentquestion]['image']).attr('alt', htmlEncode(questions[currentquestion][language]['question']));
+          $('#question-image').attr('src', questions[currentquestion]['image'].replace("localhost", HOST)).attr('alt', htmlEncode(questions[currentquestion][language]['question']));
         }
       } else {
         $('#question-image').remove();
@@ -86,7 +88,7 @@
       currentquestion++;
 
       if(currentquestion == questions.length){
-        $('#submitbutton').html('Submit Results').removeClass('list-group-item-success').addClass('list-group-item-action list-group-item-dark').css({'border-color':'#3a87ad', 'font-size':'100%','color':'#fff'}).on('click', function(){
+        $('#submitbutton').html('Submit Results').removeClass('list-group-item-success').addClass('list-group-item-action list-group-item-dark').css({'border-color':'#3a87ad', 'font-size':'100%','color':'#fff', 'text-align': 'center'}).on('click', function(){
           $(this).text('Submit Results').on('click');
           $.post('/answers', answers)
             .done(
@@ -124,11 +126,11 @@
     function setupButtons(){
       $('.list-group-item').on('click', function(){
         picked = $('.list-group-item').attr('data-index');
-        $('.list-group-item').removeAttr('style').off('mouseout mouseover');
-        $(this).css({'font-weight':'bold', 'border-color':'#51a351', 'color':'#51a351'});
+        $('.list-group-item').removeAttr('style').css({'text-align': 'center'}).off('mouseout mouseover');
+        $(this).css({'font-weight':'bold', 'border-color':'#51a351', 'color':'#51a351', 'text-align': 'center'});
         if(submt){
           submt=false;
-          $('#submitbutton').css({'color':'#fff','cursor':'pointer'}).on('click', function(){
+          $('#submitbutton').css({'cursor':'pointer', 'text-align': 'center'}).on('click', function(){
             $('.choice').off('click');
             $(this).off('click');
             processQuestion(picked); 
@@ -144,7 +146,7 @@
       $('#choice-block').empty();
       $('#submitbutton').remove();
       $('#question').remove(); 
-      $('img').remove();
+      $('img.question-image').remove();
       $('li').remove();
       
       $(document.createElement('br')).appendTo('#frame');
@@ -208,13 +210,11 @@
         interval = undefined;
       }
 
-      if(typeof title !== "undefined" && $.type(title) === "string"){
-        $(document.createElement('h2')).text(title).appendTo('#frame');
-      } else {
-        $(document.createElement('h2')).text("Questionaire").appendTo('#frame');
-      }
-      
-      console.log(questions);
+      $(document.createElement('img')).addClass('clinico-logo').attr('id', 'logo').attr('src', CLI.replace('localhost', HOST)).attr('style', 'float:right').appendTo('#frame');
+      $(document.createElement('br')).appendTo('#frame');
+      $(document.createElement('br')).appendTo('#frame');
+      $(document.createElement('br')).appendTo('#frame');
+      $(document.createElement('h2')).attr('id', 'header').appendTo('#frame');
 
       //add pager and questions
       if(typeof questions !== "undefined" && questions !== "" && questions.length !== 0){
@@ -224,7 +224,7 @@
         $(document.createElement('h3')).addClass('question').attr('id', 'question').text(questions[0][language]['question']).appendTo('#frame');
         //add image if present
         if(questions[0].hasOwnProperty('image') && questions[0]['image'] != ""){
-          $(document.createElement('img')).addClass('question-image').attr('id', 'question-image').attr('src', questions[0]['image']).attr('alt', htmlEncode(questions[0][language]['question'])).appendTo('#frame');
+          $(document.createElement('img')).addClass('question-image').attr('id', 'question-image').attr('src', questions[0]['image'].replace("localhost", HOST)).attr('alt', htmlEncode(questions[0][language]['question'])).appendTo('#frame');
         }
         
         //$(document.createElement('p')).addClass('explanation').attr('id','explanation').html('').appendTo('#frame');
@@ -239,7 +239,7 @@
         addChoices(questions[0][language]['choices']);
         
         //add submit button
-        $(document.createElement('a')).addClass('list-group-item list-group-item-action list-group-item-success').attr('id', 'submitbutton').text('Submit').css({'font-weight':'bold'}).appendTo('#frame');
+        $(document.createElement('a')).addClass('list-group-item list-group-item-action list-group-item-success').attr('id', 'submitbutton').text('Submit').css({'font-weight':'bold', 'text-align': 'center'}).appendTo('#frame');
         
         setupButtons();
       } else {
@@ -267,6 +267,7 @@
         interval = setInterval(function() {
             if (questions !== "" && questions.length !== 0) {
               $('br').remove();
+              $('img').remove();
               $('.spinner-border').remove();
               $('.d-flex').remove();
               $('h2').remove();
@@ -289,30 +290,53 @@
     }
 
     function init(){
-      $(document.createElement('h2')).text(title).appendTo('#frame');
       
+      $(document.createElement('img')).addClass('clinico-logo').attr('id', 'logo').attr('src', CLI.replace('localhost', HOST)).attr('style', 'float:right').appendTo('#frame');
+      $(document.createElement('br')).appendTo('#frame');
+      $(document.createElement('br')).appendTo('#frame');
+      $(document.createElement('br')).appendTo('#frame');
+      $(document.createElement('h2')).attr('id', 'header').appendTo('#frame');
+
       //add pager and questions
       if(typeof questions !== "undefined"){
         //add first question
-        $(document.createElement('br')).appendTo('#frame');
-        $(document.createElement('br')).appendTo('#frame');
-        $(document.createElement('h3')).text('Welcome to MRI!').css({'text-align':'center', 'font-size':'300%'}).appendTo('#frame');
 
+        $(document.createElement('br')).appendTo('#frame');
+        $(document.createElement('br')).appendTo('#frame');
         $(document.createElement('br')).appendTo('#frame');
         $(document.createElement('br')).appendTo('#frame');
 
         //add image if present
-        $(document.createElement('img')).addClass('question-homeImage').attr('id', 'question-homeImage').attr('src', "https://www.nngm.de/wp-content/uploads/2018/10/header-standort-muenchen-mri.jpg").attr('alt', htmlEncode('homePage')).appendTo('#frame');
+        $(document.createElement('img')).addClass('question-homeImage').attr('id', 'question-homeImage').attr('src', MRI.replace('localhost', HOST)).attr('alt', htmlEncode('homePage')).appendTo('#frame');
 
         $(document.createElement('br')).appendTo('#frame');
         $(document.createElement('br')).appendTo('#frame');
+        $(document.createElement('br')).appendTo('#frame');
+        $(document.createElement('br')).appendTo('#frame');
+        $(document.createElement('br')).appendTo('#frame');
+        $(document.createElement('br')).appendTo('#frame');
+        $(document.createElement('br')).appendTo('#frame');
+        $(document.createElement('br')).appendTo('#frame');
 
-        $(document.createElement('img')).addClass('question-button').attr('id', 'question-button').attr('src', "http://www.clker.com/cliparts/a/C/M/J/6/Y/start-hi.png").attr('onmouseover', '').attr('style', 'cursor:pointer').appendTo('#frame');
+        //$(document.createElement('img')).addClass('question-button').attr('id', 'question-button').attr('src', "http://www.clker.com/cliparts/a/C/M/J/6/Y/start-hi.png").attr('onmouseover', '').attr('style', 'cursor:pointer').appendTo('#frame');
 
-        $('.question-button').on('click', function() {
+        var start = $(document.createElement('div')).addClass('col text-center').appendTo('#frame');
+
+        start.append($(document.createElement('button')).addClass('btn btn-success btn-xl').attr('id', 'start-button').text('Start').attr('onmouseover', '').attr('style', 'cursor:pointer').css({'float':'center'}));
+
+        $('.btn').on('click', function() {
           $('img').remove();
+          $('button').remove();
           $('br').remove();
+          $('h2').remove();
           $('h3').remove();
+
+			$(document.createElement('img')).addClass('clinico-logo').attr('id', 'logo').attr('src', CLI.replace('localhost', HOST)).attr('style', 'float:right').appendTo('#frame');
+      		$(document.createElement('br')).appendTo('#frame');
+      		$(document.createElement('br')).appendTo('#frame');
+      		$(document.createElement('br')).appendTo('#frame');
+      		$(document.createElement('h2')).attr('id', 'header').appendTo('#frame');
+
           $(document.createElement('h3')).text('Choose a language!').appendTo('#frame');
 
           $(document.createElement('br')).appendTo('#frame');
@@ -423,15 +447,16 @@
     ol,ul                           { list-style:none; }
     strong                          { font-weight:700; }
     #frame                          { width:auto; max-width: 800px; background:transparent; margin:3px auto; padding:10px; color:#333 !important; }
-    div#frame h2                      { width:auto; border-bottom:1px solid #bdbdbd; padding:0 0 5px 0; font-size:30px; }
+    div#frame h2                      { width:auto; border-bottom:1px solid #bdbdbd; padding:0 0 5px 0; font-size:30px; text-align: left;}
     h3.question                       { font-weight:normal; margin:20px 0; padding:0; font-style:italic; display:block; }
     p.pager                         { margin:5px 0 5px; color:#999; text-align:right; }
     .qnumber                        { font-size:25px; font-weight:bold; font-style:italic; vertical-align:bottom; }
     .number                         { font-size:25px; font-weight:bold; font-style:normal; vertical-align:inherit; padding-right:10px; }
-    img.question-image                    { width:100%; width:auto; display:block; max-height:350px; margin:10px auto; border:2px solid #ccc; }
+    img.question-image                    { width:350px; display:block; max-height:350px; max-height:350px; margin:10px auto; border:2px solid #ccc; }
     .question-button                    { width:50%; height:auto; display:block; max-width:150px; margin:10px auto; border:0px solid #ccc; cursor:pointer; }
     .question-flag                      { width:80%; height:auto; display:block; max-width:180px; max-height:100px; margin:10px auto; border:1px solid #ccc; }
-    .question-homeImage                   { width:200%; height:auto; display:block; max-width:500px; margin:10px auto; border:1px solid #ccc; }
+    .question-homeImage                   { width:300%; height:auto; display:block; max-width:700px; margin:10px auto; border:0px solid #ccc; }
+    .clinico-logo					{ width:100%; height:auto; display:block; max-width:150px; max-height:150px; margin:10px auto; border:0px solid #ccc; }
     #choice-block                       { display:block; list-style:none; margin:0; padding:0; cursor: pointer; }
   /*  #submitbutton                       { cursor:pointer; -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; } */
   /*  #submitbutton:hover                   { background:#7b8da6; } */
@@ -441,6 +466,7 @@
     .choice-box                       { width:100%; height:30px;  display:block;  text-align:center;  margin:5px auto !important; padding:10px 0 !important; border:1px solid #bdbdbd; }
     .correct                        { color:#51a351; font-size: 20px; display: block; margin-bottom: 5px; border-bottom: 1px #51a351 solid; padding-bottom: 5px; }
     .incorrect                        { color:#f93939; font-size: 20px; display: block; margin-bottom: 5px; border-bottom: 1px #f93939 solid; padding-bottom: 5px; }
+    button.btn-xl 					{ padding: 30px 70px; font-size: 25px; border-radius: 10px; float: center;}
     </style>
 </head>
 <body>
