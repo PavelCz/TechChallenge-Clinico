@@ -18,9 +18,6 @@ import java.util.Map;
 
 public class GUI {
 
-    private Socket socket;
-    private BufferedReader in;
-    private PrintWriter out;
     private JsonArray allQuestions;
     private NewConnection connection;
     private String nurseLanguage;
@@ -317,12 +314,6 @@ public class GUI {
         initStartScreen();
         initQuestionPage();
         initReportScreen();
-    }
-
-    public void addSocket(Socket socket) throws IOException {
-        this.socket = socket;
-        in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-        out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())), true);
     }
 
     public void setConnection(NewConnection connection) {
