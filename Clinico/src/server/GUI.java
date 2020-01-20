@@ -6,6 +6,8 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.io.*;
 import java.net.Socket;
@@ -22,10 +24,8 @@ public class GUI {
     private JsonArray allQuestions;
     private NewConnection connection;
     private String nurseLanguage;
-    private List<JCheckBox> checkboxes;
-    private List<JLabel> answers;
-    private List<JLabel> severities;
     private JLabel loadingGif;
+    private JTable questionsTable;
 
     private static List<String> getAllQuestionsForLanguage(JsonArray questions, String language) {
         List<String> nurseQuestions = new ArrayList<>();
@@ -41,7 +41,7 @@ public class GUI {
     }
 
     private JPanel root;
-    private List<String> collectedAnswers = new ArrayList<>();
+
     private HashMap<String, Integer> indexMap;
 
 
@@ -63,6 +63,7 @@ public class GUI {
         UIManager.put("Label.font", newFont);
         UIManager.put("CheckBox.font", newFont);
         UIManager.put("Button.font", newFont);
+        //UIManager.put("JTable.font", newFont);
 
         JFrame frame = new JFrame("Clinico Triage System");
         // Frame properties
@@ -113,49 +114,71 @@ public class GUI {
         // Number of lines (plus 1 for the button)
         //gbc.gridheight = nurseQuestions.size() + 1;
 
-        //gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
 
         gbc.gridx = 0;
         gbc.gridy = 0;
-        questionsPanel.add(new JLabel("Fragen"), gbc);
-        gbc.gridx++;
 
-        questionsPanel.add(new JLabel("Antworten"), gbc);
+        int cursorX = 0;
 
-        gbc.gridx++;
-        questionsPanel.add(new JLabel("Severity"), gbc);
+        String [] columnNames = {" ", "Fragen", "Antworten", "Dringlichkeit"};
 
-        gbc.gridx = 0;
-        ++gbc.gridy;
-        checkboxes = new ArrayList<>();
-        answers = new ArrayList<>();
-        severities = new ArrayList<>();
+        // This is a normal model that has checkboxes in the first column
+        DefaultTableModel model = new DefaultTableModel()
+        {
+            @Override
+            public Class getColumnClass(int column)
+            {
+                return column == 0 ? Boolean.class : String.class;
+            }
+
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                // Only allow first column to be edited (checkboxes)
+                return column == 0;
+            }
+        };
+        questionsTable = new JTable(model);
+
+
+        JScrollPane jsp = new JScrollPane();
+        model.setRowCount(nurseQuestions.size());
+        model.setColumnCount(3);
+        model.setColumnIdentifiers(columnNames);
 
         // Add question list with checkboxes
         for (String text : nurseQuestions) {
-            JCheckBox checkbox = new JCheckBox(text, false);
-            checkboxes.add(checkbox);
 
-            questionsPanel.add(checkbox, gbc);
-            gbc.gridx++;
+            model.setValueAt(false, cursorX, 0);
 
-            JLabel answerLabel = new JLabel("                    ");
-            answers.add(answerLabel);
-            questionsPanel.add(answerLabel, gbc);
+            model.setValueAt(text, cursorX , 1);
 
-            gbc.gridx++;
+            cursorX++;
 
-            JLabel sev = new JLabel("");
-            severities.add(sev);
-            questionsPanel.add(sev, gbc);
-
-            gbc.gridx = 0;
-            ++gbc.gridy;
         }
+
+
+        questionsTable.getColumnModel().getColumn(0).setPreferredWidth(30);
+        questionsTable.getColumnModel().getColumn(1).setPreferredWidth(400);
+        questionsTable.getColumnModel().getColumn(2).setPreferredWidth(250);
+        questionsTable.getColumnModel().getColumn(3).setPreferredWidth(80);
+        //questionsTable.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
+
+        questionsTable.setPreferredSize(new Dimension(1000,250));
+        jsp.setPreferredSize(new Dimension(900,300));
+
+        // Add renderer for prio color
+        questionsTable.getColumnModel().getColumn(3).setCellRenderer(new StatusColumnCellRenderer());
+
+        gbc.gridwidth = 4;
+
+        jsp.setViewportView(questionsTable);
+        questionsPanel.add(jsp, gbc);
 
         // Panel title
         questionsPanel.setBorder(BorderFactory.createTitledBorder("Wählen Sie Fragen aus, die Sie stellen möchten"));
-
+        gbc.gridwidth = 1;
+        gbc.gridy++;
         // Add submit button
         JButton submitButton = new JButton("Fragen absenden");
         questionsPanel.add(submitButton, gbc);
@@ -180,15 +203,22 @@ public class GUI {
             if (!loadingGif.isVisible()) {
                 loadingGif.setVisible(true);
                 // Send allQuestions to client
-                this.submitQuestions(checkboxes, allQuestions);
+                this.submitQuestions(allQuestions);
             }
         });
 
         finishButton.addActionListener(e -> {
             StringBuilder report = new StringBuilder("Bericht:\nDer Patient hat:\n");
-            this.answers.stream().filter(label -> !label.getText().trim().equals("")).forEach(label ->
-                    report.append("- ").append(label.getText()).append("\n")
-            );
+            final int col = 2;
+            for(int i = 0; i < this.questionsTable.getModel().getRowCount(); ++i ){
+                String answer = (String) this.questionsTable.getValueAt(i, col);
+                if(answer != null && !answer.trim().equals("")) {
+                    report.append("- ").append(answer).append("\n");
+                }
+            }
+            //this.answers.stream().filter(label -> !label.getText().trim().equals("")).forEach(label ->
+            //        report.append("- ").append(label.getText()).append("\n")
+            //);
             JPanel p = (JPanel) this.root.getComponent(2);
             JTextArea t = (JTextArea) p.getComponent(0);
             t.setText(report.toString());
@@ -198,14 +228,15 @@ public class GUI {
         root.add(questionsPanel);
     }
 
-    private void submitQuestions(List<JCheckBox> checkboxes, JsonArray allQuestions) {
+    private void submitQuestions(JsonArray allQuestions) {
+        int col = 0;
         JsonArray a = new JsonArray();
-        for (int i = 0; i < checkboxes.size(); ++i) {
-            JCheckBox cb = checkboxes.get(i);
-            if (cb.isSelected()) {
+        for (int i = 0; i < this.questionsTable.getModel().getRowCount(); ++i) {
+            boolean checked = (boolean) questionsTable.getValueAt(i, col);
+            if(checked) {
                 a.add(allQuestions.get(i));
-                cb.setSelected(false);
-                cb.setForeground(Color.GRAY);
+                questionsTable.setValueAt(false, i, col);
+                // Update color?
             }
         }
         System.out.println("Sending Questions:");
@@ -216,7 +247,6 @@ public class GUI {
 
     public void receiveAnswers(String answers) {
         String language = this.nurseLanguage;
-        Color[] colors = {Color.CYAN, Color.GREEN, Color.YELLOW, Color.ORANGE, Color.RED};
 
         JsonObject jsonObj = JsonParser.parseString(answers).getAsJsonObject();
         for (Map.Entry<String, JsonElement> entry : jsonObj.entrySet()) {
@@ -232,13 +262,10 @@ public class GUI {
                     int severity = questionObject.getAsJsonObject().get("severity").getAsJsonArray().get(answerIndex).getAsInt();
                     String answer = questionObject.getAsJsonObject().get(language).getAsJsonObject().get("choices").getAsJsonArray().get(answerIndex).getAsString();
                     int questionIndex = tagToIndex(questionTag);
-                    // Update this answer in the GUI
 
-                    this.answers.get(questionIndex).setText(answer);
-                    this.severities.get(questionIndex).setText("" + severity);
-                    this.severities.get(questionIndex).setBackground(colors[severity]);
-                    // Necessary for background to be painted
-                    severities.get(questionIndex).setOpaque(true);
+                    // Update this answer in the GUI
+                    this.questionsTable.setValueAt(answer, questionIndex, 2);
+                    this.questionsTable.setValueAt(severity, questionIndex, 3);
 
                     // Go to next answer from client
                     break;
@@ -313,6 +340,44 @@ public class GUI {
         public void paintComponent(Graphics g) {
             Image image = new ImageIcon(path).getImage();
             g.drawImage(image, 0, 0, this);
+        }
+    }
+
+    public class StatusColumnCellRenderer extends DefaultTableCellRenderer {
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int col) {
+
+            //Cells are by default rendered as a JLabel.
+            JLabel l = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, col);
+            Color[] colors = {Color.CYAN, Color.GREEN, Color.YELLOW, Color.ORANGE, Color.RED};
+
+            DefaultTableModel tableModel = (DefaultTableModel) table.getModel();
+
+
+            //Get the status for the current row.
+            if (col == 1) {
+                l.setBackground(Color.GREEN);
+            } else if (col == 3) {
+                // Get prio
+                Object val = tableModel.getValueAt(row, col);
+                if (val != null && !val.equals("")) {
+                    try {
+                        int prio = (int) val; //Integer.parseInt((String) val);
+                        l.setBackground(colors[prio]);
+                    }  catch (NumberFormatException e) {
+                        // Don't change background color, this shouldn't happen
+                        l.setBackground(Color.WHITE);
+                    }
+                } else {
+                    l.setBackground(Color.WHITE);
+                }
+            } else {
+                l.setBackground(Color.WHITE);
+            }
+
+            //Return the JLabel which renders the cell.
+            return l;
+
         }
     }
 
