@@ -12,6 +12,8 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
     <script>
 
+    var HOST = '192.168.2.112';
+
     var title = "Clinico Sample GUI";
     var language = "";      
     var questions = "";
@@ -20,7 +22,7 @@
     var interval = undefined;
 
     setInterval(function() {
-      jQuery.get('http://localhost:3000/received.json', function(data) {
+      jQuery.get('http://' + HOST + ':3000/received.json', function(data) {
         console.log('gettttttting');
         questions = data;
       });
@@ -84,8 +86,8 @@
       currentquestion++;
 
       if(currentquestion == questions.length){
-        $('#submitbutton').html('SUBMIT RESULTS').removeClass('list-group-item-success').addClass('list-group-item-action list-group-item-dark').css({'border-color':'#3a87ad', 'font-size':'100%','color':'#fff'}).on('click', function(){
-          $(this).text('SUBMIT RESULTS').on('click');
+        $('#submitbutton').html('Submit Results').removeClass('list-group-item-success').addClass('list-group-item-action list-group-item-dark').css({'border-color':'#3a87ad', 'font-size':'100%','color':'#fff'}).on('click', function(){
+          $(this).text('Submit Results').on('click');
           $.post('/answers', answers)
             .done(
               function(data){
@@ -121,7 +123,7 @@
 
     function setupButtons(){
       $('.list-group-item').on('click', function(){
-        picked = $(this).attr('data-index');
+        picked = $('.list-group-item').attr('data-index');
         $('.list-group-item').removeAttr('style').off('mouseout mouseover');
         $(this).css({'font-weight':'bold', 'border-color':'#51a351', 'color':'#51a351'});
         if(submt){
@@ -237,7 +239,7 @@
         addChoices(questions[0][language]['choices']);
         
         //add submit button
-        $(document.createElement('a')).addClass('list-group-item list-group-item-action list-group-item-success').attr('id', 'submitbutton').text('- SUBMIT -').css({'font-weight':'bold'}).appendTo('#frame');
+        $(document.createElement('a')).addClass('list-group-item list-group-item-action list-group-item-success').attr('id', 'submitbutton').text('Submit').css({'font-weight':'bold'}).appendTo('#frame');
         
         setupButtons();
       } else {

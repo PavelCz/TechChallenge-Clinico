@@ -1,5 +1,6 @@
 // require express and other modules
 const express = require('express');
+const request = require('request');
 
 const app = express();
 // Express Body Parser
@@ -47,6 +48,11 @@ client.on('data', function(data) {
 /*
  * HTML Endpoints
  */
+
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  next();
+});
 
 app.get('/', function homepage(req, res) {
 	res.sendFile(__dirname + '/views/index.html');
