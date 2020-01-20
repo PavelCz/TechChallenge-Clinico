@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html>
+    <!-- jquery for maximum compatibility -->
 <head>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta http-equiv="content-type" content="width=device-width, initial-scale=1" charset="utf-8">
   <meta name="viewport" content="initial-scale=1.0">
     <title>Clinico</title>
-    <!-- jquery for maximum compatibility -->
-  <link type="text/css" rel="stylesheet" href="https://stackpath.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css">
     <!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>-->
-  <script src="https://code.jquery.com/jquery-1.11.1.min.js" integrity="sha256-VAvG3sHdS5LqTT+5A/aeq/bZGa/Uj04xKxY8KM/w9EE=" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
     <script>
 
     var title = "Clinico Sample GUI";
@@ -35,7 +35,7 @@
       if(typeof choices !== "undefined" && $.type(choices) == "array"){
         $('#choice-block').empty();
         for(var i=0;i<choices.length; i++){
-        $(document.createElement('li')).addClass('choice choice-box btn').attr('data-index', i).text(choices[i]).appendTo('#choice-block');
+        $(document.createElement('a')).addClass('list-group-item list-group-item-action').attr('data-index', i).text(choices[i]).appendTo('#choice-block');
         }
       }
     }
@@ -84,25 +84,25 @@
       currentquestion++;
 
       if(currentquestion == questions.length){
-        $('#submitbutton').html('SUBMIT RESULTS').removeClass('btn-success').addClass('btn-info').css({'border-color':'#3a87ad', 'font-size':'150%','color':'#fff'}).on('click', function(){
+        $('#submitbutton').html('SUBMIT RESULTS').removeClass('list-group-item-success').addClass('list-group-item-action list-group-item-dark').css({'border-color':'#3a87ad', 'font-size':'100%','color':'#fff'}).on('click', function(){
           $(this).text('SUBMIT RESULTS').on('click');
           $.post('/answers', answers)
-            .success(
-              function(success){
-                console.log(success)
+            .done(
+              function(data){
+                console.log(data);
               })
-            .error(
+            .fail(
               function(error){
-                console.log(error)
+                throw error;
               });
           $.post('/received.json', "Clean the Questions!")
-            .success(
-              function(success){
-                console.log(success)
+            .done(
+              function(data){
+                console.log(data);
               })
-            .error(
+            .fail(
               function(error){
-                console.log(error)
+                throw error;
               });
           setTimeout(function() {
             questions = "";
@@ -117,10 +117,12 @@
       }
     }
 
+    var submitbutton;
+
     function setupButtons(){
-      $('.choice').on('click', function(){
+      $('.list-group-item').on('click', function(){
         picked = $(this).attr('data-index');
-        $('.choice').removeAttr('style').off('mouseout mouseover');
+        $('.list-group-item').removeAttr('style').off('mouseout mouseover');
         $(this).css({'font-weight':'bold', 'border-color':'#51a351', 'color':'#51a351'});
         if(submt){
           submt=false;
@@ -143,8 +145,25 @@
       $('img').remove();
       $('li').remove();
       
-      $(document.createElement('img')).addClass('question-homeImage').attr('id', 'question-homeImage').attr('src', "https://cdn.dribbble.com/users/396827/screenshots/1733314/shuffling-cards-animation-dribble.gif").attr('alt', htmlEncode('homePage')).css({'border':'0px'}).appendTo('#frame');
-          interval = setInterval(function() {
+      $(document.createElement('br')).appendTo('#frame');
+        $(document.createElement('br')).appendTo('#frame');
+        $(document.createElement('br')).appendTo('#frame');
+        $(document.createElement('br')).appendTo('#frame');
+        $(document.createElement('br')).appendTo('#frame');
+        $(document.createElement('br')).appendTo('#frame');
+
+        var element = $(document.createElement('div')).addClass('d-flex justify-content-center').appendTo('#frame');
+
+        element.append($(document.createElement('div')).addClass('spinner-border text-danger').attr('role', 'status').css({ 'width':'12rem', 'height':'12rem', 'display':'inline-flex'}));
+
+        $(document.createElement('br')).appendTo('#frame');
+        $(document.createElement('br')).appendTo('#frame');
+        $(document.createElement('br')).appendTo('#frame');
+        $(document.createElement('br')).appendTo('#frame');
+        $(document.createElement('br')).appendTo('#frame');
+        $(document.createElement('br')).appendTo('#frame');
+
+        interval = setInterval(function() {
             if (questions !== "" && questions.length !== 0) {
               $('h2').remove();
               $('img').remove();
@@ -160,6 +179,8 @@
               $('#submitbutton').remove();
               $('#question').remove(); 
               $('br').remove();
+              $('.spinner-border').remove();
+              $('.d-flex').remove();
               submt = true;
               currentquestion = 0;
               answers = {};
@@ -216,26 +237,44 @@
         addChoices(questions[0][language]['choices']);
         
         //add submit button
-        $(document.createElement('div')).addClass('btn-success choice-box').attr('id', 'submitbutton').text('- SUBMIT -').css({'font-weight':'bold', 'font-size':'150%','color':'#fff','padding':'30px 0', 'border-radius':'10px'}).appendTo('#frame');
+        $(document.createElement('a')).addClass('list-group-item list-group-item-action list-group-item-success').attr('id', 'submitbutton').text('- SUBMIT -').css({'font-weight':'bold'}).appendTo('#frame');
         
         setupButtons();
       } else {
-          $(document.createElement('img')).addClass('question-homeImage').attr('id', 'question-homeImage').attr('src', "https://cdn.dribbble.com/users/396827/screenshots/1733314/shuffling-cards-animation-dribble.gif").attr('alt', htmlEncode('homePage')).css({'border':'0px'}).appendTo('#frame');
-          interval = setInterval(function() {
+
+      	$(document.createElement('p')).addClass('pager').attr('id','pager').text('Please Wait!').appendTo('#frame');
+
+      	$(document.createElement('br')).appendTo('#frame');
+        $(document.createElement('br')).appendTo('#frame');
+        $(document.createElement('br')).appendTo('#frame');
+        $(document.createElement('br')).appendTo('#frame');
+        $(document.createElement('br')).appendTo('#frame');
+        $(document.createElement('br')).appendTo('#frame');
+
+        var element = $(document.createElement('div')).addClass('d-flex justify-content-center').appendTo('#frame');
+
+        element.append($(document.createElement('div')).addClass('spinner-border text-danger').attr('role', 'status').css({ 'width':'12rem', 'height':'12rem', 'display':'inline-flex'}));
+
+        $(document.createElement('br')).appendTo('#frame');
+        $(document.createElement('br')).appendTo('#frame');
+        $(document.createElement('br')).appendTo('#frame');
+        $(document.createElement('br')).appendTo('#frame');
+        $(document.createElement('br')).appendTo('#frame');
+        $(document.createElement('br')).appendTo('#frame');
+
+        interval = setInterval(function() {
             if (questions !== "" && questions.length !== 0) {
+              $('br').remove();
+              $('.spinner-border').remove();
+              $('.d-flex').remove();
               $('h2').remove();
-              $('img').remove();
+              $('pager').empty();
+              $('p').remove();
               initQuestion();
             }
-          }, 500);
+        }, 500);
       }
     }
-
-    /*function wait () {
-      console.log('before');
-      setTimeout(function(){},5000); // after 5 seconds
-      console.log('after');
-    }*/
 
     function startQuestions(){
       if (language !== '') {
@@ -407,15 +446,12 @@
     <div id="frame" role="content"></div>
 </div>
 <hr>
-<div class="form-group rsform-block rsform-block-placecontent">
-  <label class="col-sm-3 control-label formControlLabel" data-toggle="tooltip" title="" for="placecontent"></label>
-  <div class="col-sm-6 formControls">
-    <textarea cols="50" rows="5" name="form[placecontent]" id="placecontent" readonly="" class="rsform-text-box form-control rsform-text-box"></textarea>     
-  </div>
-</div>  
+
+ 
   
 <div class="col-sm-6 formControls rsform-block-submit">
   <button type="submit" name="form[submit]" id="submit" onclick="copyText()" class="rsform-submit-button  btn btn-primary">Submit Answers</button>      
-</div>  
+</div> 
+
 </body>
 </html>
