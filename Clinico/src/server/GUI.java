@@ -18,6 +18,9 @@ import java.util.Map;
 
 public class GUI {
 
+    // GUI parameters
+    final int FONTSIZE = 18;
+
     private JsonArray allQuestions;
     private NewConnection connection;
     private String nurseLanguage;
@@ -118,14 +121,12 @@ public class GUI {
 
         int cursorX = 0;
 
-        String [] columnNames = {" ", "Fragen", "Antworten", "Dringlichkeit"};
+        String[] columnNames = {" ", "Fragen", "Antworten", "Dringlichkeit"};
 
         // This is a normal model that has checkboxes in the first column
-        DefaultTableModel model = new DefaultTableModel()
-        {
+        DefaultTableModel model = new DefaultTableModel() {
             @Override
-            public Class getColumnClass(int column)
-            {
+            public Class getColumnClass(int column) {
                 return column == 0 ? Boolean.class : String.class;
             }
 
@@ -148,7 +149,7 @@ public class GUI {
 
             model.setValueAt(false, cursorX, 0);
 
-            model.setValueAt(text, cursorX , 1);
+            model.setValueAt(text, cursorX, 1);
 
             cursorX++;
 
@@ -161,11 +162,16 @@ public class GUI {
         questionsTable.getColumnModel().getColumn(3).setPreferredWidth(80);
         //questionsTable.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
 
-        questionsTable.setPreferredSize(new Dimension(1000,250));
-        jsp.setPreferredSize(new Dimension(900,300));
+        questionsTable.setPreferredSize(new Dimension(1000, 300));
+        jsp.setPreferredSize(new Dimension(900, 350));
 
         // Add renderer for prio color
         questionsTable.getColumnModel().getColumn(3).setCellRenderer(new StatusColumnCellRenderer());
+        Font oldFont = questionsTable.getFont();
+
+        questionsTable.setFont(new Font(oldFont.getName(), oldFont.getStyle(), FONTSIZE));
+
+        questionsTable.setRowHeight(FONTSIZE+4);
 
         gbc.gridwidth = 4;
 
@@ -207,9 +213,9 @@ public class GUI {
         finishButton.addActionListener(e -> {
             StringBuilder report = new StringBuilder("Bericht:\nDer Patient hat:\n");
             final int col = 2;
-            for(int i = 0; i < this.questionsTable.getModel().getRowCount(); ++i ){
+            for (int i = 0; i < this.questionsTable.getModel().getRowCount(); ++i) {
                 String answer = (String) this.questionsTable.getValueAt(i, col);
-                if(answer != null && !answer.trim().equals("")) {
+                if (answer != null && !answer.trim().equals("")) {
                     report.append("- ").append(answer).append("\n");
                 }
             }
@@ -230,7 +236,7 @@ public class GUI {
         JsonArray a = new JsonArray();
         for (int i = 0; i < this.questionsTable.getModel().getRowCount(); ++i) {
             boolean checked = (boolean) questionsTable.getValueAt(i, col);
-            if(checked) {
+            if (checked) {
                 a.add(allQuestions.get(i));
                 questionsTable.setValueAt(false, i, col);
                 // Update color?
@@ -355,7 +361,7 @@ public class GUI {
                     try {
                         int prio = (int) val; //Integer.parseInt((String) val);
                         l.setBackground(colors[prio]);
-                    }  catch (NumberFormatException e) {
+                    } catch (NumberFormatException e) {
                         // Don't change background color, this shouldn't happen
                         l.setBackground(Color.WHITE);
                     }
