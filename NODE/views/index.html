@@ -40,6 +40,42 @@
       "bg":  "Въпрос: Къде чувствате най-силна болка? Моля, посочете с пръст."
     };
 
+    var Qmsg = {
+      "en":  "Question ",
+      "de":  "Frage ",
+      "es":  "Pregunta ",
+      "tr":  "Soru ",
+      "ru":  "Вопрос ",
+      "bg":  "Въпрос "
+    };
+
+    var continueMSG = {
+      "en":  "Continue",
+      "de":  "Weiter",
+      "es":  "Seguente",
+      "tr":  "Sürdürmek",
+      "ru":  "Продолжать",
+      "bg":  "Продължи"
+    };
+
+    var submitMSG = {
+      "en":  "Submit",
+      "de":  "Senden",
+      "es":  "Enviar",
+      "tr":  "Sunmak",
+      "ru":  "Разместить",
+      "bg":  "Изпрати"
+    };
+
+    var waitMSG = {
+      "en":  "Please Wait!",
+      "de":  "Bitte warten!",
+      "es":  "Por favor espera!",
+      "tr":  "Lütfen bekleyin!",
+      "ru":  "Пожалуйста, подождите!",
+      "bg":  "Моля изчакайте!"
+    };
+
     setInterval(function() {
       jQuery.get('http://' + HOST + ':3000/received.json', function(data) {
         console.log('gettttttting');
@@ -64,7 +100,7 @@
     function nextQuestion(){
       //$('#explanation').empty();
       $('#question').text(questions[currentquestion][language]['question']);
-      $('#pager').text('Question ' + Number(currentquestion + 1) + ' of ' + questions.length);
+      $('#pager').text(Qmsg[language] + Number(currentquestion + 1) + ' / ' + questions.length);
       if(questions[currentquestion].hasOwnProperty('image') && questions[currentquestion]['image'] != ""){
         if($('#question-image').length == 0){
           $(document.createElement('img')).addClass('question-image').attr('id', 'question-image').attr('src', questions[currentquestion]['image'].replace("localhost", HOST)).attr('alt', htmlEncode(questions[currentquestion]['question'])).insertAfter('#question');
@@ -75,6 +111,11 @@
         $('#question-image').remove();
       }
       addChoices(questions[currentquestion][language]['choices']);
+      if (currentquestion === questions.length - 1) {
+      	$('#submitbutton').text(submitMSG[language]);
+      } else {
+      	$('#submitbutton').text(continueMSG[language]);
+      }
       setupButtons();
       
       jQuery(document).ready(function($){
@@ -152,7 +193,7 @@
     }
 
     function waitForQuestions(){
-      document.getElementById("pager").innerHTML = "Please Wait!";
+      document.getElementById("pager").innerHTML = waitMSG[language];
       $('#explanation').empty();
       $('#question').empty();
       $('#choice-block').empty();
@@ -230,7 +271,7 @@
       //add pager and questions
       if(typeof questions !== "undefined" && questions !== "" && questions.length !== 0){
         //add pager
-        $(document.createElement('p')).addClass('pager').attr('id','pager').text('Question 1 of ' + questions.length).appendTo('#frame');
+        $(document.createElement('p')).addClass('pager').attr('id','pager').text(Qmsg[language] + '1 / ' + questions.length).appendTo('#frame');
         //add first question
         $(document.createElement('h3')).addClass('question').attr('id', 'question').text(questions[0][language]['question']).appendTo('#frame');
         //add image if present
@@ -250,12 +291,16 @@
         addChoices(questions[0][language]['choices']);
         
         //add submit button
-        $(document.createElement('a')).addClass('list-group-item list-group-item-action list-group-item-success').attr('id', 'submitbutton').text('Submit').css({'font-weight':'bold', 'text-align': 'center'}).appendTo('#frame');
+        if (currentquestion === questions.length - 1) {
+        	$(document.createElement('a')).addClass('list-group-item list-group-item-action list-group-item-success').attr('id', 'submitbutton').text(submitMSG[language]).css({'font-weight':'bold', 'text-align': 'center'}).appendTo('#frame');
+    	} else {
+    		$(document.createElement('a')).addClass('list-group-item list-group-item-action list-group-item-success').attr('id', 'submitbutton').text(continueMSG[language]).css({'font-weight':'bold', 'text-align': 'center'}).appendTo('#frame');
+    	}
         
         setupButtons();
       } else {
 
-      	$(document.createElement('p')).addClass('pager').attr('id','pager').text('Please Wait!').appendTo('#frame');
+      	$(document.createElement('p')).addClass('pager').attr('id','pager').text(waitMSG[language]).appendTo('#frame');
 
       	$(document.createElement('br')).appendTo('#frame');
         $(document.createElement('br')).appendTo('#frame');
@@ -326,7 +371,7 @@
 
         	$(document.createElement('br')).appendTo('#frame');
 
-        	$(document.createElement('a')).addClass('list-group-item list-group-item-action list-group-item-success').attr('id', 'submitbutton').text('Proceed').css({'font-weight':'bold', 'text-align': 'center'}).appendTo('#frame');
+        	$(document.createElement('a')).addClass('list-group-item list-group-item-action list-group-item-success').attr('id', 'submitbutton').text(continueMSG[language]).css({'font-weight':'bold', 'text-align': 'center'}).appendTo('#frame');
 
           	$('#submitbutton').on('click', function(){
             	$('.choice').off('click');
@@ -442,8 +487,6 @@
         $(document.createElement('br')).appendTo('#frame');
         $(document.createElement('br')).appendTo('#frame');
         $(document.createElement('br')).appendTo('#frame');
-
-        //$(document.createElement('img')).addClass('question-button').attr('id', 'question-button').attr('src', "http://www.clker.com/cliparts/a/C/M/J/6/Y/start-hi.png").attr('onmouseover', '').attr('style', 'cursor:pointer').appendTo('#frame');
 
         var start = $(document.createElement('div')).addClass('col text-center').appendTo('#frame');
 
