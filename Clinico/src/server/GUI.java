@@ -9,8 +9,8 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.io.*;
-import java.net.Socket;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -218,23 +218,7 @@ public class GUI {
             }
         });
 
-        finishButton.addActionListener(e -> {
-            StringBuilder report = new StringBuilder("Bericht:\nDer Patient hat:\n");
-            final int col = 2;
-            for (int i = 0; i < this.questionsTable.getModel().getRowCount(); ++i) {
-                String answer = (String) this.questionsTable.getValueAt(i, col);
-                if (answer != null && !answer.trim().equals("")) {
-                    report.append("- ").append(answer).append("\n");
-                }
-            }
-            //this.answers.stream().filter(label -> !label.getText().trim().equals("")).forEach(label ->
-            //        report.append("- ").append(label.getText()).append("\n")
-            //);
-            JPanel p = (JPanel) this.root.getComponent(2);
-            JTextArea t = (JTextArea) p.getComponent(0);
-            t.setText(report.toString());
-            this.next();
-        });
+        finishButton.addActionListener(this::finishAction);
 
         root.add(questionsPanel);
     }
@@ -334,6 +318,30 @@ public class GUI {
         this.connection = connection;
     }
 
+    private void finishAction(ActionEvent e) {
+        // Generate the report
+        StringBuilder report = new StringBuilder("Bericht:\nDer Patient hat:\n");
+        final int col = 2;
+        for (int i = 0; i < this.questionsTable.getModel().getRowCount(); ++i) {
+            String answer = (String) this.questionsTable.getValueAt(i, col);
+            if (answer != null && !answer.trim().equals("")) {
+                report.append("- ").append(answer).append("\n");
+            }
+        }
+        JPanel p = (JPanel) this.root.getComponent(2);
+        JTextArea t = (JTextArea) p.getComponent(0);
+        t.setText(report.toString());
+
+        // Send the client the ending command
+        this.connection.sendToClient("{\"command\": \"end\"}");
+
+        // Go to next screen
+        this.next();
+    }
+
+    /**
+     * This class allows haveing a panel that has a background image
+     */
     private class ImagePanel extends JPanel {
         private String path;
 
