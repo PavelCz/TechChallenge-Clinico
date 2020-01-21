@@ -148,7 +148,7 @@
         ]
       },
       "de": {
-        "question": "Frage: Wann hatten Sie das letzte mal Stuhlgang?",
+        "question": "Frage: Haben Sie Fieber?",
         "choices": [
           "Starkes Fieber",
           "Leichtes Fieber",
@@ -204,9 +204,8 @@
       "tag": "General-Question-Allergies",
       "image": "http://localhost:3000/images/9.png",
       "severity": [
-        1,
-        2,
-        3
+        0,
+        0
       ],
       "en": {
         "question": "Question: Do you suffer from allergies?",
@@ -218,7 +217,7 @@
       "de": {
         "question": "Frage: Haben Sie Allergien?",
         "choices": [
-          "Allergien bekannt gegen ",
+          "Allergien bekannt",
           "Keine Allergien bekannt"
         ]
       }
@@ -227,9 +226,9 @@
       "tag": "General-Question-Allergies2",
       "image": "http://localhost:3000/images/9.png",
       "severity": [
-        1,
-        2,
-        3
+        0,
+        0
+
       ],
       "en": {
         "question": "Question: What are you allergic to?",
@@ -241,8 +240,8 @@
       "de": {
         "question": "Frage: Wogegen sind sie allergisch?",
         "choices": [
-          "Medizinische Substanzen",
-          ", nicht relevant"
+          "Allergie gegen Medizinische Substanzen",
+          "Keine relevanten Allergien"
         ]
       }
     },
@@ -250,21 +249,20 @@
       "tag": "General-Question-Medication",
       "image": "http://localhost:3000/images/4.png",
       "severity": [
-        1,
-        2,
-        3
+        0,
+        0
       ],
       "en": {
         "question": "Question: Are you currently taking any medication?",
         "choices": [
-          "free text field",
+          "Yes",
           "No"
         ]
       },
       "de": {
         "question": "Frage: Nehmen sie aktuell Medikamente ein?",
         "choices": [
-          "Patient nimmt folgende Medikamente: ",
+          "Patient nimmt Medikamente",
           "Patient nimmt aktuell keine Medikamente"
         ]
       }
@@ -273,9 +271,11 @@
       "tag": "General-Question-History",
       "image": "http://localhost:3000/images/5.png",
       "severity": [
-        1,
-        2,
-        3
+        0,
+        0,
+        0,
+        0,
+        0
       ],
       "en": {
         "question": "Question: Have you had any abdominal surgery?",
