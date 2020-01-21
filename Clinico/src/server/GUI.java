@@ -304,6 +304,13 @@ public class GUI {
         this.connection = connection;
     }
 
+    public void clearAnswers() {
+        for (int row = 0; row < this.questionsTable.getModel().getRowCount(); ++row) {
+            this.questionsTable.setValueAt("", row, 2);
+            this.questionsTable.setValueAt("", row, 3);
+        }
+    }
+
     private void finishAction(ActionEvent e) {
         // Generate the report
 
@@ -314,9 +321,14 @@ public class GUI {
         for (int i = 0; i < this.questionsTable.getModel().getRowCount(); ++i) {
             Object obj = this.questionsTable.getValueAt(i, col);
             if (obj != null) {
-                int sev = (int) obj;
-                if (sev > maxSeverity) {
-                    maxSeverity = sev;
+                try {
+                    // If we get a string it will be "", tehrefore this is not a filled out cell
+                    String s = (String) obj;
+                } catch (ClassCastException c) {
+                    int sev = (int) obj;
+                    if (sev > maxSeverity) {
+                        maxSeverity = sev;
+                    }
                 }
             }
         }
@@ -342,6 +354,8 @@ public class GUI {
 
         // Send the client the ending command
         this.connection.sendToClient("{\"command\": \"end\"}");
+
+        this.clearAnswers();
 
         // Go to next screen
         this.next();
