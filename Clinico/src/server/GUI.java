@@ -19,7 +19,7 @@ import java.util.Map;
 public class GUI {
 
     // GUI parameters
-    final int FONTSIZE = 18;
+    private final int FONTSIZE = 18;
 
     private JsonArray allQuestions;
     private NewConnection connection;
@@ -121,6 +121,10 @@ public class GUI {
         gbc.gridy = 0;
 
         int cursorX = 0;
+
+        questionsPanel.add(new JLabel("Schmerzbild: Abdomineller Schmerz"));
+
+        gbc.gridy++;
 
         String[] columnNames = {" ", "Fragen", "Antworten", "Dringlichkeit"};
 
