@@ -298,14 +298,6 @@ public class GUI {
         this.root.add(panel);
     }
 
-    public static void main(String[] args) {
-        GUI m = new GUI();
-        m.initGUI();
-        m.initStartScreen();
-        m.initQuestionPage();
-        m.initReportScreen();
-    }
-
     public void startGUI() {
 
         this.initGUI();

@@ -43,7 +43,7 @@ public class ServerProgram {
 				Socket socket = s.accept();
 				try {
 					//gui.addSocket(socket);
-					NewConnection connection = new NewConnection(socket, "/");
+					NewConnection connection = new NewConnection(socket);
 					Thread t = new Thread(connection);
 					t.start();
 					gui.setConnection(connection);
