@@ -20,6 +20,16 @@
           "No pain"
         ]
       },
+      "es": {
+        "question": "Pregunta: ¿Qual es la gravedad de su dolor?",
+        "choices": [
+          "Insoportable",
+          "Dolor grave",
+          "Dolor moderado",
+          "Dolor leve",
+          "No dolor"
+        ]
+      },
       "de": {
         "question": "Frage: Wie stark sind Ihre Schmerzen?",
         "choices": [
@@ -43,6 +53,13 @@
         "choices": [
           "Yes, I have Problems breathing",
           "No, I can breath normally"
+        ]
+      },
+      "es": {
+        "question": "Pregunta: ¿Usted tiene falta de aire agudo?",
+        "choices": [
+          "Si, tengo problemas respirando",
+          "No, respiro normalmente"
         ]
       },
       "de": {
@@ -69,6 +86,14 @@
           "No, I did not vomit"
         ]
       },
+      "es": {
+        "question": "Pregunta: ¿Ustéd tuvo que vomitar?",
+        "choices": [
+          "Si, y hubo sangre en el vomito",
+          "Si, pero no hubo sangre",
+          "No, no vomité"
+        ]
+      },
       "de": {
         "question": "Frage: Mussten Sie sich übergeben?",
         "choices": [
@@ -92,6 +117,14 @@
           "1-2 times",
           "3-4 times",
           "5 or more times"
+        ]
+      },
+      "es": {
+        "question": "Pregunta: ¿Cuantas veces ha vomitado en los ultimos 24 horas?",
+        "choices": [
+          "1-2 veces",
+          "3-4 veces",
+          "5 o mas"
         ]
       },
       "de": {
@@ -121,6 +154,15 @@
           "No, my bowel movement was normal"
         ]
       },
+      "es": {
+        "question": "Pregunta: ¿Usted ha tenido tenido con su ultimo defecación?",
+        "choices": [
+          "Si, tuve diarrea",
+          "Si, y hubo sangre en la diarrea",
+          "Si, y tuve entreñimiento",
+          "No, mi defecación fue normal"
+        ]
+      },
       "de": {
         "question": "Frage: Hatten Sie Probleme bei Ihrem letzten Stuhlgang?",
         "choices": [
@@ -147,6 +189,14 @@
           "No, I feel normal"
         ]
       },
+      "es": {
+        "question": "Pregunta: ¿Has tenido fiebre?",
+        "choices": [
+          "Si, y me siento muy caliente",
+          "Si, y me siento un poco caliente",
+          "No, me siento normal"
+        ]
+      },
       "de": {
         "question": "Frage: Haben Sie Fieber?",
         "choices": [
@@ -167,6 +217,13 @@
         "question": "Question: Does the pain radiate to the back?",
         "choices": [
           "Yes",
+          "No"
+        ]
+      },
+      "es": {
+        "question": "Pregunta: ¿Difunde el dolor en la espalda?",
+        "choices": [
+          "Si",
           "No"
         ]
       },
@@ -192,6 +249,13 @@
           "No"
         ]
       },
+      "es": {
+        "question": "Pregunta: ¿Difunde el dolor en el hombro?",
+        "choices": [
+          "Si",
+          "No"
+        ]
+      },
       "de": {
         "question": "Frage: Strahlen die Schmerzen in die Schulter ab?",
         "choices": [
@@ -214,10 +278,17 @@
           "No"
         ]
       },
+      "es": {
+        "question": "Pregunta: ¿Usted tiene alergías?",
+        "choices": [
+          "Si",
+          "No"
+        ]
+      },
       "de": {
         "question": "Frage: Haben Sie Allergien?",
         "choices": [
-          "Allergien bekannt",
+          "Allergien vorhanden",
           "Keine Allergien bekannt"
         ]
       }
@@ -237,10 +308,17 @@
           "Other - e.g. food, animal dander, hay fever..."
         ]
       },
+      "es": {
+        "question": "Pregunta: ¿De cual natura son sus alergias?",
+        "choices": [
+          "Medicinas - p.e. ibuprofen, aspirin, penecilin, antibioticas",
+          "Otras - p.e. alimentos, caspa animal, fiebre de heno"
+        ]
+      },
       "de": {
         "question": "Frage: Wogegen sind sie allergisch?",
         "choices": [
-          "Allergie gegen Medizinische Substanzen",
+          "Allergien gegen Medizinische Substanzen",
           "Keine relevanten Allergien"
         ]
       }
@@ -256,6 +334,13 @@
         "question": "Question: Are you currently taking any medication?",
         "choices": [
           "Yes",
+          "No"
+        ]
+      },
+      "es": {
+        "question": "Pregunta: ¿Estas tomando algun medicación?",
+        "choices": [
+          "Si",
           "No"
         ]
       },
@@ -285,6 +370,16 @@
           "Yes, by the gall",
           "Yes, on the intestines",
           "Yes, Other"
+        ]
+      },
+      "es": {
+        "question": "Pregunta: ¿Has tenido algun operación abdominal?",
+        "choices": [
+          "No, no ha tenido ninguna operación abdominal",
+          "Si, me tomaron el ciego",
+          "Si, al hiel",
+          "Si, en los intestines",
+          "Si, otras"
         ]
       },
       "de": {
