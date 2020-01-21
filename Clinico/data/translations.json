@@ -49,6 +49,26 @@
           "Hafif ağrı",
           "Acı yok"
         ]
+      },
+      "ru": {
+        "question": "Question: What is the severity of the pain?",
+        "choices": [
+          "Unendurable, excruciating pain",
+          "Severe pain",
+          "Moderate pain",
+          "Mild pain",
+          "No pain"
+        ]
+      },
+      "bg": {
+        "question": "Question: What is the severity of the pain?",
+        "choices": [
+          "Unendurable, excruciating pain",
+          "Severe pain",
+          "Moderate pain",
+          "Mild pain",
+          "No pain"
+        ]
       }
     },
     {
@@ -84,6 +104,20 @@
         "choices": [
           "Evet, nefes almakta zorlanıyorum",
           "Hayır, normal nefes alabilirim"
+        ]
+      },
+      "ru": {
+        "question": "Question: Are you in acute shortness of breath?",
+        "choices": [
+          "Yes, I have problems breathing",
+          "No, I can breath normally"
+        ]
+      },
+      "bg": {
+        "question": "Question: Are you in acute shortness of breath?",
+        "choices": [
+          "Yes, I have problems breathing",
+          "No, I can breath normally"
         ]
       }
     },
@@ -126,6 +160,22 @@
           "Evet, ama kusmukta kan yoktu",
           "Hayır, kusmadım"
         ]
+      },
+      "ru": {
+        "question": "Question: Did you have to vomit?",
+        "choices": [
+          "Yes, and there was blood in the vomit",
+          "Yes, but there was no blood in the vomit",
+          "No, I did not vomit"
+        ]
+      },
+      "bg": {
+        "question": "Question: Did you have to vomit?",
+        "choices": [
+          "Yes, and there was blood in the vomit",
+          "Yes, but there was no blood in the vomit",
+          "No, I did not vomit"
+        ]
       }
     },
     {
@@ -166,6 +216,22 @@
           "1-2 kez",
           "3-4 kez",
           "5 ve daha fazla"
+        ]
+      },
+      "ru": {
+        "question": "Question: How often did you vomit in the last 24 hours?",
+        "choices": [
+          "1-2 times",
+          "3-4 times",
+          "5 or more times"
+        ]
+      },
+      "bg": {
+        "question": "Question: How often did you vomit in the last 24 hours?",
+        "choices": [
+          "1-2 times",
+          "3-4 times",
+          "5 or more times"
         ]
       }
     },
@@ -213,6 +279,24 @@
           "Evet, kabızlık problemi yaşıyorum",
           "Hayır, bağırsak hareketlerim normal"
         ]
+      },
+      "ru": {
+        "question": "Question: Did you have any problems with your last bowel movement?",
+        "choices": [
+          "Yes, I had diarrhea",
+          "Yes, I had diarrhea and there was blood in the feces",
+          "Yes, I suffer from constipation",
+          "No, my bowel movement was normal"
+        ]
+      },
+      "bg": {
+        "question": "Question: Did you have any problems with your last bowel movement?",
+        "choices": [
+          "Yes, I had diarrhea",
+          "Yes, I had diarrhea and there was blood in the feces",
+          "Yes, I suffer from constipation",
+          "No, my bowel movement was normal"
+        ]
       }
     },
     {
@@ -254,6 +338,22 @@
           "Evet, biraz ateşim olduğunu hissediyorum",
           "Hayır, ateşim yok."
         ]
+      },
+      "ru": {
+        "question": "Question: Do you have a fever?",
+        "choices": [
+          "Yes, I feel very hot",
+          "Yes, I feel kind of hot",
+          "No, I feel normal"
+        ]
+      },
+      "bg": {
+        "question": "Question: Do you have a fever?",
+        "choices": [
+          "Yes, I feel very hot",
+          "Yes, I feel kind of hot",
+          "No, I feel normal"
+        ]
       }
     },
     {
@@ -289,6 +389,20 @@
         "choices": [
           "Evet",
           "Hayır"
+        ]
+      },
+      "ru": {
+        "question": "Question: Does the pain radiate to the back?",
+        "choices": [
+          "Yes",
+          "No"
+        ]
+      },
+      "bg": {
+        "question": "Question: Does the pain radiate to the back?",
+        "choices": [
+          "Yes",
+          "No"
         ]
       }
     },
@@ -326,6 +440,20 @@
           "Evet",
           "Hayır"
         ]
+      },
+      "ru": {
+        "question": "Question: Does the pain radiate to the shoulder?",
+        "choices": [
+          "Yes",
+          "No"
+        ]
+      },
+      "bg": {
+        "question": "Question: Does the pain radiate to the shoulder?",
+        "choices": [
+          "Yes",
+          "No"
+        ]
       }
     },
     {
@@ -361,6 +489,20 @@
         "choices": [
           "Evet",
           "Hayır"
+        ]
+      },
+      "ru": {
+        "question": "Question: Do you suffer from allergies?",
+        "choices": [
+          "Yes",
+          "No"
+        ]
+      },
+      "bg": {
+        "question": "Question: Do you suffer from allergies?",
+        "choices": [
+          "Yes",
+          "No"
         ]
       }
     },
@@ -399,6 +541,20 @@
           "İlaçlar: ibuprofen, aspirin, penisilin, antibiyotik",
           "Diğer : yiyecekler, hayvan tüyü, polen"
         ]
+      },
+      "ru": {
+        "question": "Question: What are you allergic to?",
+        "choices": [
+          "Medicines - e.g. ibuprofen, aspirin, penecilin, antibiotics",
+          "Other - e.g. food, animal dander, hay fever..."
+        ]
+      },
+      "bg": {
+        "question": "Question: What are you allergic to?",
+        "choices": [
+          "Medicines - e.g. ibuprofen, aspirin, penecilin, antibiotics",
+          "Other - e.g. food, animal dander, hay fever..."
+        ]
       }
     },
     {
@@ -435,7 +591,21 @@
           "Evet",
           "Hayır"
         ]
-      }
+      },
+      "ru": {
+        "question": "Question: Are you currently taking any medication?",
+        "choices": [
+          "Yes",
+          "No"
+        ]
+      },
+      "bg": {
+        "question": "Question: Are you currently taking any medication?",
+        "choices": [
+          "Yes",
+          "No"
+        ]
+      },
     },
     {
       "tag": "General-Question-History",
@@ -485,6 +655,26 @@
           "Evet, safra kesesi ameliyatı geçirdim",
           "Evet, bağırsaklarımdan ameliyat geçirdim",
           "Evet, diğer"
+        ]
+      },
+      "ru": {
+        "question": "Question: Have you had any abdominal surgery?",
+        "choices": [
+          "No, I have not had any abdominal surgery",
+          "Yes, I had my caecum out",
+          "Yes, by the gall",
+          "Yes, on the intestines",
+          "Yes, Other"
+        ]
+      },
+      "bg": {
+        "question": "Question: Have you had any abdominal surgery?",
+        "choices": [
+          "No, I have not had any abdominal surgery",
+          "Yes, I had my caecum out",
+          "Yes, by the gall",
+          "Yes, on the intestines",
+          "Yes, Other"
         ]
       }
     }
