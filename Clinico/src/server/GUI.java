@@ -11,6 +11,7 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.io.*;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -129,18 +130,7 @@ public class GUI {
         String[] columnNames = {" ", "Fragen", "Antworten", "Dringlichkeit"};
 
         // This is a normal model that has checkboxes in the first column
-        DefaultTableModel model = new DefaultTableModel() {
-            @Override
-            public Class getColumnClass(int column) {
-                return column == 0 ? Boolean.class : String.class;
-            }
-
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                // Only allow first column to be edited (checkboxes)
-                return column == 0;
-            }
-        };
+        MyDefaultTableModel model = new MyDefaultTableModel();
         questionsTable = new JTable(model);
 
 
@@ -159,6 +149,8 @@ public class GUI {
             cursorX++;
 
         }
+
+        model.initAskedQuestions(nurseQuestions.size());
 
 
         questionsTable.getColumnModel().getColumn(0).setPreferredWidth(30);
@@ -231,10 +223,12 @@ public class GUI {
             if (checked) {
                 a.add(allQuestions.get(i));
                 questionsTable.setValueAt(false, i, col);
-                // Update color (gray)?
+
+                // For updating text color (gray)
+                ((MyDefaultTableModel) questionsTable.getModel()).setAskedQuestion(i);
             }
         }
-        if(a.size() >0) {
+        if (a.size() > 0) {
             loadingGif.setVisible(true);
             this.connection.sendToClient(a.toString());
         }
@@ -349,20 +343,26 @@ public class GUI {
     }
 
     public class StatusColumnCellRenderer extends DefaultTableCellRenderer {
+
         @Override
         public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int col) {
 
             //Cells are by default rendered as a JLabel.
             JLabel l = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, col);
-            Color[] colors = {Color.CYAN, Color.GREEN, Color.YELLOW, Color.ORANGE, Color.RED};
 
-            DefaultTableModel tableModel = (DefaultTableModel) table.getModel();
+            MyDefaultTableModel tableModel = (MyDefaultTableModel) table.getModel();
 
 
             //Get the status for the current row.
             if (col == 1) {
-                l.setBackground(Color.GREEN);
+                // Make already asked answers gray
+                if (tableModel.wasAsked(row)) {
+                    l.setForeground(Color.GRAY);
+                    System.out.println("YES");
+                }
             } else if (col == 3) {
+                Color[] colors = {Color.CYAN, Color.GREEN, Color.YELLOW, Color.ORANGE, Color.RED};
+                // For the severity column change color according to prio
                 // Get prio
                 Object val = tableModel.getValueAt(row, col);
                 if (val != null && !val.equals("")) {
@@ -383,6 +383,37 @@ public class GUI {
             //Return the JLabel which renders the cell.
             return l;
 
+        }
+
+
+    }
+
+    public class MyDefaultTableModel extends DefaultTableModel {
+        private boolean[] askedQuestions;
+
+        public void initAskedQuestions(int size) {
+            askedQuestions = new boolean[size];
+
+        }
+
+        public void setAskedQuestion(int row) {
+            askedQuestions[row] = true;
+        }
+
+        public boolean wasAsked(int row) {
+            return askedQuestions[row];
+        }
+
+
+        @Override
+        public Class getColumnClass(int column) {
+            return column == 0 ? Boolean.class : String.class;
+        }
+
+        @Override
+        public boolean isCellEditable(int row, int column) {
+            // Only allow first column to be edited (checkboxes)
+            return column == 0;
         }
     }
 
