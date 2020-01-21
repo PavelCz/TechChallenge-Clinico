@@ -306,17 +306,39 @@ public class GUI {
 
     private void finishAction(ActionEvent e) {
         // Generate the report
-        StringBuilder report = new StringBuilder("Bericht:\nDer Patient hat:\n");
-        final int col = 2;
+
+        // Get the severities
+        int col = 3;
+        String[] severityNames = {"BLAU", "GRÜN", "GELB", "ORANGE", "ROT"};
+        int maxSeverity = 0;
+        for (int i = 0; i < this.questionsTable.getModel().getRowCount(); ++i) {
+            Object obj = this.questionsTable.getValueAt(i, col);
+            if (obj != null) {
+                int sev = (int) obj;
+                if (sev > maxSeverity) {
+                    maxSeverity = sev;
+                }
+            }
+        }
+        StringBuilder report = new StringBuilder();
+        report.append("Die Dringlichkeitseinstufung ist: " + severityNames[maxSeverity] + "\n");
+
+
+        report.append("Bericht:\nDer Patient hat folgende Beschwerden:\n");
+        col = 2;
+        // Get the answers
         for (int i = 0; i < this.questionsTable.getModel().getRowCount(); ++i) {
             String answer = (String) this.questionsTable.getValueAt(i, col);
             if (answer != null && !answer.trim().equals("")) {
                 report.append("- ").append(answer).append("\n");
             }
         }
+        // Add report to textarea
         JPanel p = (JPanel) this.root.getComponent(2);
         JTextArea t = (JTextArea) p.getComponent(0);
         t.setText(report.toString());
+        t.setPreferredSize(new Dimension(400, 400));
+
 
         // Send the client the ending command
         this.connection.sendToClient("{\"command\": \"end\"}");
