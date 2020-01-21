@@ -212,7 +212,6 @@ public class GUI {
         // Add button action
         submitButton.addActionListener(e -> {
             if (!loadingGif.isVisible()) {
-                loadingGif.setVisible(true);
                 // Send allQuestions to client
                 this.submitQuestions(allQuestions);
             }
@@ -226,18 +225,19 @@ public class GUI {
     private void submitQuestions(JsonArray allQuestions) {
         int col = 0;
         JsonArray a = new JsonArray();
+        //
         for (int i = 0; i < this.questionsTable.getModel().getRowCount(); ++i) {
             boolean checked = (boolean) questionsTable.getValueAt(i, col);
             if (checked) {
                 a.add(allQuestions.get(i));
                 questionsTable.setValueAt(false, i, col);
-                // Update color?
+                // Update color (gray)?
             }
         }
-        System.out.println("Sending Questions:");
-        System.out.println(a);
-
-        this.connection.sendToClient(a.toString());
+        if(a.size() >0) {
+            loadingGif.setVisible(true);
+            this.connection.sendToClient(a.toString());
+        }
     }
 
     public void receiveAnswers(String answers) {
