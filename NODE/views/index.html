@@ -12,7 +12,7 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
     <script>
 
-    var HOST = 'localhost';
+    var HOST = '10.177.255.164';
 
     var title = "Clinico GmbH";
     var language = "";      
@@ -244,15 +244,16 @@
         $(document.createElement('br')).appendTo('#frame');
 
         interval = setInterval(function() {
-            if (questions !== "" && questions.length !== 0 && endRender == false) {
+        	if (endRender) {
+            	endQuestions();
+            }
+            if (questions !== "" && questions.length !== 0) {
               $('h2').remove();
               $('img').remove();
               $('p').remove();
               $('br').remove();
-              $('li').remove();
               $('#explanation').remove();
               $('#question').remove();
-              $('#choice-block').empty();
               $('#choice-block').remove();
               $('choice').remove();
               $('btn').remove();
@@ -263,9 +264,8 @@
               $('.d-flex').remove();
               currentquestion = 0;
               answers = {};
+              console.log(questions);
               initQuestion();
-            } else if (endRender) {
-            	endQuestions();
             }
           }, 500);
     }
@@ -274,16 +274,15 @@
     	endRender = false;    
 
       	$('h2').remove();
+      	$('h3').remove();
         $('img').remove();
         $('p').remove();
         $('br').remove();
-        $('li').remove();
         $('#explanation').remove();
         $('#question').remove();
         $('#choice-block').empty();
         $('#choice-block').remove();
         $('choice').remove();
-        $('btn').remove();
         $('#submitbutton').remove();
         $('#question').remove(); 
         $('br').remove();
@@ -299,7 +298,6 @@
               function(error){
                 throw error;
               });
-        questions = "";
 
       	$(document.createElement('img')).addClass('clinico-logo').attr('id', 'logo').attr('src', CLI.replace('localhost', HOST)).attr('style', 'float:right').appendTo('#frame');
       	$(document.createElement('br')).appendTo('#frame');

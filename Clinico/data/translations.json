@@ -39,6 +39,16 @@
           "Geringe Schmerzen",
           "Keine Schmerzen"
         ]
+      },
+      "tr": {
+        "question": "Soru: Lütfen ağrı hissini derecelendiriniz.",
+        "choices": [
+          "İnanılmaz, dayanılmaz acı",
+          "Şiddetli acı",
+          "Orta derecede ağrı",
+          "Hafif ağrı",
+          "Acı yok"
+        ]
       }
     },
     {
@@ -51,7 +61,7 @@
       "en": {
         "question": "Question: Are you in acute shortness of breath?",
         "choices": [
-          "Yes, I have Problems breathing",
+          "Yes, I have problems breathing",
           "No, I can breath normally"
         ]
       },
@@ -67,6 +77,13 @@
         "choices": [
           "Unzureichende Atmung",
           "Normale Atmung"
+        ]
+      },
+      "tr": {
+        "question": "Soru: Nefes almakta güçlük çekiyor musunuz?",
+        "choices": [
+          "Evet, nefes almakta zorlanıyorum",
+          "Hayır, normal nefes alabilirim"
         ]
       }
     },
@@ -101,6 +118,14 @@
           "Übergeben ohne Blut",
           "Kein Übergeben"
         ]
+      },
+      "tr": {
+        "question": "Question: Daha önce kustunuz mu?",
+        "choices": [
+          "Evet, kusmukta kan vardı",
+          "Evet, ama kusmukta kan yoktu",
+          "Hayır, kusmadım"
+        ]
       }
     },
     {
@@ -133,6 +158,14 @@
           "Häufigkeit: 1-2x",
           "Häufigkeit: 3-4x",
           "Häufigkeit: >4x"
+        ]
+      },
+      "tr": {
+        "question": "Soru: Son 24 saatte kaç kez kustunuz?",
+        "choices": [
+          "1-2 kez",
+          "3-4 kez",
+          "5 ve daha fazla"
         ]
       }
     },
@@ -171,6 +204,15 @@
           "Verstopfung",
           "Normaler Stuhlgang"
         ]
+      },
+      "tr": {
+        "question": "Soru: Bağırsaklarınızla ilgili problem yaşadınız mı?",
+        "choices": [
+          "Evet, ishal problemi yaşıyorum",
+          "Evet, ishal problemi yaşıyorum ve dışkımda kan bulunuyor",
+          "Evet, kabızlık problemi yaşıyorum",
+          "Hayır, bağırsak hareketlerim normal"
+        ]
       }
     },
     {
@@ -204,6 +246,14 @@
           "Leichtes Fieber",
           "Kein Fieber"
         ]
+      },
+      "tr": {
+        "question": "Soru: Ateşiniz var mı?",
+        "choices": [
+          "Evet, yüksek ateşim olduğunu hissediyorum.",
+          "Evet, biraz ateşim olduğunu hissediyorum",
+          "Hayır, ateşim yok."
+        ]
       }
     },
     {
@@ -232,6 +282,13 @@
         "choices": [
           "Schmerzaustrahlung in den Rücken",
           "Keine Schmerzaustrahlung in den Rücken"
+        ]
+      },
+      "tr": {
+        "question": "Soru: Ağrıyı sırtınızda doğru mu hissediyorsunuz?",
+        "choices": [
+          "Evet",
+          "Hayır"
         ]
       }
     },
@@ -262,6 +319,13 @@
           "Schmerzaustrahlung in die Schulter",
           "Keine Schmerzaustrahlung in die Schulter"
         ]
+      },
+      "tr": {
+        "question": "Soru: Ağrıyı omzunuza doğru mu hissediyorsunuz?",
+        "choices": [
+          "Evet",
+          "Hayır"
+        ]
       }
     },
     {
@@ -290,6 +354,13 @@
         "choices": [
           "Allergien vorhanden",
           "Keine Allergien bekannt"
+        ]
+      },
+      "tr": {
+        "question": "Soru: Herhangi bir alerjiniz bulunuyor mu?",
+        "choices": [
+          "Evet",
+          "Hayır"
         ]
       }
     },
@@ -321,6 +392,13 @@
           "Allergien gegen Medizinische Substanzen",
           "Keine relevanten Allergien"
         ]
+      },
+      "tr": {
+        "question": "Soru: Hangilerine alerjiniz var?",
+        "choices": [
+          "İlaçlar: ibuprofen, aspirin, penisilin, antibiyotik",
+          "Diğer : yiyecekler, hayvan tüyü, polen"
+        ]
       }
     },
     {
@@ -349,6 +427,13 @@
         "choices": [
           "Patient nimmt Medikamente",
           "Patient nimmt aktuell keine Medikamente"
+        ]
+      },
+      "tr": {
+        "question": "Soru: Şu an kullandığınız ilaçlar var mı?",
+        "choices": [
+          "Evet",
+          "Hayır"
         ]
       }
     },
@@ -391,7 +476,17 @@
           "Operation am Darm",
           "Andere Operation im Bauchbereich"
         ]
-      }
+      },
+      "tr": {
+        "question": "Soru: Daha önce karın bölgenizle ilgili ameliyat geçirdiniz mi?",
+        "choices": [
+          "Hayır, karın bölgemle ilgili ameliyat geçirmedim",
+          "Evet, kör bağırsağım alındı",
+          "Evet, safra kesesi ameliyatı geçirdim",
+          "Evet, bağırsaklarımdan ameliyat geçirdim",
+          "Evet, diğer"
+        ]
+      },
     }
   ]
 }
