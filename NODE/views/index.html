@@ -12,16 +12,33 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
     <script>
 
-    var HOST = '192.168.2.112';
+    var HOST = '192.168.1.210';
 
     var title = "Clinico GmbH";
     var language = "";      
     var questions = "";
-    var currentquestion = 0, submt=true, picked;
+    var currentquestion = 0, picked, staticQ = true;
     var answers = {};
     var interval = undefined;
     var MRI = "http://localhost:3000/images/MRI.svg";
     var CLI = "http://localhost:3000/images/CLI.png";
+    var BODY = "http://localhost:3000/images/body.jpg";
+
+    var enIMG = "http://localhost:3000/images/en.png";
+    var esIMG = "http://localhost:3000/images/es.jpg";
+    var deIMG = "http://localhost:3000/images/de.png";
+    var trIMG = "http://localhost:3000/images/tr.jpg";
+    var ruIMG = "http://localhost:3000/images/ru.png";
+    var bgIMG = "http://localhost:3000/images/bg.png";
+
+    var staticQuestion = {
+      "en":  "Question: Where do you feel the most pain? Please, point with your finger.",
+      "de":  "Frage: Wo fühlen Sie den stärksten Schmerz? Zeigen Sie bitte mit Ihrem Finger.",
+      "es":  "Pregunta: ¿Dónde sientes más dolor? Por favor, apunte con su dedo.",
+      "tr":  "Soru: Lütfen vücudunuzun ağrıyan bölgesini gösteriniz.",
+      "ru":  "Вопрос: Где вы чувствуете наибольшую боль? Пожалуйста, покажи пальцем.",
+      "bg":  "Въпрос: Къде чувствате най-силна болка? Моля, посочете с пръст."
+    };
 
     setInterval(function() {
       jQuery.get('http://' + HOST + ':3000/received.json', function(data) {
@@ -39,13 +56,12 @@
       if(typeof choices !== "undefined" && $.type(choices) == "array"){
         $('#choice-block').empty();
         for(var i=0;i<choices.length; i++){
-        $(document.createElement('a')).addClass('list-group-item list-group-item-action').attr('data-index', i).text(choices[i]).css({'text-align':'center'}).appendTo('#choice-block');
+        $(document.createElement('a')).addClass('list-group-item list-group-item-action choices').attr('data-index', i).text(choices[i]).css({'text-align':'center'}).appendTo('#choice-block');
         }
       }
     }
 
     function nextQuestion(){
-      submt = true;
       //$('#explanation').empty();
       $('#question').text(questions[currentquestion][language]['question']);
       $('#pager').text('Question ' + Number(currentquestion + 1) + ' of ' + questions.length);
@@ -82,14 +98,15 @@
     }
 
     function processQuestion(choice){
-      
-      answers[questions[currentquestion]['tag']] = choice;
+
+      answers[questions[currentquestion]["tag"]] = choice;
 
       currentquestion++;
 
       if(currentquestion == questions.length){
-        $('#submitbutton').html('Submit Results').removeClass('list-group-item-success').addClass('list-group-item-action list-group-item-dark').css({'border-color':'#3a87ad', 'font-size':'100%','color':'#fff', 'text-align': 'center'}).on('click', function(){
-          $(this).text('Submit Results').on('click');
+
+          console.log(answers);
+
           $.post('/answers', answers)
             .done(
               function(data){
@@ -112,7 +129,6 @@
             questions = "";
             waitForQuestions();
           }, 500);
-        })
         
       } else if (currentquestion < questions.length){
         nextQuestion();
@@ -124,19 +140,15 @@
     var submitbutton;
 
     function setupButtons(){
-      $('.list-group-item').on('click', function(){
-        picked = $('.list-group-item').attr('data-index');
-        $('.list-group-item').removeAttr('style').css({'text-align': 'center'}).off('mouseout mouseover');
+      $('.choices').on('click', function(){
+        picked = $(this).attr('data-index');
+        $('.choices').removeAttr('style').css({'text-align': 'center'}).off('mouseout mouseover');
         $(this).css({'font-weight':'bold', 'border-color':'#51a351', 'color':'#51a351', 'text-align': 'center'});
-        if(submt){
-          submt=false;
           $('#submitbutton').css({'cursor':'pointer', 'text-align': 'center'}).on('click', function(){
-            $('.choice').off('click');
             $(this).off('click');
             processQuestion(picked); 
           });
-        }
-      })
+      });
     }
 
     function waitForQuestions(){
@@ -185,7 +197,6 @@
               $('br').remove();
               $('.spinner-border').remove();
               $('.d-flex').remove();
-              submt = true;
               currentquestion = 0;
               answers = {};
               initQuestion();
@@ -289,6 +300,121 @@
       }
     }
 
+    function proceesStaticQuestion() {
+    	// ToDo: answer of static question
+    	$('#submitbutton').remove();
+    	startQuestions();
+    }
+
+    function staticQuestionRender(){
+    	if (language !== '') {
+        	$('img').remove();
+        	$('br').remove();
+        	$('h3').remove();
+        	$('h2').remove();
+
+        	$(document.createElement('img')).addClass('clinico-logo').attr('id', 'logo').attr('src', CLI.replace('localhost', HOST)).attr('style', 'float:right').appendTo('#frame');
+      		$(document.createElement('br')).appendTo('#frame');
+      		$(document.createElement('br')).appendTo('#frame');
+      		$(document.createElement('br')).appendTo('#frame');
+      		$(document.createElement('h2')).attr('id', 'header').appendTo('#frame');
+
+      		$(document.createElement('h2')).text(staticQuestion[language]).css({'text-align':'center'}).appendTo('#frame');
+        	$(document.createElement('br')).appendTo('#frame');
+
+        	$(document.createElement('img')).addClass('question-homeImage').attr('id', 'question-homeImage').attr('src', BODY.replace('localhost', HOST)).attr('alt', htmlEncode('homePage')).appendTo('#frame');
+
+        	$(document.createElement('br')).appendTo('#frame');
+
+        	$(document.createElement('a')).addClass('list-group-item list-group-item-action list-group-item-success').attr('id', 'submitbutton').text('Proceed').css({'font-weight':'bold', 'text-align': 'center'}).appendTo('#frame');
+
+          	$('#submitbutton').on('click', function(){
+            	$('.choice').off('click');
+            	$(this).off('click');
+            	proceesStaticQuestion();
+          	});
+        }
+    }
+
+    function chooseLanguage(){
+    	$(document.createElement('img')).addClass('clinico-logo').attr('id', 'logo').attr('src', CLI.replace('localhost', HOST)).attr('style', 'float:right').appendTo('#frame');
+      		$(document.createElement('br')).appendTo('#frame');
+      		$(document.createElement('br')).appendTo('#frame');
+      		$(document.createElement('br')).appendTo('#frame');
+      		$(document.createElement('h2')).attr('id', 'header').appendTo('#frame');
+
+          $(document.createElement('h3')).text('Choose a language!').appendTo('#frame');
+
+          $(document.createElement('br')).appendTo('#frame');
+          $(document.createElement('br')).appendTo('#frame');
+          $(document.createElement('br')).appendTo('#frame');
+          $(document.createElement('br')).appendTo('#frame');
+
+          var en = $(document.createElement('img')).addClass('question-flag').attr('id', 'question-flag').attr('src', enIMG.replace('localhost', HOST)).attr('style', 'float:left').appendTo('#frame');
+          var de = $(document.createElement('img')).addClass('question-flag').attr('id', 'question-flag').attr('src', deIMG.replace('localhost', HOST)).attr('style', 'float:right').appendTo('#frame');
+          var es = $(document.createElement('img')).addClass('question-flag').attr('id', 'question-flag').attr('src', esIMG.replace('localhost', HOST)).attr('style', 'float').appendTo('#frame');
+
+          $(document.createElement('br')).appendTo('#frame');
+          $(document.createElement('br')).appendTo('#frame');
+
+          var tr = $(document.createElement('img')).addClass('question-flag').attr('id', 'question-flag').attr('src', trIMG.replace('localhost', HOST)).attr('style', 'float:left').appendTo('#frame');
+          var bg = $(document.createElement('img')).addClass('question-flag').attr('id', 'question-flag').attr('src', bgIMG.replace('localhost', HOST)).attr('style', 'float:right').appendTo('#frame');
+          var ru = $(document.createElement('img')).addClass('question-flag ').attr('id', 'question-flag').attr('src', ruIMG.replace('localhost', HOST)).attr('style', 'float').appendTo('#frame');
+
+          $(document.createElement('br')).appendTo('#frame');
+          $(document.createElement('br')).appendTo('#frame');
+          $(document.createElement('br')).appendTo('#frame');
+          $(document.createElement('br')).appendTo('#frame');
+
+          en.on('click', function() {
+            language = 'en';
+            if (staticQ)
+            	staticQuestionRender();
+            else
+            	startQuestions();
+          });
+          de.on('click', function() {
+            language = 'de';
+            if (staticQ)
+            	staticQuestionRender();
+            else
+            	startQuestions();
+          });
+          es.on('click', function() {
+            language = 'es';
+            //language = 'en'; 
+            if (staticQ)
+            	staticQuestionRender();
+            else
+            	startQuestions();
+          });
+          tr.on('click', function() {
+            language = 'tr';
+            //language = 'en'
+            if (staticQ)
+            	staticQuestionRender();
+            else
+            	startQuestions();
+
+          });
+          bg.on('click', function() {
+            language = 'bg';
+            //language = 'en';
+            if (staticQ)
+            	staticQuestionRender();
+            else
+            	startQuestions();
+          });
+          ru.on('click', function() {
+            language = 'ru';
+            //language = 'en';
+            if (staticQ)
+            	staticQuestionRender();
+            else
+            	startQuestions();
+          });
+    }
+
     function init(){
       
       $(document.createElement('img')).addClass('clinico-logo').attr('id', 'logo').attr('src', CLI.replace('localhost', HOST)).attr('style', 'float:right').appendTo('#frame');
@@ -306,7 +432,6 @@
         $(document.createElement('br')).appendTo('#frame');
         $(document.createElement('br')).appendTo('#frame');
 
-        //add image if present
         $(document.createElement('img')).addClass('question-homeImage').attr('id', 'question-homeImage').attr('src', MRI.replace('localhost', HOST)).attr('alt', htmlEncode('homePage')).appendTo('#frame');
 
         $(document.createElement('br')).appendTo('#frame');
@@ -325,73 +450,15 @@
         start.append($(document.createElement('button')).addClass('btn btn-success btn-xl').attr('id', 'start-button').text('Start').attr('onmouseover', '').attr('style', 'cursor:pointer').css({'float':'center'}));
 
         $('.btn').on('click', function() {
-          $('img').remove();
-          $('button').remove();
-          $('br').remove();
-          $('h2').remove();
-          $('h3').remove();
+          	$('img').remove();
+          	$('button').remove();
+          	$('br').remove();
+          	$('h2').remove();
+          	$('h3').remove();
 
-			$(document.createElement('img')).addClass('clinico-logo').attr('id', 'logo').attr('src', CLI.replace('localhost', HOST)).attr('style', 'float:right').appendTo('#frame');
-      		$(document.createElement('br')).appendTo('#frame');
-      		$(document.createElement('br')).appendTo('#frame');
-      		$(document.createElement('br')).appendTo('#frame');
-      		$(document.createElement('h2')).attr('id', 'header').appendTo('#frame');
-
-          $(document.createElement('h3')).text('Choose a language!').appendTo('#frame');
-
-          $(document.createElement('br')).appendTo('#frame');
-          $(document.createElement('br')).appendTo('#frame');
-          $(document.createElement('br')).appendTo('#frame');
-          $(document.createElement('br')).appendTo('#frame');
-
-          var en = $(document.createElement('img')).addClass('question-flag').attr('id', 'question-flag').attr('src', "http://blog.geocaching.com/wp-content/uploads/2012/09/English-language-flag4.png").attr('style', 'float:left').appendTo('#frame');
-          var de = $(document.createElement('img')).addClass('question-flag').attr('id', 'question-flag').attr('src', "https://upload.wikimedia.org/wikipedia/en/thumb/b/ba/Flag_of_Germany.svg/1200px-Flag_of_Germany.svg.png").attr('style', 'float:right').appendTo('#frame');
-          var es = $(document.createElement('img')).addClass('question-flag').attr('id', 'question-flag').attr('src', "https://i.ytimg.com/vi/vV_owUdv_7o/maxresdefault.jpg").attr('style', 'float').appendTo('#frame');
-
-          $(document.createElement('br')).appendTo('#frame');
-          $(document.createElement('br')).appendTo('#frame');
-
-          var tr = $(document.createElement('img')).addClass('question-flag').attr('id', 'question-flag').attr('src', "https://i.ytimg.com/vi/N2xHqs-9GzQ/maxresdefault.jpg").attr('style', 'float:left').appendTo('#frame');
-          var bg = $(document.createElement('img')).addClass('question-flag').attr('id', 'question-flag').attr('src', "https://upload.wikimedia.org/wikipedia/commons/e/e5/Flag_of_Bulgaria_%28bordered%29.png").attr('style', 'float:right').appendTo('#frame');
-          var ru = $(document.createElement('img')).addClass('question-flag ').attr('id', 'question-flag').attr('src', "https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/Flag_of_Russia_with_border_mini.svg/640px-Flag_of_Russia_with_border_mini.svg.png").attr('style', 'float').appendTo('#frame');
-
-          $(document.createElement('br')).appendTo('#frame');
-          $(document.createElement('br')).appendTo('#frame');
-          $(document.createElement('br')).appendTo('#frame');
-          $(document.createElement('br')).appendTo('#frame');
-
-          en.on('click', function() {
-            language = 'en';
-            startQuestions();
-          })
-          de.on('click', function() {
-            language = 'de';
-            startQuestions();
-          })
-          es.on('click', function() {
-            language = 'es';
-            language = 'en'; 
-            startQuestions();
-          })
-          tr.on('click', function() {
-            language = 'tr';
-            language = 'en'
-            startQuestions();
-
-          })
-          bg.on('click', function() {
-            language = 'bg';
-            language = 'en';
-            startQuestions();
-          })
-          ru.on('click', function() {
-            language = 'ru';
-            language = 'en';
-            startQuestions();
-          })
+			chooseLanguage();
         });
       }
-      //wait();
     }
   
     init();
