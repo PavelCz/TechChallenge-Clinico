@@ -6,9 +6,12 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
 import java.io.*;
 import java.lang.reflect.Array;
@@ -283,12 +286,33 @@ public class GUI {
 
     private void initReportScreen() {
         JPanel panel = new JPanel();
-        JTextArea t = new JTextArea("Bericht");
-        panel.add(t);
+        panel.setLayout(new GridBagLayout());
 
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+
+        gbc.gridwidth = 2;
+        JTextArea t = new JTextArea("Bericht");
+        t.setBorder(new LineBorder(Color.BLACK));
+        panel.add(t, gbc);
+        gbc.gridwidth = 1;
+
+        gbc.gridy++;
+        JButton copyButton = new JButton("Copy");
+        copyButton.addActionListener(e -> {
+            JPanel p = (JPanel) this.root.getComponent(2);
+            JTextArea ta = (JTextArea) p.getComponent(0);
+            StringSelection stringSelection = new StringSelection(ta.getText());
+            Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+            clipboard.setContents(stringSelection, null);
+        });
+        panel.add(copyButton, gbc);
+
+        gbc.gridx++;
         JButton continueButton = new JButton("Fertigstellen");
         continueButton.addActionListener(e -> this.next());
-        panel.add(continueButton);
+        panel.add(continueButton, gbc);
         this.root.add(panel);
     }
 
@@ -351,9 +375,10 @@ public class GUI {
         t.setText(report.toString());
         t.setPreferredSize(new Dimension(400, 400));
 
-
-        // Send the client the ending command
-        this.connection.sendToClient("{\"command\": \"end\"}");
+        if (connection != null) {
+            // Send the client the ending command
+            this.connection.sendToClient("{\"command\": \"end\"}");
+        }
 
         this.clearAnswers();
 
