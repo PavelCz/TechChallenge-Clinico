@@ -92,6 +92,7 @@ public class GUI {
                 fr = new FileReader(translationsPath);
             } catch (FileNotFoundException e) {
                 // Pass, retry the while loop
+                System.out.println("File problem: Can't find file with questions");
             }
         }
         JsonObject translation = JsonParser.parseReader(fr).getAsJsonObject();
@@ -157,21 +158,24 @@ public class GUI {
 
 
         questionsTable.getColumnModel().getColumn(0).setPreferredWidth(30);
-        questionsTable.getColumnModel().getColumn(1).setPreferredWidth(400);
-        questionsTable.getColumnModel().getColumn(2).setPreferredWidth(250);
-        questionsTable.getColumnModel().getColumn(3).setPreferredWidth(80);
+        questionsTable.getColumnModel().getColumn(1).setPreferredWidth(550);
+        questionsTable.getColumnModel().getColumn(2).setPreferredWidth(400);
+        questionsTable.getColumnModel().getColumn(3).setPreferredWidth(150);
         //questionsTable.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
 
-        questionsTable.setPreferredSize(new Dimension(1000, 300));
-        jsp.setPreferredSize(new Dimension(900, 350));
+        questionsTable.setPreferredSize(new Dimension(1130, 300));
+        jsp.setPreferredSize(new Dimension(1130, 350));
 
         // Add renderer for prio color
         questionsTable.getColumnModel().getColumn(3).setCellRenderer(new StatusColumnCellRenderer());
+
+        // Change table fonts
         Font oldFont = questionsTable.getFont();
-
         questionsTable.setFont(new Font(oldFont.getName(), oldFont.getStyle(), FONTSIZE));
+        Font oldHeaderFont = questionsTable.getTableHeader().getFont();
+        questionsTable.getTableHeader().setFont(new Font(oldHeaderFont.getName(), oldHeaderFont.getStyle(), FONTSIZE));
 
-        questionsTable.setRowHeight(FONTSIZE+4);
+        questionsTable.setRowHeight(FONTSIZE + 4);
 
         gbc.gridwidth = 4;
 
