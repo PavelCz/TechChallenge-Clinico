@@ -51,23 +51,23 @@
         ]
       },
       "ru": {
-        "question": "Question: What is the severity of the pain?",
+        "question": "Вопрос: Какова тяжесть боли?",
         "choices": [
-          "Unendurable, excruciating pain",
-          "Severe pain",
-          "Moderate pain",
-          "Mild pain",
-          "No pain"
+          "Нестерпимая мучительная боль",
+          "Тяжелая боль",
+          "Умеренная боль",
+          "Легкая боль",
+          "Нет боли"
         ]
       },
       "bg": {
-        "question": "Question: What is the severity of the pain?",
+        "question": "Въпрос: Колко силна е болката?",
         "choices": [
-          "Unendurable, excruciating pain",
-          "Severe pain",
-          "Moderate pain",
-          "Mild pain",
-          "No pain"
+          "Непоносима, мъчителна болка",
+          "Силна болка",
+          "Умерено силна болка",
+          "Лека болка",
+          "Няма болка"
         ]
       }
     },
@@ -107,17 +107,17 @@
         ]
       },
       "ru": {
-        "question": "Question: Are you in acute shortness of breath?",
+        "question": "Вопрос: У вас острая одышка??",
         "choices": [
-          "Yes, I have problems breathing",
+          "Да у меня проблемы с дыханием",
           "No, I can breath normally"
         ]
       },
       "bg": {
-        "question": "Question: Are you in acute shortness of breath?",
+        "question": "Въпрос: Имате ли силно затруднено дишане?",
         "choices": [
-          "Yes, I have problems breathing",
-          "No, I can breath normally"
+          "Да, имам проблеми с дишането",
+          "Не, мога да дишам нормално"
         ]
       }
     },
@@ -162,19 +162,19 @@
         ]
       },
       "ru": {
-        "question": "Question: Did you have to vomit?",
+        "question": "Вопрос: Вас рвало?",
         "choices": [
-          "Yes, and there was blood in the vomit",
-          "Yes, but there was no blood in the vomit",
-          "No, I did not vomit"
+          "Да и в рвоте была кровь",
+          "Да, но в рвоте не было крови",
+          "Нет у меня такой проблемы не было"
         ]
       },
       "bg": {
-        "question": "Question: Did you have to vomit?",
+        "question": "Въпрос: Повръщахте ли?",
         "choices": [
-          "Yes, and there was blood in the vomit",
-          "Yes, but there was no blood in the vomit",
-          "No, I did not vomit"
+          "Да, и имаше кръв в изповръщаното",
+          "Да, но нямаше кръв в изповръщаното",
+          "Не, нямам такъв проблем"
         ]
       }
     },
@@ -219,19 +219,19 @@
         ]
       },
       "ru": {
-        "question": "Question: How often did you vomit in the last 24 hours?",
+        "question": "Вопрос: Как часто вас рвало за последние 24 часа??",
         "choices": [
-          "1-2 times",
-          "3-4 times",
-          "5 or more times"
+          "1-2 раза",
+          "3-4 раза",
+          "5 или более раз"
         ]
       },
       "bg": {
-        "question": "Question: How often did you vomit in the last 24 hours?",
+        "question": "Въпрос: Колко пъти повърнате през последните 24 часа?",
         "choices": [
-          "1-2 times",
-          "3-4 times",
-          "5 or more times"
+          "1-2 пъти",
+          "3-4 пъти",
+          "5 или повече пъти"
         ]
       }
     },
@@ -281,21 +281,21 @@
         ]
       },
       "ru": {
-        "question": "Question: Did you have any problems with your last bowel movement?",
+        "question": "Вопрос: Did you have any problems with your last bowel movement?",
         "choices": [
-          "Yes, I had diarrhea",
-          "Yes, I had diarrhea and there was blood in the feces",
-          "Yes, I suffer from constipation",
-          "No, my bowel movement was normal"
+          "Да у меня была диарея",
+          "Да, у меня была диарея и была кровь в кале",
+          "Да я страдаю от запоров",
+          "Нет, мое движение кишечника было нормальным"
         ]
       },
       "bg": {
-        "question": "Question: Did you have any problems with your last bowel movement?",
+        "question": "Въпрос: Имахте ли проблем с вашето последно изхождане?",
         "choices": [
-          "Yes, I had diarrhea",
-          "Yes, I had diarrhea and there was blood in the feces",
-          "Yes, I suffer from constipation",
-          "No, my bowel movement was normal"
+          "Да, имах диария",
+          "Да, имах диария и имаше кръв във фекалийте",
+          "Да, имах запек",
+          "Не, перисталтиката ми беше нормална"
         ]
       }
     },
@@ -340,19 +340,19 @@
         ]
       },
       "ru": {
-        "question": "Question: Do you have a fever?",
+        "question": "Вопрос: У тебя температура?",
         "choices": [
-          "Yes, I feel very hot",
-          "Yes, I feel kind of hot",
-          "No, I feel normal"
+          "Да, у меня очень высокая температура тела",
+          "Да я думаю у меня",
+          "Нет я чувствую себя нормально"
         ]
       },
       "bg": {
-        "question": "Question: Do you have a fever?",
+        "question": "Въпрос: Имате ли висока температура?",
         "choices": [
-          "Yes, I feel very hot",
-          "Yes, I feel kind of hot",
-          "No, I feel normal"
+          "Да, много висока",
+          "Да, мисля, че имам",
+          "Не, чувствам се нормално"
         ]
       }
     },
@@ -392,17 +392,17 @@
         ]
       },
       "ru": {
-        "question": "Question: Does the pain radiate to the back?",
+        "question": "Вопрос: У вас болит спина?",
         "choices": [
-          "Yes",
-          "No"
+          "Да",
+          "Нет"
         ]
       },
       "bg": {
-        "question": "Question: Does the pain radiate to the back?",
+        "question": "Въпрос: Имате ли болки в гърба?",
         "choices": [
-          "Yes",
-          "No"
+          "Да",
+          "Не"
         ]
       }
     },
@@ -442,17 +442,17 @@
         ]
       },
       "ru": {
-        "question": "Question: Does the pain radiate to the shoulder?",
+        "question": "Вопрос: У вас болит плечо?",
         "choices": [
-          "Yes",
-          "No"
+          "Да",
+          "Нет"
         ]
       },
       "bg": {
-        "question": "Question: Does the pain radiate to the shoulder?",
+        "question": "Въпрос: Имате ли болка в рамото?",
         "choices": [
-          "Yes",
-          "No"
+          "Да",
+          "Не"
         ]
       }
     },
@@ -492,17 +492,17 @@
         ]
       },
       "ru": {
-        "question": "Question: Do you suffer from allergies?",
+        "question": "Вопрос: Вы страдаете от аллергии?",
         "choices": [
-          "Yes",
-          "No"
+          "Да",
+          "Нет"
         ]
       },
       "bg": {
-        "question": "Question: Do you suffer from allergies?",
+        "question": "Въпрос: Страдате ли от някакви алергии?",
         "choices": [
-          "Yes",
-          "No"
+          "Да",
+          "Не"
         ]
       }
     },
@@ -543,17 +543,17 @@
         ]
       },
       "ru": {
-        "question": "Question: What are you allergic to?",
+        "question": "Вопрос: На что у тебя аллергия?",
         "choices": [
-          "Medicines - e.g. ibuprofen, aspirin, penecilin, antibiotics",
-          "Other - e.g. food, animal dander, hay fever..."
+          "Лекарства - например, ибупрофен, аспирин, пенициллин, антибиотики",
+          "Другое - например, еда, перхоть животных, сенная лихорадка ..."
         ]
       },
       "bg": {
-        "question": "Question: What are you allergic to?",
+        "question": "Въпрос: Към какво сте алергични?",
         "choices": [
-          "Medicines - e.g. ibuprofen, aspirin, penecilin, antibiotics",
-          "Other - e.g. food, animal dander, hay fever..."
+          "Лекарства - например, ибупрофен, аспирин, пеницилин, антибиотици",
+          "Други - например, храна, животни, прах..."
         ]
       }
     },
@@ -565,7 +565,7 @@
         0
       ],
       "en": {
-        "question": "Question: Are you currently taking any medication?",
+        "question": "Question: Are you currently taking any medications?",
         "choices": [
           "Yes",
           "No"
@@ -593,19 +593,19 @@
         ]
       },
       "ru": {
-        "question": "Question: Are you currently taking any medication?",
+        "question": "Вопрос: Вы в настоящее время принимаете какие-либо лекарства?",
         "choices": [
-          "Yes",
-          "No"
+          "Да",
+          "Нет"
         ]
       },
       "bg": {
-        "question": "Question: Are you currently taking any medication?",
+        "question": "Въпрос: В момента приемате ли някакви лекарства?",
         "choices": [
-          "Yes",
-          "No"
+          "Да",
+          "Не"
         ]
-      },
+      }
     },
     {
       "tag": "General-Question-History",
@@ -658,23 +658,23 @@
         ]
       },
       "ru": {
-        "question": "Question: Have you had any abdominal surgery?",
+        "question": "Вопрос: Была ли у вас операция на брюшной полости?",
         "choices": [
-          "No, I have not had any abdominal surgery",
-          "Yes, I had my caecum out",
-          "Yes, by the gall",
-          "Yes, on the intestines",
-          "Yes, Other"
+          "Нет, у меня не было операций на брюшной полости",
+          "Да, у меня был аппендикс",
+          "Да, желчи",
+          "Да, на кишечнике",
+          "Да, другое"
         ]
       },
       "bg": {
-        "question": "Question: Have you had any abdominal surgery?",
+        "question": "Въпрос: Имали ли сте коремна операция?",
         "choices": [
-          "No, I have not had any abdominal surgery",
-          "Yes, I had my caecum out",
-          "Yes, by the gall",
-          "Yes, on the intestines",
-          "Yes, Other"
+          "Не, не съм правил никакви коремни операции",
+          "Да, извадиха ми апендикса",
+          "Да, от жлъчка",
+          "Да, на червата",
+          "Да, друго"
         ]
       }
     }
