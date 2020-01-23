@@ -1,6 +1,8 @@
-# TechChallenge-Clinico
+# Clinico
 
 Locally hosted webapp to aid nurses with language barrier problems in the triage process
+
+Built for the TechChallenge at TUM
 
 ## Collaborators
 
