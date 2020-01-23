@@ -4,7 +4,7 @@ Locally hosted webapp to aid nurses with language barrier problems in the triage
 
 Built for the TechChallenge at TUM
 
-## Collaborators
+## Contributors
 
 - Pavel Czempin
 - Julius Herter
